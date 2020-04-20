@@ -15,6 +15,7 @@ import com.example.test.PlaceDetailActivity;
 import com.example.test.R;
 import com.example.test.model.Person;
 import com.example.test.model.Place;
+import com.example.test.model.PlaceAddress;
 
 import java.util.List;
 
@@ -24,9 +25,9 @@ import butterknife.ButterKnife;
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHolder>{
     private LayoutInflater inflater;
     private Activity context;
-    private List<Place> mPlaces;
+    private List<PlaceAddress> mPlaces;
 
-    public PlaceAdapter(Activity context, List<Place> places) {
+    public PlaceAdapter(Activity context, List<PlaceAddress> places) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.mPlaces = places;
@@ -42,16 +43,16 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     @Override
     public void onBindViewHolder(PlaceAdapter.PlaceViewHolder holder, int position) {
         // Adapt the ViewHolder state to the new element
-        final Place place = mPlaces.get(position);
-        holder.mPlaceStreetTextView.setText(place.getStreet());
-        holder.mPlaceZipTextView.setText(place.getZipCode());
-        holder.mPlaceCityTextView.setText(place.getCity());
+        final PlaceAddress place = mPlaces.get(position);
+        holder.mPlaceIdTextView.setText(place.id);
+        holder.mPlaceCountryTextView.setText(place.country);
+        holder.mPlaceCityTextView.setText(place.city);
 
         holder.mPlaceIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent seePlaceDetailIntent = new Intent(context, PlaceDetailActivity.class);
-                seePlaceDetailIntent.putExtra("placeStreet", place.getStreet());
+                seePlaceDetailIntent.putExtra("placeStreet", place.city);
                 context.startActivity(seePlaceDetailIntent);
             }
         });
@@ -63,18 +64,18 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
         return mPlaces.size();
     }
 
-    public void setPlaces(List<Place> places){
+    public void setPlaces(List<PlaceAddress> places){
         this.mPlaces = places;
     }
 
     // Pattern ViewHolder :
     class PlaceViewHolder extends RecyclerView.ViewHolder
     {
-        @BindView(R.id.place_adapter_street)
-        TextView mPlaceStreetTextView;
+        @BindView(R.id.place_adapter_id)
+        TextView mPlaceIdTextView;
 
-        @BindView(R.id.place_adapter_zip)
-        TextView mPlaceZipTextView;
+        @BindView(R.id.place_adapter_country)
+        TextView mPlaceCountryTextView;
 
         @BindView(R.id.place_adapter_city)
         TextView mPlaceCityTextView;

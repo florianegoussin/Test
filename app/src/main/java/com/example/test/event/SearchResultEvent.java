@@ -1,16 +1,16 @@
 package com.example.test.event;
 
-import com.example.test.model.Place;
+import com.example.test.model.PlaceAddress;
 
 import java.util.List;
 
 public class SearchResultEvent {
 
-    private List<Place> places;
+    private List<PlaceAddress> places;
 
-    public SearchResultEvent(List<Place> places){
+    public SearchResultEvent(List<PlaceAddress> places){
         this.places = places;
     }
 
-    public List<Place> getPlaces(){return places;}
+    public List<PlaceAddress> getPlaces(){return places;}
 }

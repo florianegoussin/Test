@@ -6,7 +6,7 @@
     >
 
     <TextView
-        android:id="@+id/place_adapter_street"
+        android:id="@+id/place_adapter_id"
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="0dp" />
@@ -24,7 +24,7 @@
         android:layout_height="0dp">
 
         <TextView
-            android:id="@+id/place_adapter_zip"
+            android:id="@+id/place_adapter_country"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content" />

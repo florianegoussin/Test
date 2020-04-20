@@ -46,5 +46,9 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.3.1'
 
     // Add Otto Event Bus
-    compile 'com.squareup:otto:+'
+    implementation 'com.squareup:otto:+'
+
+    // Add Retrofit (with GSON converter)
+    implementation 'com.squareup.retrofit2:retrofit:2.7+'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7+'
 }
