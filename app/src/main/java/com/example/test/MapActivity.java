@@ -20,8 +20,12 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.otto.Subscribe;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +40,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     ProgressBar mProgressBar;
 
     private GoogleMap mActiveGoogleMap;
+    private Map<String, PlaceAddress> mMarkersToPlaces = new LinkedHashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +109,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 if (mActiveGoogleMap != null) {
                     // Update map's markers
                     mActiveGoogleMap.clear();
+                    mMarkersToPlaces.clear();
                     for (PlaceAddress place : event.getPlaces()) {
                         // Step 1: create marker icon (and resize drawable so that marker is not too big)
                        /* int markerIconResource;
@@ -122,7 +128,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 //.icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap));
 
                         // Step 3: add marker
-                        mActiveGoogleMap.addMarker(markerOptions);
+                        //mActiveGoogleMap.addMarker(markerOptions);
+                        Marker marker = mActiveGoogleMap.addMarker(markerOptions);
+                        mMarkersToPlaces.put(marker.getId(), place);
                     }
                 }
             }
@@ -141,5 +149,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mActiveGoogleMap = googleMap;
         mActiveGoogleMap.getUiSettings().setZoomControlsEnabled(true);
         mActiveGoogleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+
+
+        //Quand on clique sur l'infoWindow pour avoir le détail de la zone
+        mActiveGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                PlaceAddress associatedPlace = mMarkersToPlaces.get(marker.getId());
+                if (associatedPlace != null) {
+                    Intent seePlaceDetailIntent = new Intent(MapActivity.this, PlaceDetailActivity.class);
+                    seePlaceDetailIntent.putExtra("placeStreet", associatedPlace.country);
+                    startActivity(seePlaceDetailIntent);
+                }
+            }
+        });
     }
 }

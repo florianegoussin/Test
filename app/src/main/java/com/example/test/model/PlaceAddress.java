@@ -14,4 +14,7 @@ public class PlaceAddress {
 
     @Expose
     public PlaceCoordinates coordinates;
+
+   // @Expose
+ //   public PlaceParameter countsByMeasurement;
 }
