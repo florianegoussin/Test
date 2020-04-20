@@ -37,20 +37,20 @@ public class PlaceSearchService {
                 try {
                     final OkHttpClient okHttpClient = new OkHttpClient();
                     final Request request = new Request.Builder()
-                            .url("https://api-adresse.data.gouv.fr/search/?q=" + search)
+                            .url("https://api.openaq.org/v1/locations?city=" + search)
                             .build();
                     Response response = okHttpClient.newCall(request).execute();
                     if (response != null && response.body() != null) {
                         JSONObject jsonResult = new JSONObject(response.body().string());
-                        JSONArray jsonPlaces = jsonResult.getJSONArray("features");
+                        JSONArray jsonPlaces = jsonResult.getJSONArray("results");
 
                         List<Place> foundPlaces = new ArrayList<>();
                         for (int i = 0; i < jsonPlaces.length(); i++) {
                             JSONObject jsonPlace = jsonPlaces.getJSONObject(i);
-                            JSONObject properties = jsonPlace.getJSONObject("properties");
-                            String city = properties.getString("city");
-                            String street = properties.getString("name");
-                            String zipCode = properties.getString("postcode");
+                            //JSONObject properties = jsonPlace.getJSONObject("properties");
+                            String city = jsonPlace.getString("city");
+                            String street = jsonPlace.getString("country");
+                            String zipCode = jsonPlace.getString("id");
                             foundPlaces.add(new Place(0, 0, street, zipCode, city));
                         }
                         EventBusManager.BUS.post(new SearchResultEvent(foundPlaces));

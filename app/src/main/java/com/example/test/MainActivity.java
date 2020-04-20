@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         EventBusManager.BUS.register(this);
 
-        PlaceSearchService.INSTANCE.searchPlacesFromAddress("Place du commerce");
+        PlaceSearchService.INSTANCE.searchPlacesFromAddress("Loire-Atlantique");
         }
     @Override
     protected void onPause() {
