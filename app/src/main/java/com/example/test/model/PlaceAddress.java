@@ -13,5 +13,5 @@ public class PlaceAddress {
     public String id;
 
     @Expose
-    public PlaceProperties coordinates;
+    public PlaceCoordinates coordinates;
 }

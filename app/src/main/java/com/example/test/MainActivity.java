@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -28,6 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -55,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
         mPlaceAdapter = new PlaceAdapter(this, new ArrayList<>());
         mRecyclerView.setAdapter(mPlaceAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        if (getIntent().hasExtra("currentSearch")) {
+            mSearchEditText.setText(getIntent().getStringExtra("currentSearch"));
+        }
 
         mSearchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -87,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
         EventBusManager.BUS.register(this);
 
-       // PlaceSearchService.INSTANCE.searchPlacesFromAddress("Loire-Atlantique");
+        PlaceSearchService.INSTANCE.searchPlacesFromAddress(mSearchEditText.getText().toString());
         }
     @Override
     protected void onPause() {
@@ -106,6 +112,14 @@ public class MainActivity extends AppCompatActivity {
             mPlaceAdapter.notifyDataSetChanged();
             // Step 2: hide loader
             mProgressBar.setVisibility(View.GONE);
-        });}
+        });
+    }
+
+    @OnClick(R.id.activity_main_switch_button)
+    public void clickedOnSwitshToMap(){
+        Intent switchToMapIntent = new Intent (this, MapActivity.class);
+        switchToMapIntent.putExtra("currentSearch", mSearchEditText.getText().toString());
+        startActivity(switchToMapIntent);
+    }
 
 }

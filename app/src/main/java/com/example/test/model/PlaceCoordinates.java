@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaceProperties {
+public class PlaceCoordinates {
     @Expose
     public List<Double> coordinates = new ArrayList<>();
 
