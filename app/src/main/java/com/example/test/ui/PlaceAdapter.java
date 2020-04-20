@@ -1,7 +1,6 @@
 package com.example.test.ui;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +10,11 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.test.Database.ModelDB.Favorite;
 import com.example.test.PlaceDetailActivity;
 import com.example.test.R;
-import com.example.test.model.Person;
 import com.example.test.model.Place;
+import com.example.test.utils.Common;
 
 import java.util.List;
 
@@ -25,6 +25,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     private LayoutInflater inflater;
     private Activity context;
     private List<Place> mPlaces;
+
 
     public PlaceAdapter(Activity context, List<Place> places) {
         inflater = LayoutInflater.from(context);
@@ -56,7 +57,46 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
             }
         });
         //holder.mPlaceIcon.setOnClickListener(new View.OnClickListener() {
+
+        //Favorite System
+        if(Common.favoriteRepository.isFavorite(Integer.parseInt(mPlaces.get(position).getZipCode())) == 1)
+            holder.btn_favorite.setImageResource(R.drawable.ic_favorite_white_24dp);
+        else
+            holder.btn_favorite.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+
+        holder.btn_favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(Common.favoriteRepository.isFavorite(Integer.parseInt(mPlaces.get(position).getZipCode())) != 1){
+                    addOrRemoveFavorite(mPlaces.get(position),true);
+                    holder.btn_favorite.setImageResource(R.drawable.ic_favorite_white_24dp);
+                }
+                else{
+                    addOrRemoveFavorite(mPlaces.get(position),false);
+                    holder.btn_favorite.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+                }
+
+
+            }
+        });
     }
+
+    private void addOrRemoveFavorite(Place place, boolean isAdd) {
+        Favorite favorite = new Favorite();
+        favorite.latitude = place.getLatitude();
+        favorite.longitude= place.getLongitude();
+        favorite.street=place.getStreet();
+        favorite.zipCode=place.getZipCode();
+        favorite.city= place.getCity();
+
+        if(isAdd)
+            Common.favoriteRepository.insertFav(favorite);
+        else
+            Common.favoriteRepository.delete(favorite);
+
+    }
+
 
     @Override
     public int getItemCount() {
@@ -86,7 +126,12 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+
+        @BindView(R.id.btn_favorite)
+        ImageView btn_favorite;
     }
+
+
 
 }
 

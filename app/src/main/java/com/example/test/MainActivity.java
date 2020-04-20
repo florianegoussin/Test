@@ -1,31 +1,24 @@
 package com.example.test;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
-
+import com.example.test.Database.DataSource.FavoriteRepository;
+import com.example.test.Database.Local.EDMTRoomDatabase;
+import com.example.test.Database.Local.FavoriteDataSource;
 import com.example.test.event.EventBusManager;
 import com.example.test.event.SearchResultEvent;
-import com.example.test.model.Person;
-import com.example.test.model.Place;
-import com.example.test.ui.PersonAdapter;
 import com.example.test.ui.PlaceAdapter;
+import com.example.test.utils.Common;
 import com.squareup.otto.Subscribe;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,6 +60,12 @@ public class MainActivity extends AppCompatActivity {
         // Update adapter's model
         mPlaceAdapter.setPlaces(event.getPlaces());
         runOnUiThread(() -> mPlaceAdapter.notifyDataSetChanged());
+    }
+
+    private void initDB(){
+        Common.edmtRoomDatabase = EDMTRoomDatabase.getInstance(this);
+        //Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.edmtRoomDatabase.CartDAO()));
+        Common.favoriteRepository = FavoriteRepository.getInstance(FavoriteDataSource.getInstance(Common.edmtRoomDatabase.favoriteDAO()));
     }
 
 }

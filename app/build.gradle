@@ -46,5 +46,13 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.3.1'
 
     // Add Otto Event Bus
-    compile 'com.squareup:otto:+'
+    implementation 'com.squareup:otto:+'
+
+    //Add Room persistence
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
+
+    //Add Reactive Extensions
+    // implementation "io.reactivex.rxjava3:rxjava:3.0.2"
+    implementation 'android.arch.persistence.room:rxjava2:1.1.1'
 }
