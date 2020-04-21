@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import com.example.test.event.EventBusManager;
 import com.example.test.event.ZoneResultEvent;
 import com.example.test.model.ZoneAddress;
+import com.example.test.service.ZoneSearchService;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -126,8 +127,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
                         // Step 3: add marker
                         //mActiveGoogleMap.addMarker(markerOptions);
-                        //Marker marker = mActiveGoogleMap.addMarker(markerOptions);
-                       // mMarkersToPlaces.put(marker.getId(), place);
+                        /*Marker marker = mActiveGoogleMap.addMarker(markerOptions);
+                        mMarkersToPlaces.put(marker.getId(), place);*/
                     }
                 }
             }

@@ -13,7 +13,12 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.test.event.EventBusManager;
+import com.example.test.event.LocationResultEvent;
 import com.example.test.event.ZoneResultEvent;
+import com.example.test.model.Location;
+import com.example.test.service.LocationSearchService;
+import com.example.test.service.ZoneSearchService;
+import com.example.test.ui.LocationAdapter;
 import com.example.test.ui.PlaceAdapter;
 import com.squareup.otto.Subscribe;
 
@@ -29,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
 
     private PlaceAdapter mPlaceAdapter;
+    //private LocationAdapter mPlaceAdapter;
 
     @BindView(R.id.activity_main_search_adress_edittext)
     EditText mSearchEditText;
@@ -44,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mPlaceAdapter = new PlaceAdapter(this, new ArrayList<>());
+        //mPlaceAdapter = new LocationAdapter(this, new ArrayList<>());
         mRecyclerView.setAdapter(mPlaceAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -70,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Launch a search through the PlaceSearchService
                 ZoneSearchService.INSTANCE.searchPlacesFromAddress(editable.toString());
+                //LocationSearchService.INSTANCE.searchLocationsFromAddress(editable.toString());
             }
         });
 
@@ -83,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         EventBusManager.BUS.register(this);
 
         ZoneSearchService.INSTANCE.searchPlacesFromAddress(mSearchEditText.getText().toString());
+        //LocationSearchService.INSTANCE.searchLocationsFromAddress(mSearchEditText.getText().toString());
         }
     @Override
     protected void onPause() {
@@ -103,6 +112,18 @@ public class MainActivity extends AppCompatActivity {
             mProgressBar.setVisibility(View.GONE);
         });
     }
+
+    /*public void searchResult(final LocationResultEvent event) {
+        // Here someone has posted a SearchResultEvent
+        // Update adapter's model
+        runOnUiThread(() -> {
+            // Step 1: Update adapter's model
+            mPlaceAdapter.setLocations(event.getLocations());
+            mPlaceAdapter.notifyDataSetChanged();
+            // Step 2: hide loader
+            mProgressBar.setVisibility(View.GONE);
+        });
+    }*/
 
     @OnClick(R.id.activity_main_switch_button)
     public void clickedOnSwitchToMap(){
