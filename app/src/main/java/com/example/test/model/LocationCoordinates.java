@@ -8,11 +8,11 @@ import com.google.gson.annotations.Expose;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(name = "PlaceCoordinates")
+@Table(name = "LocationCoordinates")
 public class LocationCoordinates extends Model {
 
-    @Column(name = "name", index = true, unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
-    public String name;
+    @Column(name = "location", index = true, unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
+    public String location;
 
     @Expose
     public List<Double> coordinates = new ArrayList<>();

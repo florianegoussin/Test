@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.test.event.EventBusManager;
 import com.example.test.event.LocationResultEvent;
 import com.example.test.event.ZoneResultEvent;
+import com.example.test.model.Location;
 import com.example.test.service.LocationSearchService;
 import com.example.test.service.ZoneSearchService;
 import com.example.test.ui.LocationAdapter;
@@ -22,6 +23,7 @@ import com.example.test.ui.PlaceAdapter;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +49,8 @@ public class ListeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_liste);
 
         ButterKnife.bind(this);
+
+
 
 
         mPlaceAdapter = new LocationAdapter(this, new ArrayList<>());

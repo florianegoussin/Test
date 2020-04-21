@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.activity_main_loader)
     ProgressBar mProgressBar;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 mProgressBar.setVisibility(View.VISIBLE);
 
                 // Launch a search through the PlaceSearchService
-                ZoneSearchService.INSTANCE.searchPlacesFromAddress(editable.toString());
+                ZoneSearchService.INSTANCE.searchZone(editable.toString());
                 //LocationSearchService.INSTANCE.searchLocationsFromAddress(editable.toString());
             }
         });
@@ -90,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
         EventBusManager.BUS.register(this);
 
-        ZoneSearchService.INSTANCE.searchPlacesFromAddress(mSearchEditText.getText().toString());
+        ZoneSearchService.INSTANCE.searchZone(mSearchEditText.getText().toString());
         //LocationSearchService.INSTANCE.searchLocationsFromAddress(mSearchEditText.getText().toString());
         }
     @Override
@@ -106,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         // Update adapter's model
         runOnUiThread (() -> {
             // Step 1: Update adapter's model
-            mPlaceAdapter.setPlaces(event.getPlaces());
+            mPlaceAdapter.setPlaces(event.getZones());
             mPlaceAdapter.notifyDataSetChanged();
             // Step 2: hide loader
             mProgressBar.setVisibility(View.GONE);
@@ -131,5 +133,7 @@ public class MainActivity extends AppCompatActivity {
         switchToMapIntent.putExtra("currentSearch", mSearchEditText.getText().toString());
         startActivity(switchToMapIntent);
     }
+
+
 
 }

@@ -44,10 +44,10 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     public void onBindViewHolder(LocationAdapter.LocationViewHolder holder, int position) {
         // Adapt the ViewHolder state to the new element
         final Location location = mLocation.get(position);
-        holder.mPlaceIdTextView.setText(location.city);
-        holder.mPlaceCountryTextView.setText(location.country);
+        holder.mPlaceIdTextView.setText(location.country);
+       // holder.mPlaceCountryTextView.setText(location.country);
         holder.mPlaceCityTextView.setText(location.city);
-        holder.mPlaceLocationTextView.setText(location.city);
+        holder.mPlaceLocationTextView.setText(Integer.toString(location.count));
 
 
         //Accès au détail de l'activité, doit renvoyer les mêmes infos qu'au clic sur l'infowindows

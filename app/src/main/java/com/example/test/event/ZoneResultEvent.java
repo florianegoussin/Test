@@ -12,5 +12,5 @@ public class ZoneResultEvent {
         this.zones = places;
     }
 
-    public List<ZoneAddress> getPlaces(){return zones;}
+    public List<ZoneAddress> getZones(){return zones;}
 }

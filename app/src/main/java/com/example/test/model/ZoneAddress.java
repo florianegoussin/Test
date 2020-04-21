@@ -6,7 +6,7 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 import com.google.gson.annotations.Expose;
 
-@Table(name = "PlaceAddress")
+@Table(name = "ZoneAddress")
 public class ZoneAddress extends Model {
 
     @Expose

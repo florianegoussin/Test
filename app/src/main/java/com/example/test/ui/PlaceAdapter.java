@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.test.ListeActivity;
 import com.example.test.PlaceDetailActivity;
 import com.example.test.R;
 import com.example.test.model.ZoneAddress;
@@ -21,12 +22,12 @@ import butterknife.ButterKnife;
 
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHolder>{
     private LayoutInflater inflater;
-    private Activity context;
+    private Activity activity;
     private List<ZoneAddress> mPlaces;
 
-    public PlaceAdapter(Activity context, List<ZoneAddress> places) {
-        inflater = LayoutInflater.from(context);
-        this.context = context;
+    public PlaceAdapter(Activity activity, List<ZoneAddress> places) {
+        inflater = LayoutInflater.from(activity);
+        this.activity = activity;
         this.mPlaces = places;
     }
 
@@ -51,12 +52,12 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
         holder.mPlaceIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent seePlaceDetailIntent = new Intent(context, PlaceDetailActivity.class);
-                seePlaceDetailIntent.putExtra("placeStreet", place.city);
-                context.startActivity(seePlaceDetailIntent);
+                Intent ListeActivity = new Intent(activity, ListeActivity.class);
+                ListeActivity.putExtra("placeStreet", place.city);
+                activity.startActivity(ListeActivity);
             }
         });
-        //holder.mPlaceIcon.setOnClickListener(new View.OnClickListener() {
+
     }
 
     @Override

@@ -2,13 +2,22 @@ package com.example.test.service;
 
 import android.util.Log;
 
+import com.activeandroid.ActiveAndroid;
+import com.activeandroid.query.Select;
 import com.example.test.event.EventBusManager;
 import com.example.test.event.ZoneResultEvent;
+import com.example.test.model.Location;
+import com.example.test.model.ZoneAddress;
 import com.example.test.model.ZoneSearchResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.Modifier;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -20,10 +29,11 @@ import retrofit2.http.Query;
 
 public class ZoneSearchService {
 
-
+    private static final long REFRESH_DELAY = 650;
     public static ZoneSearchService INSTANCE = new ZoneSearchService();
     private final PlaceSearchRESTService mPlaceSearchRESTService;
-
+    private ScheduledExecutorService mScheduler = Executors.newScheduledThreadPool(1);
+    private ScheduledFuture mLastScheduleTask;
 
     private ZoneSearchService(){
         // Create GSON Converter that will be used to convert from JSON to Java
@@ -47,16 +57,30 @@ public class ZoneSearchService {
 
     }
 
-    public  void searchPlacesFromAddress(final String search) {
+    public  void searchZone(final String search) {
+
+        if (mLastScheduleTask != null && !mLastScheduleTask.isDone()) {
+            mLastScheduleTask.cancel(true);
+        }
+
+        mLastScheduleTask = mScheduler.schedule(new Runnable() {
+            public void run() {
+                searchZoneFromDB(search);
 
                 // Call to the REST service
-                mPlaceSearchRESTService.searchForPlaces(search).enqueue(new Callback<ZoneSearchResult>() {
+                mPlaceSearchRESTService.searchForZones("FR").enqueue(new Callback<ZoneSearchResult>() {
                     @Override
                     public void onResponse(Call<ZoneSearchResult> call, retrofit2.Response<ZoneSearchResult> response) {
                         // Post an event so that listening activities can update their UI
                         if (response.body() != null && response.body().results != null) {
-                            EventBusManager.BUS.post(new ZoneResultEvent(response.body().results));
+                            ActiveAndroid.beginTransaction();
+                            for (ZoneAddress zone : response.body().results) {
+                                zone.save();
+                            }
+                            ActiveAndroid.setTransactionSuccessful();
+                            ActiveAndroid.endTransaction();
 
+                            searchZoneFromDB(search);
 
                         } else {
                             // Null result
@@ -72,12 +96,21 @@ public class ZoneSearchService {
                         Log.e("[PlaceSearcher] [REST]", "Response error : " + t.getMessage());
                     }
                 });
-            }
 
+            }
+        },REFRESH_DELAY, TimeUnit.MILLISECONDS);
+    }
+
+    public void searchZoneFromDB(String search){
+        List<ZoneAddress> matchingZoneFromDB = new Select().from(ZoneAddress.class)
+                .where("city LIKE '%" + search + "%'").orderBy("country").execute();
+
+        EventBusManager.BUS.post((new ZoneResultEvent(matchingZoneFromDB)));
+    }
         // Service describing the REST APIs
         public interface PlaceSearchRESTService {
             @GET("cities/")
-            Call<ZoneSearchResult> searchForPlaces(@Query("country") String search);
+            Call<ZoneSearchResult> searchForZones(@Query("country") String search);
 
         }
 

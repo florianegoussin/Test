@@ -31,7 +31,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
+//Ici affichage pour les locations, pas pour les zones
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     @BindView(R.id.activity_main_search_adress_edittext)
@@ -42,6 +42,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private GoogleMap mActiveGoogleMap;
     private Map<String, Location> mMarkersToPlaces = new LinkedHashMap<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +78,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 mProgressBar.setVisibility(View.VISIBLE);
 
                 // Launch a search through the PlaceSearchService
-                //ZoneSearchService.INSTANCE.searchPlacesFromAddress(editable.toString());
+                //ZoneSearchService.INSTANCE.searchZone(editable.toString());
                 LocationSearchService.INSTANCE.searchLocationsFromAddress(editable.toString());
             }
         });
@@ -90,6 +91,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         EventBusManager.BUS.register(this);
 
         LocationSearchService.INSTANCE.searchLocationsFromAddress(mSearchEditText.getText().toString());
+       // ZoneSearchService.INSTANCE.searchZone(mSearchEditText.getText().toString());
+
     }
 
     @Override
@@ -112,6 +115,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     // Update map's markers
                     mActiveGoogleMap.clear();
                     mMarkersToPlaces.clear();
+
                     for (Location location : event.getLocations()) {
 
                         MarkerOptions markerOptions = new MarkerOptions()
