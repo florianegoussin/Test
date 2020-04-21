@@ -45,5 +45,11 @@ public class MenuActivity extends AppCompatActivity {
         Intent test = new Intent(MenuActivity.this, MapActivity.class);
         startActivity(test);
     }
+
+    @OnClick(R.id.detail)
+    public void onClickDetail(){
+        Intent test = new Intent(MenuActivity.this, ListeActivity.class);
+        startActivity(test);
+    }
 }
 
