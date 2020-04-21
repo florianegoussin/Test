@@ -76,6 +76,11 @@ public class LocationSearchService {
                         if (response.body() != null && response.body().results != null) {
                             ActiveAndroid.beginTransaction();
                             for (Location location : response.body().results) {
+                                Location l = new Location();
+                                l.location = location.location;
+                                l.city = location.city;
+                                l.coordinates.latitude = location.coordinates.latitude;
+                                l.coordinates.longitude = location.coordinates.longitude;
                                 location.save();
                             }
                             ActiveAndroid.setTransactionSuccessful();
@@ -95,6 +100,7 @@ public class LocationSearchService {
                         // Request has failed or is not at expected format
                         // We may want to display a warning to user (e.g. Toast)
                         Log.e("[PlaceSearcher] [REST]", "Response error : " + t.getMessage());
+                        searchLocationsFromDB(search);
                     }
 
                 });
@@ -104,7 +110,8 @@ public class LocationSearchService {
     }
 
     public void searchLocationsFromDB (String search){
-        List<Location> matchingLocationFromDB = new Select().from(Location.class)
+        List<Location> matchingLocationFromDB = new Select()
+                .from(Location.class)
                 .where("city LIKE '%" + search + "%'").orderBy("city ").execute();
 
         EventBusManager.BUS.post(new LocationResultEvent(matchingLocationFromDB));

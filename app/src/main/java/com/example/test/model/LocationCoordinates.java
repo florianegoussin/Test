@@ -19,9 +19,9 @@ public class LocationCoordinates extends Model {
 
     @Expose
     @Column(name = "longitude")
-    public double longitude;
+    public double longitude = 0;
 
     @Expose
     @Column(name = "latitude")
-    public double latitude;
+    public double latitude = 0;
 }

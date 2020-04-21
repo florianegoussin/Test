@@ -43,6 +43,8 @@ public class ListeActivity extends AppCompatActivity {
     @BindView(R.id.activity_main_loader)
     ProgressBar mProgressBar;
 
+    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
