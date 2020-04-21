@@ -59,7 +59,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
         //holder.mPlaceIcon.setOnClickListener(new View.OnClickListener() {
 
         //Favorite System
-        if(Common.favoriteRepository.isFavorite(Integer.parseInt(mPlaces.get(position).getZipCode())) == 1)
+        if(Common.favoriteRepository.isFavorite(place.getCity()) == 1)
             holder.btn_favorite.setImageResource(R.drawable.ic_favorite_white_24dp);
         else
             holder.btn_favorite.setImageResource(R.drawable.ic_favorite_border_white_24dp);
@@ -67,7 +67,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
         holder.btn_favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                                                                                        //get id à la place de get zipcode
                 if(Common.favoriteRepository.isFavorite(Integer.parseInt(mPlaces.get(position).getZipCode())) != 1){
                     addOrRemoveFavorite(mPlaces.get(position),true);
                     holder.btn_favorite.setImageResource(R.drawable.ic_favorite_white_24dp);
