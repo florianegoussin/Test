@@ -1,7 +1,6 @@
 package com.example.test.ui;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test.PlaceDetailActivity;
 import com.example.test.R;
-import com.example.test.model.Person;
-import com.example.test.model.Place;
-import com.example.test.model.PlaceAddress;
+import com.example.test.model.ZoneAddress;
 
 import java.util.List;
 
@@ -25,9 +22,9 @@ import butterknife.ButterKnife;
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHolder>{
     private LayoutInflater inflater;
     private Activity context;
-    private List<PlaceAddress> mPlaces;
+    private List<ZoneAddress> mPlaces;
 
-    public PlaceAdapter(Activity context, List<PlaceAddress> places) {
+    public PlaceAdapter(Activity context, List<ZoneAddress> places) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.mPlaces = places;
@@ -43,11 +40,14 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     @Override
     public void onBindViewHolder(PlaceAdapter.PlaceViewHolder holder, int position) {
         // Adapt the ViewHolder state to the new element
-        final PlaceAddress place = mPlaces.get(position);
-        holder.mPlaceIdTextView.setText(place.id);
+        final ZoneAddress place = mPlaces.get(position);
+        holder.mPlaceIdTextView.setText(place.name);
         holder.mPlaceCountryTextView.setText(place.country);
         holder.mPlaceCityTextView.setText(place.city);
+        holder.mPlaceLocationTextView.setText(Integer.toString(place.count));
 
+
+        //Accès au détail de l'activité, doit renvoyer les mêmes infos qu'au clic sur l'infowindows
         holder.mPlaceIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +64,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
         return mPlaces.size();
     }
 
-    public void setPlaces(List<PlaceAddress> places){
+    public void setPlaces(List<ZoneAddress> places){
         this.mPlaces = places;
     }
 
@@ -82,6 +82,9 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
 
         @BindView(R.id.place_adapter_icon)
         ImageView mPlaceIcon;
+
+        @BindView(R.id.place_adapter_location)
+        TextView mPlaceLocationTextView;
 
         public PlaceViewHolder(View itemView) {
             super(itemView);

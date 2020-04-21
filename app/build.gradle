@@ -54,4 +54,7 @@ dependencies {
 
     // Add google maps
     implementation 'com.google.android.gms:play-services-maps:17+'
+
+    // Add Active Android
+    implementation 'com.michaelpardo:activeandroid:3+'
 }

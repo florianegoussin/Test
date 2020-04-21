@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name="com.activeandroid.app.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -12,10 +13,31 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+
+        <!-- Active Android Database definition -->
+        <!-- DB Name -->
+        <meta-data android:name="AA_DB_NAME" android:value="Test" />
+        <!-- DB Version -->
+        <meta-data android:name="AA_DB_VERSION" android:value="1" />
+        <!--Provider-->
+        <provider
+            android:name="com.activeandroid.content.ContentProvider"
+            android:authorities="com.example.test"
+            android:enabled="true"
+            android:exported="false">
+        </provider>
+
         <!-- Google Maps API Key -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBcRt3W8uifSjrhXBu2467iz9ciQqMNTzM"/>
+
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="com.example.test.model.ZoneAddress,
+                           com.example.test.model.ZoneCoordinates,
+                           com.example.test.model.Measurement
+                           "/>
 
         <activity android:name=".MapActivity"></activity>
         <activity android:name=".PlaceDetailActivity" />

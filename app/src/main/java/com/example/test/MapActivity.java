@@ -3,8 +3,6 @@ package com.example.test;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,12 +11,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.test.event.EventBusManager;
-import com.example.test.event.SearchResultEvent;
-import com.example.test.model.PlaceAddress;
+import com.example.test.event.ZoneResultEvent;
+import com.example.test.model.ZoneAddress;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -40,7 +37,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     ProgressBar mProgressBar;
 
     private GoogleMap mActiveGoogleMap;
-    private Map<String, PlaceAddress> mMarkersToPlaces = new LinkedHashMap<>();
+    private Map<String, ZoneAddress> mMarkersToPlaces = new LinkedHashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +73,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 mProgressBar.setVisibility(View.VISIBLE);
 
                 // Launch a search through the PlaceSearchService
-                PlaceSearchService.INSTANCE.searchPlacesFromAddress(editable.toString());
+                ZoneSearchService.INSTANCE.searchPlacesFromAddress(editable.toString());
             }
         });
     }
@@ -87,7 +84,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         EventBusManager.BUS.register(this);
 
-        PlaceSearchService.INSTANCE.searchPlacesFromAddress(mSearchEditText.getText().toString());
+        ZoneSearchService.INSTANCE.searchPlacesFromAddress(mSearchEditText.getText().toString());
     }
 
     @Override
@@ -98,7 +95,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     @Subscribe
-    public void searchResult(final SearchResultEvent event){
+    public void searchResult(final ZoneResultEvent event){
 
         runOnUiThread(new Runnable() {
             @Override
@@ -110,7 +107,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     // Update map's markers
                     mActiveGoogleMap.clear();
                     mMarkersToPlaces.clear();
-                    for (PlaceAddress place : event.getPlaces()) {
+                    for (ZoneAddress place : event.getPlaces()) {
                         // Step 1: create marker icon (and resize drawable so that marker is not too big)
                        /* int markerIconResource;
                         if (place.properties.isStreet()) {
@@ -121,16 +118,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                        // Bitmap imageBitmap = BitmapFactory.decodeResource(getResources());
                        // Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, 50, 50, false);
                         // Step 2: define marker options
-                        MarkerOptions markerOptions = new MarkerOptions()
-                                .position(new LatLng(place.coordinates.latitude, place.coordinates.longitude))
+                       /* MarkerOptions markerOptions = new MarkerOptions()
+                                .position(new LatLng(place.latitude, place.getCoordinates().longitude))
                                 .title(place.city)
-                                .snippet(place.country);
-                                //.icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap));
+                                .snippet(place.country + " " + place.location);
+                                //.icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap));*/
 
                         // Step 3: add marker
                         //mActiveGoogleMap.addMarker(markerOptions);
-                        Marker marker = mActiveGoogleMap.addMarker(markerOptions);
-                        mMarkersToPlaces.put(marker.getId(), place);
+                        //Marker marker = mActiveGoogleMap.addMarker(markerOptions);
+                       // mMarkersToPlaces.put(marker.getId(), place);
                     }
                 }
             }
@@ -155,7 +152,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mActiveGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                PlaceAddress associatedPlace = mMarkersToPlaces.get(marker.getId());
+                ZoneAddress associatedPlace = mMarkersToPlaces.get(marker.getId());
                 if (associatedPlace != null) {
                     Intent seePlaceDetailIntent = new Intent(MapActivity.this, PlaceDetailActivity.class);
                     seePlaceDetailIntent.putExtra("placeStreet", associatedPlace.country);

@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 
 import java.util.List;
 
-public class PlaceSearchResult {
+public class MeasurementSearchResult {
     @Expose
-    public List<PlaceAddress> results;
+    public List<Measurement> results;
 }

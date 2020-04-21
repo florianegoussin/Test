@@ -5,34 +5,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.test.event.EventBusManager;
-import com.example.test.event.SearchResultEvent;
-import com.example.test.model.Person;
-import com.example.test.model.Place;
-import com.example.test.ui.PersonAdapter;
+import com.example.test.event.ZoneResultEvent;
 import com.example.test.ui.PlaceAdapter;
 import com.squareup.otto.Subscribe;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -80,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 mProgressBar.setVisibility(View.VISIBLE);
 
                 // Launch a search through the PlaceSearchService
-                PlaceSearchService.INSTANCE.searchPlacesFromAddress(editable.toString());
+                ZoneSearchService.INSTANCE.searchPlacesFromAddress(editable.toString());
             }
         });
 
@@ -93,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         EventBusManager.BUS.register(this);
 
-        PlaceSearchService.INSTANCE.searchPlacesFromAddress(mSearchEditText.getText().toString());
+        ZoneSearchService.INSTANCE.searchPlacesFromAddress(mSearchEditText.getText().toString());
         }
     @Override
     protected void onPause() {
@@ -103,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Subscribe
-    public void searchResult(final SearchResultEvent event) {
+    public void searchResult(final ZoneResultEvent event) {
         // Here someone has posted a SearchResultEvent
         // Update adapter's model
         runOnUiThread (() -> {
@@ -116,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.activity_main_switch_button)
-    public void clickedOnSwitshToMap(){
+    public void clickedOnSwitchToMap(){
         Intent switchToMapIntent = new Intent (this, MapActivity.class);
         switchToMapIntent.putExtra("currentSearch", mSearchEditText.getText().toString());
         startActivity(switchToMapIntent);
