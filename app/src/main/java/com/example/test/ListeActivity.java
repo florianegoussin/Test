@@ -84,6 +84,12 @@ public class ListeActivity extends AppCompatActivity {
             }
         });
 
+        //initDB
+            Common.edmtRoomDatabase = EDMTRoomDatabase.getInstance(this);
+            //Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.edmtRoomDatabase.CartDAO()));
+            Common.favoriteRepository = FavoriteRepository.getInstance(FavoriteDataSource.getInstance(Common.edmtRoomDatabase.favoriteDAO()));
+
+
 
     }
 
@@ -123,10 +129,6 @@ public class ListeActivity extends AppCompatActivity {
         startActivity(switchToMapIntent);
     }
 
-    private void initDB(){
-        Common.edmtRoomDatabase = EDMTRoomDatabase.getInstance(this);
-        //Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.edmtRoomDatabase.CartDAO()));
-        Common.favoriteRepository = FavoriteRepository.getInstance(FavoriteDataSource.getInstance(Common.edmtRoomDatabase.favoriteDAO()));
-    }
+
 
 }
