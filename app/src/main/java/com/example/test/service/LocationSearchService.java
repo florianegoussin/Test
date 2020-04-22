@@ -28,11 +28,11 @@ import retrofit2.http.Query;
 
 public class LocationSearchService {
 
-   // private static final long REFRESH_DELAY = 650;
+    private static final long REFRESH_DELAY = 650;
     public static LocationSearchService INSTANCE = new LocationSearchService();
     private final LocationSearchRESTService mLocationSearchRESTService;
-   // private ScheduledExecutorService mScheduler = Executors.newScheduledThreadPool(1);
-   // private ScheduledFuture mLastScheduleTask;
+    private ScheduledExecutorService mScheduler = Executors.newScheduledThreadPool(1);
+    private ScheduledFuture mLastScheduleTask;
 
     private LocationSearchService(){
         // Create GSON Converter that will be used to convert from JSON to Java
@@ -58,15 +58,15 @@ public class LocationSearchService {
 
     public  void searchLocationsFromAddress(final String search) {
 
-        /*if (mLastScheduleTask != null && !mLastScheduleTask.isDone()) {
+        if (mLastScheduleTask != null && !mLastScheduleTask.isDone()) {
             mLastScheduleTask.cancel(true);
-        }*/
+        }
 
 
         // Schedule a network call in REFRESH_DELAY ms
-        /*mLastScheduleTask = mScheduler.schedule(new Runnable() {
+        mLastScheduleTask = mScheduler.schedule(new Runnable() {
             public void run() {
-                searchLocationsFromDB(search);*/
+                searchLocationsFromDB(search);
 
                 // Call to the REST service
                 mLocationSearchRESTService.searchForLocations(search).enqueue(new Callback<LocationSearchResult>() {
@@ -75,7 +75,7 @@ public class LocationSearchService {
                         // Post an event so that listening activities can update their UI
                         if (response.body() != null && response.body().results != null) {
                             EventBusManager.BUS.post(new LocationResultEvent(response.body().results));
-                          /*  ActiveAndroid.beginTransaction();
+                            ActiveAndroid.beginTransaction();
                             for (Location location : response.body().results) {
                                 Location l = new Location();
                                 l.location = location.location;
@@ -88,7 +88,7 @@ public class LocationSearchService {
                             ActiveAndroid.setTransactionSuccessful();
                             ActiveAndroid.endTransaction();
 
-                            searchLocationsFromDB(search);*/
+                            searchLocationsFromDB(search);
 
                         } else {
                             // Null result
@@ -108,16 +108,16 @@ public class LocationSearchService {
                 });
             }
 
-       // },REFRESH_DELAY, TimeUnit.MILLISECONDS);
-    //}
+        },REFRESH_DELAY, TimeUnit.MILLISECONDS);
+    }
 
-    /*public void searchLocationsFromDB (String search){
+    public void searchLocationsFromDB (String search){
         List<Location> matchingLocationFromDB = new Select()
                 .from(Location.class)
                 .where("city LIKE '%" + search + "%'").orderBy("city ").execute();
 
         EventBusManager.BUS.post(new LocationResultEvent(matchingLocationFromDB));
-    }*/
+    }
 
     // Service describing the REST APIs
     public interface LocationSearchRESTService {

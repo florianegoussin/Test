@@ -10,8 +10,8 @@ import com.google.gson.annotations.Expose;
 public class Location extends Model {
 
     @Expose
-    @Column(name = "id", index = true, unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
-    public String id;
+    @Column(name = "location", index = true, unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
+    public String location;
 
     @Expose
     @Column(name = "city")
@@ -32,7 +32,7 @@ public class Location extends Model {
         if(coordinates == null){
             coordinates = new Select()
                     .from(LocationCoordinates.class)
-                    .where("id='" + id.replace("'", "''") + "'")
+                    .where("location='" + location.replace("'", "''") + "'")
                     .executeSingle();
         }
         return coordinates;
