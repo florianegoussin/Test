@@ -12,14 +12,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.test.Database.DataSource.FavoriteRepository;
+import com.example.test.Database.Local.EDMTRoomDatabase;
+import com.example.test.Database.Local.FavoriteDataSource;
 import com.example.test.event.EventBusManager;
 import com.example.test.event.LocationResultEvent;
+
 import com.example.test.event.ZoneResultEvent;
 import com.example.test.model.Location;
 import com.example.test.service.LocationSearchService;
-import com.example.test.service.ZoneSearchService;
 import com.example.test.ui.LocationAdapter;
-import com.example.test.ui.PlaceAdapter;
+import com.example.test.utils.Common;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -122,6 +125,12 @@ public class ListeActivity extends AppCompatActivity {
         Intent switchToMapIntent = new Intent (this, MapActivity.class);
         switchToMapIntent.putExtra("placeStreet", mSearchEditText.getText().toString());
         startActivity(switchToMapIntent);
+    }
+
+    private void initDB(){
+        Common.edmtRoomDatabase = EDMTRoomDatabase.getInstance(this);
+        //Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.edmtRoomDatabase.CartDAO()));
+        Common.favoriteRepository = FavoriteRepository.getInstance(FavoriteDataSource.getInstance(Common.edmtRoomDatabase.favoriteDAO()));
     }
 
 }

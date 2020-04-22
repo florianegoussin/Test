@@ -58,6 +58,17 @@ dependencies {
     // Add Active Android
     implementation 'com.michaelpardo:activeandroid:3+'
 
+
     //debug database
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+
+    //Add Room persistence
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
+
+    //Add Reactive Extensions
+    // implementation "io.reactivex.rxjava3:rxjava:3.0.2"
+    implementation 'android.arch.persistence.room:rxjava2:1.1.1'
+
+
 }
