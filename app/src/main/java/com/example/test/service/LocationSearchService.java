@@ -7,6 +7,7 @@ import com.activeandroid.query.Select;
 import com.example.test.event.EventBusManager;
 import com.example.test.event.LocationResultEvent;
 import com.example.test.model.Location;
+import com.example.test.model.LocationCoordinates;
 import com.example.test.model.LocationSearchResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -80,10 +81,16 @@ public class LocationSearchService {
                                 Location l = new Location();
                                 l.location = location.location;
                                 l.city = location.city;
-                                l.coordinates.latitude = location.coordinates.latitude;
-                                l.coordinates.longitude = location.coordinates.longitude;
-                                location.save();
+                                l.country = location.country;
+                                l.count = location.count;
 
+                                LocationCoordinates c = new LocationCoordinates();
+                                c.longitude = location.coordinates.longitude;
+                                c.latitude = location.coordinates.latitude;
+                                c.save();
+
+                                l.coordinates = c;
+                                l.save();
                             }
                             ActiveAndroid.setTransactionSuccessful();
                             ActiveAndroid.endTransaction();
@@ -114,6 +121,8 @@ public class LocationSearchService {
     public void searchLocationsFromDB (String search){
         List<Location> matchingLocationFromDB = new Select()
                 .from(Location.class)
+                .join(LocationCoordinates.class)
+                .on("Location.coordinates=LocationCoordinates.Id")
                 .where("city LIKE '%" + search + "%'").orderBy("city ").execute();
 
         EventBusManager.BUS.post(new LocationResultEvent(matchingLocationFromDB));

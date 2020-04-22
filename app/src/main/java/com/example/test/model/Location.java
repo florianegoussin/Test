@@ -26,6 +26,7 @@ public class Location extends Model {
     public int count;
 
     @Expose
+    @Column(name = "coordinates")
     public LocationCoordinates coordinates;
 
     public LocationCoordinates getCoordinates(){
