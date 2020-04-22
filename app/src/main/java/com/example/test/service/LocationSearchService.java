@@ -70,7 +70,8 @@ public class LocationSearchService {
                 searchLocationsFromDB(search);
 
                 // Call to the REST service
-                mLocationSearchRESTService.searchForLocations(search).enqueue(new Callback<LocationSearchResult>() {
+                //Modification pour uniquement les locations en France
+                mLocationSearchRESTService.searchForLocations("FR",search).enqueue(new Callback<LocationSearchResult>() {
                     @Override
                     public void onResponse(Call<LocationSearchResult> call, retrofit2.Response<LocationSearchResult> response) {
                         // Post an event so that listening activities can update their UI
@@ -131,7 +132,7 @@ public class LocationSearchService {
     // Service describing the REST APIs
     public interface LocationSearchRESTService {
         @GET("locations/")
-        Call<LocationSearchResult> searchForLocations(@Query("city") String search);
+        Call<LocationSearchResult> searchForLocations(@Query("country") String country,@Query("city") String search);
 
     }
 

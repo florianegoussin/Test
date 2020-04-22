@@ -43,9 +43,9 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
         // Adapt the ViewHolder state to the new element
         final ZoneAddress place = mPlaces.get(position);
         holder.mPlaceIdTextView.setText(place.name);
-        holder.mPlaceCountryTextView.setText(place.country);
-        holder.mPlaceCityTextView.setText(place.city);
-        holder.mPlaceLocationTextView.setText(Integer.toString(place.count));
+        //holder.mPlaceCountryTextView.setText(place.country);
+        holder.mPlaceCityTextView.setText(place.country);
+        holder.mPlaceLocationTextView.setText(place.city);
 
 
         //Accès au détail de l'activité, doit renvoyer les mêmes infos qu'au clic sur l'infowindows
