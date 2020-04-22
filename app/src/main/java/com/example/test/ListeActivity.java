@@ -17,16 +17,12 @@ import com.example.test.Database.Local.EDMTRoomDatabase;
 import com.example.test.Database.Local.FavoriteDataSource;
 import com.example.test.event.EventBusManager;
 import com.example.test.event.LocationResultEvent;
-
-import com.example.test.event.ZoneResultEvent;
-import com.example.test.model.Location;
 import com.example.test.service.LocationSearchService;
 import com.example.test.ui.LocationAdapter;
 import com.example.test.utils.Common;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

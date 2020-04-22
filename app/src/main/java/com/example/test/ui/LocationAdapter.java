@@ -1,7 +1,6 @@
 package com.example.test.ui;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +9,13 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.test.ListeActivity;
-import com.example.test.PlaceDetailActivity;
 import com.example.test.R;
 import com.example.test.model.Location;
-import com.example.test.model.ZoneAddress;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationViewHolder>{
