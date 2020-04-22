@@ -34,7 +34,6 @@ public class ListeActivity extends AppCompatActivity {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
-
     private LocationAdapter mPlaceAdapter;
 
     @BindView(R.id.activity_main_search_adress_edittext)

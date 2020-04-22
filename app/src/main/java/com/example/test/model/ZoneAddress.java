@@ -6,6 +6,8 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 import com.google.gson.annotations.Expose;
 
+import java.security.PublicKey;
+
 @Table(name = "ZoneAddress")
 public class ZoneAddress extends Model {
 
@@ -29,10 +31,11 @@ public class ZoneAddress extends Model {
     @Column(name = "count")
     public int count;
 
-
     public ZoneAddress(){
         super();
     }
+
+
 
 
 }

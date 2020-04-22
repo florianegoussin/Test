@@ -119,7 +119,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     for (Location location : event.getLocations()) {
 
                         MarkerOptions markerOptions = new MarkerOptions()
-                                .position(new LatLng(location.coordinates.latitude, location.coordinates.longitude))
+                                .position(new LatLng(location.getCoordinates().latitude, location.getCoordinates().longitude))
                                 .title(location.city)
                                 .snippet(location.country + " " + location.count);
                                 //.icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap));

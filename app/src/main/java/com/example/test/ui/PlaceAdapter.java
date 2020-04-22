@@ -49,14 +49,14 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
 
 
         //Accès au détail de l'activité, doit renvoyer les mêmes infos qu'au clic sur l'infowindows
-        holder.mPlaceIcon.setOnClickListener(new View.OnClickListener() {
+      /*  holder.mPlaceIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent ListeActivity = new Intent(activity, ListeActivity.class);
                 ListeActivity.putExtra("placeStreet", place.city);
                 activity.startActivity(ListeActivity);
             }
-        });
+        })*/;
 
     }
 

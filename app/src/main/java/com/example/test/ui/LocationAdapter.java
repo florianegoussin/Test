@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.test.ListeActivity;
 import com.example.test.PlaceDetailActivity;
 import com.example.test.R;
 import com.example.test.model.Location;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationViewHolder>{
