@@ -7,6 +7,8 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.Expose;
 
+import java.util.List;
+
 @Table(name = "Measurement")
 public class Measurement extends Model {
 
@@ -14,7 +16,9 @@ public class Measurement extends Model {
     @Column(name = "location", index = true, unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     public String location;
 
-    @Expose
+
+
+   /* @Expose
     @Column(name = "parameter")
     public String parameter;
 
@@ -24,9 +28,12 @@ public class Measurement extends Model {
 
     @Expose
     @Column(name = "unit")
-    public String unit;
+    public String unit;*/
 
     @Expose
     @Column(name = "city")
     public ZoneAddress city;
+
+    @Expose
+    public List<MeasurementValue> measurement;
 }

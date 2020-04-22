@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
         ZoneSearchService.INSTANCE.searchZone(mSearchEditText.getText().toString());
         //LocationSearchService.INSTANCE.searchLocationsFromAddress(mSearchEditText.getText().toString());
-        }
+    }
     @Override
     protected void onPause() {
         // Unregister from Event bus : if event are posted now, the activity will not receive it
@@ -135,19 +135,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    @OnClick(R.id.activity_main_switch_list)
-    public void clickedOnSwitchToList(){
-        Intent switchToMapIntent = new Intent (this, ListeActivity.class);
-        switchToMapIntent.putExtra("currentSearch", mSearchEditText.getText().toString());
-        startActivity(switchToMapIntent);
-    }
-
-    @OnClick(R.id.place_adapter_icon)
-    public void clickedOnSwitchToL(){
-        Intent switchToMapIntent = new Intent (this, ListeActivity.class);
-        switchToMapIntent.putExtra("currentSearch", mSearchEditText.getText().toString());
-        startActivity(switchToMapIntent);
-    }
 
 }
