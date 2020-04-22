@@ -1,10 +1,10 @@
 package com.example.test;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +49,12 @@ public class MenuActivity extends AppCompatActivity {
     @OnClick(R.id.detail)
     public void onClickDetail(){
         Intent test = new Intent(MenuActivity.this, ListeActivity.class);
+        startActivity(test);
+    }
+
+    @OnClick(R.id.favoris)
+    public  void onClickFav(){
+        Intent test = new Intent(MenuActivity.this,FavoriteListActivity.class);
         startActivity(test);
     }
 }
