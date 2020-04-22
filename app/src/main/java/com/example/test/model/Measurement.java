@@ -16,9 +16,7 @@ public class Measurement extends Model {
     @Column(name = "location", index = true, unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     public String location;
 
-
-
-   /* @Expose
+    @Expose
     @Column(name = "parameter")
     public String parameter;
 
@@ -28,12 +26,12 @@ public class Measurement extends Model {
 
     @Expose
     @Column(name = "unit")
-    public String unit;*/
+    public String unit;
 
     @Expose
     @Column(name = "city")
-    public ZoneAddress city;
+    public String city;
 
     @Expose
-    public List<MeasurementValue> measurement;
+    public MeasurementValue measurement;
 }

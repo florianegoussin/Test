@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.test.model.Measurement;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -49,6 +51,12 @@ public class MenuActivity extends AppCompatActivity {
     @OnClick(R.id.detail)
     public void onClickDetail(){
         Intent test = new Intent(MenuActivity.this, ListeActivity.class);
+        startActivity(test);
+    }
+
+    @OnClick(R.id.mesure)
+    public void onClickMesure(){
+        Intent test = new Intent(MenuActivity.this, MeasurementActivity.class);
         startActivity(test);
     }
 }

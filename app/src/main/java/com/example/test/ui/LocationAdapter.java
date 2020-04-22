@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test.ListeActivity;
+import com.example.test.MenuActivity;
 import com.example.test.PlaceDetailActivity;
 import com.example.test.R;
 import com.example.test.model.Location;
@@ -53,14 +54,14 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
 
         //Accès au détail de l'activité, doit renvoyer les mêmes infos qu'au clic sur l'infowindows
-      /*  holder.mPlaceIcon.setOnClickListener(new View.OnClickListener() {
+        holder.mPlaceIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent seePlaceDetailIntent = new Intent(context, PlaceDetailActivity.class);
-                seePlaceDetailIntent.putExtra("placeStreet", location.city);
+                Intent seePlaceDetailIntent = new Intent(context, MenuActivity.class);
+                //seePlaceDetailIntent.putExtra("placeStreet", location.city);
                 context.startActivity(seePlaceDetailIntent);
             }
-        })*/;
+        });
 
     }
 
