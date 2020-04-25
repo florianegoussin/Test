@@ -129,6 +129,4 @@ public class ListeActivity extends AppCompatActivity {
         startActivity(switchToMapIntent);
     }
 
-
-
 }

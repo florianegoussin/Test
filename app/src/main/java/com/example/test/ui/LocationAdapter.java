@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test.Database.ModelDB.Favorite;
-import com.example.test.MenuActivity;
+import com.example.test.PlaceDetailActivity;
 import com.example.test.R;
 import com.example.test.model.Location;
 import com.example.test.utils.Common;
@@ -55,8 +55,10 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         holder.mPlaceIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent seePlaceDetailIntent = new Intent(context, MenuActivity.class);
-                //seePlaceDetailIntent.putExtra("placeStreet", location.city);
+                Intent seePlaceDetailIntent = new Intent(context, PlaceDetailActivity.class);
+                seePlaceDetailIntent.putExtra("city", location.city);
+                seePlaceDetailIntent.putExtra("country",location.country);
+                seePlaceDetailIntent.putExtra("location",location.location);
                 context.startActivity(seePlaceDetailIntent);
             }
         });
@@ -104,6 +106,8 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     public int getItemCount() {
         return mLocation.size();
     }
+
+
 
     public void setLocations(List<Location> locations){
         this.mLocation = locations;
