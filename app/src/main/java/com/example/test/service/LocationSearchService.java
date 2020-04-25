@@ -131,7 +131,7 @@ public class LocationSearchService {
 
     // Service describing the REST APIs
     public interface LocationSearchRESTService {
-        @GET("locations/")
+        @GET("measurements/")
         Call<LocationSearchResult> searchForLocations(@Query("country") String country,@Query("city") String search);
 
     }

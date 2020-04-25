@@ -40,11 +40,6 @@ public class MeasurementAdapter extends RecyclerView.Adapter<MeasurementAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MeasurementAdapter.MeasurementViewHolder holder, int position) {
-        //final Location location = mLocation.get(position);
-
-        //holder.place_adapter_country.setText(location.country);
-        //holder.place_adapter_id.setText(location.location);
-        //holder.place_adapter_city.setText(location.city);
         holder.mesure_parameter.setText(mesureList.get(position).parameter);
         holder.mesure_value.setText(Double.toString(mesureList.get(position).value));
 
@@ -56,14 +51,6 @@ public class MeasurementAdapter extends RecyclerView.Adapter<MeasurementAdapter.
     }
 
     public class MeasurementViewHolder extends RecyclerView.ViewHolder {
-
-
-      /*  @BindView(R.id.place_adapter_id)
-        TextView place_adapter_id;
-        @BindView(R.id.place_adapter_country)
-        TextView place_adapter_country;
-        @BindView(R.id.place_adapter_city)
-        TextView place_adapter_city;*/
 
         @BindView(R.id.mesure_parameter)
         TextView mesure_parameter;
