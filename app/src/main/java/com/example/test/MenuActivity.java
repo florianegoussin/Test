@@ -1,12 +1,14 @@
 package com.example.test;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+
 import com.example.test.model.Measurement;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,6 +20,7 @@ public class MenuActivity extends AppCompatActivity {
     @BindView(R.id.liste) TextView liste;
     @BindView(R.id.carte) TextView carte;
     @BindView(R.id.detail) TextView detail;
+    //@BindView(R.id.mesure) TextView mesure;
     @BindView(R.id.recherche) TextView recherche;
     @BindView(R.id.favoris) TextView favoris;
 
@@ -54,9 +57,16 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(test);
     }
 
-    @OnClick(R.id.mesure)
+
+    /*@OnClick(R.id.mesure)
     public void onClickMesure(){
         Intent test = new Intent(MenuActivity.this, MeasurementActivity.class);
+        startActivity(test);
+    }*/
+
+    @OnClick(R.id.favoris)
+    public  void onClickFav(){
+        Intent test = new Intent(MenuActivity.this,FavoriteListActivity.class);
         startActivity(test);
     }
 }

@@ -12,7 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".MeasurementActivity"></activity>
+
+        <activity android:name=".FavoriteListActivity"></activity>
+
         <activity android:name=".MenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,11 +41,13 @@
             android:value="AIzaSyBcRt3W8uifSjrhXBu2467iz9ciQqMNTzM" />
         <meta-data
             android:name="AA_MODELS"
+
             android:value="com.example.test.model.ZoneAddress,
                            com.example.test.model.LocationCoordinates,
                            com.example.test.model.Measurement,
                            com.example.test.model.MeasurementValue,
                            com.example.test.model.Location" />
+
 
         <activity android:name=".MapActivity" />
         <activity android:name=".PlaceDetailActivity" />

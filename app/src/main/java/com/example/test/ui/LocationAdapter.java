@@ -10,18 +10,16 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.test.ListeActivity;
+import com.example.test.Database.ModelDB.Favorite;
 import com.example.test.MenuActivity;
-import com.example.test.PlaceDetailActivity;
 import com.example.test.R;
 import com.example.test.model.Location;
-import com.example.test.model.ZoneAddress;
+import com.example.test.utils.Common;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationViewHolder>{
@@ -63,7 +61,44 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
             }
         });
 
+        //Favorite System
+        if(Common.favoriteRepository.isFavorite(location.location) == 1)
+            holder.btn_favorite.setImageResource(R.drawable.ic_favorite_white_24dp);
+        else
+            holder.btn_favorite.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+
+        holder.btn_favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(Common.favoriteRepository.isFavorite(location.location) != 1){
+                    addOrRemoveFavorite(location,true);
+                    holder.btn_favorite.setImageResource(R.drawable.ic_favorite_white_24dp);
+                }
+                else{
+                    addOrRemoveFavorite(location,false);
+                    holder.btn_favorite.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+                }
+
+
+            }
+        });
     }
+
+    private void addOrRemoveFavorite(Location location, boolean isAdd) {
+        Favorite favorite = new Favorite();
+        favorite.location=location.location;
+        favorite.city=location.city;
+        favorite.country=location.country;
+
+        if(isAdd)
+            Common.favoriteRepository.insertFav(favorite);
+        else
+            Common.favoriteRepository.delete(favorite);
+
+    }
+
+
 
     @Override
     public int getItemCount() {
@@ -91,6 +126,9 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
         @BindView(R.id.place_adapter_location)
         TextView mPlaceLocationTextView;
+
+        @BindView(R.id.btn_favorite)
+        ImageView btn_favorite;
 
         public LocationViewHolder(View itemView) {
             super(itemView);
