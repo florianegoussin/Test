@@ -9,6 +9,7 @@ import com.example.test.event.LocationResultEvent;
 import com.example.test.model.Location;
 import com.example.test.model.LocationCoordinates;
 import com.example.test.model.LocationSearchResult;
+import com.example.test.model.Measurement;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -89,6 +90,14 @@ public class LocationSearchService {
                                 c.longitude = location.coordinates.longitude;
                                 c.latitude = location.coordinates.latitude;
                                 c.save();
+
+                                for (Measurement mesure : response.body().mesures) {
+                                    Measurement m = new Measurement();
+                                    m.parameter= mesure.parameter;
+                                    m.value=mesure.value;
+                                    m.save();
+
+                                }
 
                                 l.coordinates = c;
                                 l.save();
