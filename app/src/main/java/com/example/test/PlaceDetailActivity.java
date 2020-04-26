@@ -82,7 +82,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
 
    //     MeasurementSearchService.INSTANCE.searchMesures(getIntent().getStringExtra("city"), getIntent().getStringExtra("location"));
-        MeasurementSearchService.INSTANCE.searchMesuresFromDB(getIntent().getStringExtra("location") );
+        MeasurementSearchService.INSTANCE.searchMesures(getIntent().getStringExtra("location") );
 
 
 

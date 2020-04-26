@@ -76,7 +76,7 @@ public class LocationSearchService {
                     public void onResponse(Call<LocationSearchResult> call, retrofit2.Response<LocationSearchResult> response) {
                         // Post an event so that listening activities can update their UI
                         if (response.body() != null && response.body().results != null) {
-                            EventBusManager.BUS.post(new LocationResultEvent(response.body().results));
+                            //EventBusManager.BUS.post(new LocationResultEvent(response.body().results));
                             ActiveAndroid.beginTransaction();
                             for (Location location : response.body().results) {
                                 Location l = new Location();
