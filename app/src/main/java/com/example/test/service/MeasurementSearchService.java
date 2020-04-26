@@ -35,6 +35,8 @@ public class MeasurementSearchService {
     private ScheduledExecutorService mScheduler = Executors.newScheduledThreadPool(1);
     private ScheduledFuture mLastScheduleTask;
 
+    private Gson gson ;
+
     private MeasurementSearchService() {
         // Create GSON Converter that will be used to convert from JSON to Java
         Gson gsonConverter = new GsonBuilder()
@@ -54,6 +56,10 @@ public class MeasurementSearchService {
 
         // Use retrofit to generate our REST service code
         mMesureSearchRESTService = retrofit.create(MeasurementSearchRESTService.class);
+
+        gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
+                .serializeNulls()
+                .create();
     }
 
         public  void searchMesures(final String location) {
@@ -82,8 +88,9 @@ public class MeasurementSearchService {
                                 System.out.println("aaaaaaaaaaaaa "+mv.parameter+"       "+mv.value+"    "+mv.unit);
 
                                 value.add(mv);
-
                             }
+                            m.mesure= gson.toJson(value);
+                            System.out.println("testValue: "+m.mesure);
                             m.save();
                         }
                         ActiveAndroid.setTransactionSuccessful();

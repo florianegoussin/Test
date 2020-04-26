@@ -5,14 +5,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test.event.EventBusManager;
-import com.example.test.model.MeasurementResult;
+import com.example.test.event.MeasurementResultEvent;
+import com.example.test.model.Measurement;
 import com.example.test.service.MeasurementSearchService;
-import com.example.test.ui.MeasurementAdapter;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.squareup.otto.Subscribe;
+
+import java.lang.reflect.Modifier;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,8 +22,8 @@ import butterknife.ButterKnife;
 
 public class PlaceDetailActivity extends AppCompatActivity {
 
-    @BindView(R.id.recyclerView_param)
-    RecyclerView recyclerView_param;
+    //@BindView(R.id.recyclerView_param)
+    //RecyclerView recyclerView_param;
 
     @BindView(R.id.place_adapter_icon)
     ImageView place_adapter_icon;
@@ -35,8 +37,12 @@ public class PlaceDetailActivity extends AppCompatActivity {
     @BindView(R.id.place_adapter_city)
     TextView place_adapter_city;
 
+    @BindView(R.id.param)
+    TextView param;
 
-    private MeasurementAdapter mMesureAdapter;
+
+    //private MeasurementAdapter mMesureAdapter;
+    private Gson gson ;
 
 
    /* @BindView(R.id.activity_detail_place_street)
@@ -55,26 +61,28 @@ public class PlaceDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-
-
         ButterKnife.bind(this);
 
-//        mMesureAdapter = new MeasurementAdapter(this, new ArrayList<>());
-        recyclerView_param.setAdapter(mMesureAdapter);
-        recyclerView_param.setLayoutManager(new LinearLayoutManager(this));
+        this.gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
+                .serializeNulls()
+                .create();
+        //mMesureAdapter = new MeasurementAdapter(this, new ArrayList<>());
+        //recyclerView_param.setAdapter(mMesureAdapter);
+        //recyclerView_param.setLayoutManager(new LinearLayoutManager(this));
 
 
 
 
         EventBusManager.BUS.register(this);
-          place_adapter_icon.setImageResource(R.drawable.home_icon);
+        place_adapter_icon.setImageResource(R.drawable.home_icon);
         place_adapter_country.setText(getIntent().getStringExtra("country"));
         place_adapter_city.setText(getIntent().getStringExtra("city"));
         place_adapter_location.setText(getIntent().getStringExtra("location"));
 
 
+
    //     MeasurementSearchService.INSTANCE.searchMesures(getIntent().getStringExtra("city"), getIntent().getStringExtra("location"));
-        MeasurementSearchService.INSTANCE.searchMesures( "FR20047");
+        MeasurementSearchService.INSTANCE.searchMesuresFromDB(getIntent().getStringExtra("location") );
 
 
 
@@ -91,15 +99,6 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
     }
 
-
-    @Override
-    protected  void onResume(){
-        super.onResume();
-
-        EventBusManager.BUS.register(this);
-
-    }
-
     @Override
     protected void onPause() {
         // Unregister from Event bus : if event are posted now, the activity will not receive it
@@ -107,12 +106,38 @@ public class PlaceDetailActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
 
     @Subscribe
-    public void searchResult(MeasurementResult event) {
-        runOnUiThread(()-> {
-           System.out.println("eventttttttttttttttttttt "+event.results);
+    public void searchResult(final MeasurementResultEvent event) {
+        runOnUiThread( () -> {
+
+            for(Measurement m: event.getmesures()) {
+                Measurement.Values[] valeur = gson.fromJson(m.mesure, Measurement.Values[].class);
+                for (Measurement.Values v : valeur)
+                {
+                    param.append(v.parameter+" : "+v.value +" "+v.unit+"\n");
+                }
+            }
         });
+       /*runOnUiThread(()-> {
+           //System.out.println("eventttttttttttttttttttt "+event.results);
+           List<Measurement> mesures= event.getmesures();
+           mMesureAdapter.setMesures(event.getmesures());
+           mMesureAdapter.notifyDataSetChanged();
+           System.out.println(event.getmesures());*/
+
+
+
+           /*for(int i=0;i<=event.getmesures().size();i++){
+               param.setText(mesures.get(i));
+           }
+
+        });*/
     }
 
     /*@OnClick(R.id.activity_detail_place_street)

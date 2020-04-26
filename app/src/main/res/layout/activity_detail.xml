@@ -9,7 +9,7 @@
         android:id="@+id/place_adapter_id"
         android:layout_width="match_parent"
         android:layout_weight="1"
-        android:layout_height="0dp" />
+        android:layout_height="wrap_content" />
 
 
     <ImageView
@@ -29,52 +29,41 @@
 
         <TextView
             android:id="@+id/place_adapter_country"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <TextView
             android:id="@+id/place_adapter_city"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <TextView
             android:id="@+id/place_adapter_location"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
+
+
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <TextView
+        android:id="@+id/param"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
 
+    <ImageView
+        android:id="@+id/btn_favorite"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="end"
+        android:layout_weight="1"
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_param"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <ImageView
-            android:id="@+id/btn_favorite"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="end"
-            android:layout_weight="1"
-
-            android:src="@drawable/ic_favorite_border_white_24dp"></ImageView>
-
-
-
-    </LinearLayout>
+        android:src="@drawable/ic_favorite_border_white_24dp"></ImageView>
 
 
     <View

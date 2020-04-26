@@ -11,7 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test.R;
 import com.example.test.model.Measurement;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.lang.reflect.Modifier;
 import java.util.List;
 
 import butterknife.BindView;
@@ -40,14 +43,31 @@ public class MeasurementAdapter extends RecyclerView.Adapter<MeasurementAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MeasurementAdapter.MeasurementViewHolder holder, int position) {
-        holder.mesure_parameter.setText(mesureList.get(position).measurements.get(position).parameter);
-        holder.mesure_value.setText(Double.toString(mesureList.get(position).measurements.get(position).value));
+        Gson gson;
+        gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
+                .serializeNulls()
+                .create();
+        for(Measurement m: mesureList) {
+            Measurement.Values[] valeur = gson.fromJson(m.mesure, Measurement.Values[].class);
+            for (Measurement.Values v : valeur)
+            {
+                holder.param.setText(v.parameter+" : "+v.value +" "+v.unit+"\n");
+            }
+
+        }
+        //holder.param.setText(mesureList.get(position).mesure);
+        //holder.mesure_value.setText(Double.toString(mesureList.get(position).measurements.get(position).value));
 
     }
 
     @Override
     public int getItemCount() {
         return mesureList.size();
+    }
+
+    public void setMesures(List<Measurement> mesures){
+        this.mesureList = mesures;
+        System.out.println("Liste"+ this.mesureList);
     }
 
     public class MeasurementViewHolder extends RecyclerView.ViewHolder {
@@ -57,6 +77,9 @@ public class MeasurementAdapter extends RecyclerView.Adapter<MeasurementAdapter.
 
         @BindView(R.id.mesure_value)
         TextView mesure_value;
+
+        @BindView(R.id.param)
+        TextView param;
 
         public MeasurementViewHolder(@NonNull View mesureView) {
             super(mesureView);
