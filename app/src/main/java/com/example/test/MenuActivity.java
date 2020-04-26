@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 
-import com.example.test.model.Measurement;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 

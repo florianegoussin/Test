@@ -8,8 +8,7 @@ import com.activeandroid.util.Log;
 import com.example.test.event.EventBusManager;
 import com.example.test.event.MeasurementResultEvent;
 import com.example.test.model.Measurement;
-import com.example.test.model.MeasurementValue;
-import com.example.test.model.MesureSearchResult;
+import com.example.test.model.MeasurementResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -19,7 +18,6 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -58,64 +56,59 @@ public class MeasurementSearchService {
         mMesureSearchRESTService = retrofit.create(MeasurementSearchRESTService.class);
     }
 
-        public  void searchMesures(final String search,final String location) {
+        public  void searchMesures(final String location) {
 
-            if (mLastScheduleTask != null && !mLastScheduleTask.isDone()) {
-                mLastScheduleTask.cancel(true);
-            }
+            // Call to the REST service
+            //Modification pour uniquement les locations en France
+            mMesureSearchRESTService.searchForMesures("FR", location).enqueue(new Callback<MeasurementResult>() {
+                @Override
+                public void onResponse(Call<MeasurementResult> call, retrofit2.Response<MeasurementResult> response) {
 
+                    System.out.println("aaaaaaaaaaaaa "+response.body().results);
+                    // Post an event so that listening activities can update their UI
+                    if (response.body() != null && response.body().results != null) {
 
-            // Schedule a network call in REFRESH_DELAY ms
-            mLastScheduleTask = mScheduler.schedule(new Runnable() {
-                public void run() {
-                    searchMesuresFromDB(search);
+                        ActiveAndroid.beginTransaction();
+                        for (Measurement mesure : response.body().results) {
 
-                    // Call to the REST service
-                    //Modification pour uniquement les locations en France
-                    mMesureSearchRESTService.searchForMesures("FR",search,location).enqueue(new Callback<MesureSearchResult>() {
-                        @Override
-                        public void onResponse(Call<MesureSearchResult> call, retrofit2.Response<MesureSearchResult> response) {
-                            // Post an event so that listening activities can update their UI
-                            if (response.body() != null && response.body().results != null) {
-                                EventBusManager.BUS.post(new MeasurementResultEvent(response.body().results));
-                                ActiveAndroid.beginTransaction();
-                                for (Measurement mesure : response.body().results) {
-                                    Measurement m = new Measurement();
-                                    m.location=mesure.location;
-                                    m.city=mesure.city;
-                                    m.country=mesure.country;
-                                    List<MeasurementValue> value = new ArrayList<>();
-                                    for(MeasurementValue mv :mesure.measurements){
-                                        value.add(mv);
-                                    }
-                                    m.measurements = value;
-                                    m.save();
-                                }
-                                ActiveAndroid.setTransactionSuccessful();
-                                ActiveAndroid.endTransaction();
+                            System.out.println("aaaaaaaaaaaaa "+mesure.location+"         "+mesure.city);
 
+                            Measurement m = new Measurement();
+                            m.location=mesure.location;
+                            m.city=mesure.city;
 
-                                searchMesuresFromDB(search);
+                            List<Measurement.Values> value = new ArrayList<>();
+                            for(Measurement.Values mv :mesure.measurements){
+                                System.out.println("aaaaaaaaaaaaa "+mv.parameter+"       "+mv.value+"    "+mv.unit);
 
-                            } else {
-                                // Null result
-                                // We may want to display a warning to user (e.g. Toast)
+                                value.add(mv);
+>>>>>>> cb33c7ecdcf50b135bf3212c7142e50b140a8359
                             }
+                            m.save();
                         }
+                        ActiveAndroid.setTransactionSuccessful();
+                        ActiveAndroid.endTransaction();
 
 
-                        @Override
-                        public void onFailure(Call<MesureSearchResult> call, Throwable t) {
-                            // Request has failed or is not at expected format
-                            // We may want to display a warning to user (e.g. Toast)
-                            Log.e("[PlaceSearcher] [REST]", "Response error : " + t.getMessage());
-                            //searchLocationsFromDB(search);
-                        }
+                     //   searchMesuresFromDB(search);
 
-                    });
+                    } else {
+                        // Null result
+                        // We may want to display a warning to user (e.g. Toast)
+                    }
                 }
 
-            },REFRESH_DELAY, TimeUnit.MILLISECONDS);
+
+                @Override
+                public void onFailure(Call<MeasurementResult> call, Throwable t) {
+                    // Request has failed or is not at expected format
+                    // We may want to display a warning to user (e.g. Toast)
+                    System.out.println("trooooooooooooooooooop triste pas de reponse");
+                    Log.e("[PlaceSearcher] [REST]", "Response error : " + t.getMessage());
+                    //searchLocationsFromDB(search);
+                }
+
+            });
         }
 
         public void searchMesuresFromDB (String search){
@@ -128,8 +121,9 @@ public class MeasurementSearchService {
 
         // Service describing the REST APIs
         public interface MeasurementSearchRESTService {
-            @GET("latest/")
-            Call<MesureSearchResult> searchForMesures(@Query("country") String country, @Query("city") String search, @Query("location") String location );
+
+            @GET("latest")
+            Call<MeasurementResult> searchForMesures(@Query("country") String country, @Query("location") String location );
 
         }
 
