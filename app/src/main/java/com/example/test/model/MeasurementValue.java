@@ -6,7 +6,7 @@ import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.Expose;
 
 @Table(name = "MeasurementValue")
-class MeasurementValue extends Model {
+public class MeasurementValue extends Model {
 
     @Expose
     @Column(name = "parameter")

@@ -8,6 +8,5 @@ public class LocationSearchResult {
 
     @Expose
     public List<Location> results;
-    public List<Measurement> mesures;
 
 }

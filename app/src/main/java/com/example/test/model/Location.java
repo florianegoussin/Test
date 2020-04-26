@@ -39,9 +39,9 @@ public class Location extends Model {
         return coordinates;
     }
 
-    @Expose
+   /* @Expose
     @Column(name = "measurements")
-    public MeasurementList measurements;
+    public MesureSearchResult measurements;*/
 
     public Location(){
         super();

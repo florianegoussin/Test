@@ -4,10 +4,10 @@ import com.google.gson.annotations.Expose;
 
 import java.util.List;
 
-public class MeasurementList {
+public class MesureSearchResult {
     @Expose
-    public List<Measurement> results;
-    public Measurement mesure;
+    public List<Measurement> mesures;
+    //public Measurement mesure;
 
   /*  public MeasurementList() {
 

@@ -40,8 +40,8 @@ public class MeasurementAdapter extends RecyclerView.Adapter<MeasurementAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MeasurementAdapter.MeasurementViewHolder holder, int position) {
-        holder.mesure_parameter.setText(mesureList.get(position).parameter);
-        holder.mesure_value.setText(Double.toString(mesureList.get(position).value));
+        holder.mesure_parameter.setText(mesureList.get(position).measurements.get(position).parameter);
+        holder.mesure_value.setText(Double.toString(mesureList.get(position).measurements.get(position).value));
 
     }
 

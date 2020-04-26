@@ -1,7 +1,5 @@
 package com.example.test.model;
 
-import android.view.Display;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -17,21 +15,14 @@ public class Measurement extends Model {
     public String location;
 
     @Expose
-    @Column(name = "parameter")
-    public String parameter;
-
-    @Expose
-    @Column(name = "value")
-    public double value;
-
-    @Expose
-    @Column(name = "unit")
-    public String unit;
-
-    @Expose
     @Column(name = "city")
     public String city;
 
     @Expose
-    public MeasurementValue measurement;
+    @Column(name="country")
+    public String country;
+
+    @Expose
+    public List<MeasurementValue> measurements;
+
 }
