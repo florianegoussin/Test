@@ -1,6 +1,5 @@
 package com.example.test;
 
-import android.icu.util.Measure;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,15 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test.event.EventBusManager;
-<<<<<<< HEAD
-=======
 import com.example.test.model.MeasurementResult;
 import com.example.test.service.MeasurementSearchService;
->>>>>>> cb33c7ecdcf50b135bf3212c7142e50b140a8359
 import com.example.test.ui.MeasurementAdapter;
 import com.squareup.otto.Subscribe;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

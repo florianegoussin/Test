@@ -82,7 +82,7 @@ public class MeasurementSearchService {
                                 System.out.println("aaaaaaaaaaaaa "+mv.parameter+"       "+mv.value+"    "+mv.unit);
 
                                 value.add(mv);
->>>>>>> cb33c7ecdcf50b135bf3212c7142e50b140a8359
+
                             }
                             m.save();
                         }
