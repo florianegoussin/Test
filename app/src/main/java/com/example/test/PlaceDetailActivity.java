@@ -1,5 +1,6 @@
 package com.example.test;
 
+import android.icu.util.Measure;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,7 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.test.event.EventBusManager;
+import com.example.test.model.MeasurementResult;
+import com.example.test.service.MeasurementSearchService;
 import com.example.test.ui.MeasurementAdapter;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 
@@ -53,16 +58,29 @@ public class PlaceDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+
+
         ButterKnife.bind(this);
 
-        mMesureAdapter = new MeasurementAdapter(this, new ArrayList<>());
+//        mMesureAdapter = new MeasurementAdapter(this, new ArrayList<>());
         recyclerView_param.setAdapter(mMesureAdapter);
         recyclerView_param.setLayoutManager(new LinearLayoutManager(this));
 
-        place_adapter_icon.setImageResource(R.drawable.home_icon);
+
+
+
+        EventBusManager.BUS.register(this);
+          place_adapter_icon.setImageResource(R.drawable.home_icon);
         place_adapter_country.setText(getIntent().getStringExtra("country"));
         place_adapter_city.setText(getIntent().getStringExtra("city"));
         place_adapter_location.setText(getIntent().getStringExtra("location"));
+
+
+   //     MeasurementSearchService.INSTANCE.searchMesures(getIntent().getStringExtra("city"), getIntent().getStringExtra("location"));
+        MeasurementSearchService.INSTANCE.searchMesures( "FR20047");
+
+
+
 
         //mPlaceStreetValue = getIntent().getStringExtra("placeStreet");
         //mPlaceStreet.setText(mPlaceStreetValue);
@@ -76,6 +94,12 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
     }
 
+    @Subscribe
+    public void searchResult(MeasurementResult event) {
+        runOnUiThread(()-> {
+           System.out.println("eventttttttttttttttttttt "+event.results);
+        });
+    }
     /*@OnClick(R.id.activity_detail_place_street)
     public void clickedOnPlaceStreet(){
         finish();
