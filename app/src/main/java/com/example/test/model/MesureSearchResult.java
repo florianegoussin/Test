@@ -6,7 +6,7 @@ import java.util.List;
 
 public class MesureSearchResult {
     @Expose
-    public List<Measurement> mesures;
+    public List<Measurement> results;
     //public Measurement mesure;
 
   /*  public MeasurementList() {

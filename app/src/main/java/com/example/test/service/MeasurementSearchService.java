@@ -76,10 +76,10 @@ public class MeasurementSearchService {
                         @Override
                         public void onResponse(Call<MesureSearchResult> call, retrofit2.Response<MesureSearchResult> response) {
                             // Post an event so that listening activities can update their UI
-                            if (response.body() != null && response.body().mesures != null) {
-                                EventBusManager.BUS.post(new MeasurementResultEvent(response.body().mesures));
+                            if (response.body() != null && response.body().results != null) {
+                                EventBusManager.BUS.post(new MeasurementResultEvent(response.body().results));
                                 ActiveAndroid.beginTransaction();
-                                for (Measurement mesure : response.body().mesures) {
+                                for (Measurement mesure : response.body().results) {
                                     Measurement m = new Measurement();
                                     m.location=mesure.location;
                                     m.city=mesure.city;
@@ -88,6 +88,7 @@ public class MeasurementSearchService {
                                     for(MeasurementValue mv :mesure.measurements){
                                         value.add(mv);
                                     }
+                                    m.measurements = value;
                                     m.save();
                                 }
                                 ActiveAndroid.setTransactionSuccessful();
@@ -128,7 +129,7 @@ public class MeasurementSearchService {
         // Service describing the REST APIs
         public interface MeasurementSearchRESTService {
             @GET("latest/")
-            Call<MesureSearchResult> searchForMesures(@Query("country") String country, @Query("city") String city, @Query("location") String location );
+            Call<MesureSearchResult> searchForMesures(@Query("country") String country, @Query("city") String search, @Query("location") String location );
 
         }
 

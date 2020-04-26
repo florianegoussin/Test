@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.test.event.EventBusManager;
 import com.example.test.ui.MeasurementAdapter;
 
 import java.util.ArrayList;
@@ -74,6 +75,21 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    protected  void onResume(){
+        super.onResume();
+
+        EventBusManager.BUS.register(this);
+
+    }
+
+    @Override
+    protected void onPause() {
+        // Unregister from Event bus : if event are posted now, the activity will not receive it
+        EventBusManager.BUS.unregister(this);
+        super.onPause();
     }
 
     /*@OnClick(R.id.activity_detail_place_street)
