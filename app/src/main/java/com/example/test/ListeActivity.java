@@ -50,9 +50,6 @@ public class ListeActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-
-
-
         mPlaceAdapter = new LocationAdapter(this, new ArrayList<>());
         mRecyclerView.setAdapter(mPlaceAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));

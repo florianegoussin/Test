@@ -1,6 +1,7 @@
 package com.example.test;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +17,9 @@ import com.example.test.event.ZoneResultEvent;
 import com.example.test.model.Location;
 import com.example.test.model.ZoneAddress;
 import com.example.test.service.LocationSearchService;
+import com.example.test.service.MeasurementSearchService;
 import com.example.test.service.ZoneSearchService;
+import com.example.test.ui.LocationAdapter;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -25,6 +28,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -43,6 +47,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private GoogleMap mActiveGoogleMap;
     private Map<String, Location> mMarkersToPlaces = new LinkedHashMap<>();
 
+    private LocationAdapter mPlaceAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_map);
 
         ButterKnife.bind(this);
+
+        mPlaceAdapter = new LocationAdapter(this, new ArrayList<>());
+        //mRecyclerView.setAdapter(mPlaceAdapter);
+        //mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Get map fragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -155,7 +165,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 Location associatedPlace = mMarkersToPlaces.get(marker.getId());
                 if (associatedPlace != null) {
                     Intent seePlaceDetailIntent = new Intent(MapActivity.this, PlaceDetailActivity.class);
-                    seePlaceDetailIntent.putExtra("placeStreet", associatedPlace.location);
+                    //seePlaceDetailIntent.putExtra("placeStreet", associatedPlace.location);
+                    seePlaceDetailIntent.putExtra("city", associatedPlace.city);
+                    seePlaceDetailIntent.putExtra("country",associatedPlace.country);
+                    seePlaceDetailIntent.putExtra("location",associatedPlace.location);
+                    //MeasurementSearchService.INSTANCE.searchMesures(getIntent().getStringExtra("location") );
                     startActivity(seePlaceDetailIntent);
                 }
             }
