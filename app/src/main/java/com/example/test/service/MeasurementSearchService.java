@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -64,6 +65,15 @@ public class MeasurementSearchService {
 
         public  void searchMesures(final String location) {
 
+            if (mLastScheduleTask != null && !mLastScheduleTask.isDone()) {
+                mLastScheduleTask.cancel(true);
+            }
+
+            mLastScheduleTask = mScheduler.schedule(new Runnable() {
+
+                public void run(){
+
+
             // Call to the REST service
             //Modification pour uniquement les locations en France
             mMesureSearchRESTService.searchForMesures("FR", location).enqueue(new Callback<MeasurementResult>() {
@@ -97,7 +107,7 @@ public class MeasurementSearchService {
                         ActiveAndroid.endTransaction();
 
 
-                     //   searchMesuresFromDB(search);
+                        searchMesuresFromDB(location);
 
                     } else {
                         // Null result
@@ -112,16 +122,19 @@ public class MeasurementSearchService {
                     // We may want to display a warning to user (e.g. Toast)
                     System.out.println("trooooooooooooooooooop triste pas de reponse");
                     Log.e("[PlaceSearcher] [REST]", "Response error : " + t.getMessage());
-                    //searchLocationsFromDB(search);
+                    searchMesuresFromDB(location);
                 }
 
+
             });
+            }
+            },REFRESH_DELAY, TimeUnit.MILLISECONDS);
         }
 
         public void searchMesuresFromDB (String search){
             List<Measurement> matchingMesureFromDB = new Select()
                     .from(Measurement.class)
-                    .where("city LIKE '%" + search + "%'").orderBy("city ").execute();
+                    .where("location LIKE '%" + search + "%'").orderBy("location ").execute();
 
             EventBusManager.BUS.post(new MeasurementResultEvent(matchingMesureFromDB));
         }

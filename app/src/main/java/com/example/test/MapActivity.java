@@ -155,7 +155,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 Location associatedPlace = mMarkersToPlaces.get(marker.getId());
                 if (associatedPlace != null) {
                     Intent seePlaceDetailIntent = new Intent(MapActivity.this, PlaceDetailActivity.class);
-                    seePlaceDetailIntent.putExtra("placeStreet", associatedPlace.country);
+                    seePlaceDetailIntent.putExtra("placeStreet", associatedPlace.location);
                     startActivity(seePlaceDetailIntent);
                 }
             }
