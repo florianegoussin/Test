@@ -1,15 +1,22 @@
 package com.example.test;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.test.Database.DataSource.FavoriteRepository;
+import com.example.test.Database.Local.EDMTRoomDatabase;
+import com.example.test.Database.Local.FavoriteDataSource;
+import com.example.test.Database.ModelDB.Favorite;
 import com.example.test.event.EventBusManager;
 import com.example.test.event.MeasurementResultEvent;
+import com.example.test.model.Location;
 import com.example.test.model.Measurement;
 import com.example.test.service.MeasurementSearchService;
+import com.example.test.utils.Common;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Subscribe;
@@ -40,9 +47,14 @@ public class PlaceDetailActivity extends AppCompatActivity {
     @BindView(R.id.param)
     TextView param;
 
+    @BindView(R.id.btn_favorite)
+    ImageView btn_favorite;
+
 
     //private MeasurementAdapter mMesureAdapter;
     private Gson gson ;
+    String loc;
+    Location ObjLoc;
 
 
    /* @BindView(R.id.activity_detail_place_street)
@@ -74,16 +86,24 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
 
         EventBusManager.BUS.register(this);
+        loc=getIntent().getStringExtra("location");
         place_adapter_icon.setImageResource(R.drawable.home_icon);
         place_adapter_country.setText(getIntent().getStringExtra("country"));
         place_adapter_city.setText(getIntent().getStringExtra("city"));
         place_adapter_location.setText(getIntent().getStringExtra("location"));
+        ObjLoc = (Location)getIntent().getSerializableExtra("objetloc");
+
+
 
 
 
    //     MeasurementSearchService.INSTANCE.searchMesures(getIntent().getStringExtra("city"), getIntent().getStringExtra("location"));
         MeasurementSearchService.INSTANCE.searchMesures(getIntent().getStringExtra("location") );
 
+        //initDB
+        Common.edmtRoomDatabase = EDMTRoomDatabase.getInstance(this);
+        //Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.edmtRoomDatabase.CartDAO()));
+        Common.favoriteRepository = FavoriteRepository.getInstance(FavoriteDataSource.getInstance(Common.edmtRoomDatabase.favoriteDAO()));
 
 
 
@@ -94,10 +114,47 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
         //place_adapter_id.setText();
 
+        //Favorite System
+        if(Common.favoriteRepository.isFavorite(loc) == 1)
+            btn_favorite.setImageResource(R.drawable.ic_favorite_white_24dp);
+        else
+            btn_favorite.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+
+        btn_favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(Common.favoriteRepository.isFavorite(loc) != 1){
+                    addOrRemoveFavorite(ObjLoc,true);
+                    btn_favorite.setImageResource(R.drawable.ic_favorite_white_24dp);
+                }
+                else{
+                    addOrRemoveFavorite(ObjLoc,false);
+                    btn_favorite.setImageResource(R.drawable.ic_favorite_border_white_24dp);
+                }
 
 
+            }
+        });
+    }
+
+    private void addOrRemoveFavorite(Location location, boolean isAdd) {
+        Favorite favorite = new Favorite();
+        favorite.location=location.location;
+        favorite.city=location.city;
+        favorite.country=location.country;
+
+        if(isAdd)
+            Common.favoriteRepository.insertFav(favorite);
+        else
+            Common.favoriteRepository.delete(favorite);
 
     }
+
+
+
+
+
 
     @Override
     protected void onPause() {

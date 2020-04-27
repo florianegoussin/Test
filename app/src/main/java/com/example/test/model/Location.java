@@ -6,8 +6,10 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 import com.google.gson.annotations.Expose;
 
+import java.io.Serializable;
+
 @Table(name = "Location")
-public class Location extends Model {
+public class Location extends Model implements Serializable {
 
     @Expose
     @Column(name = "location", index = true, unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)

@@ -59,6 +59,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
                 seePlaceDetailIntent.putExtra("city", location.city);
                 seePlaceDetailIntent.putExtra("country",location.country);
                 seePlaceDetailIntent.putExtra("location",location.location);
+                seePlaceDetailIntent.putExtra("objetloc",location);
                 context.startActivity(seePlaceDetailIntent);
             }
         });
