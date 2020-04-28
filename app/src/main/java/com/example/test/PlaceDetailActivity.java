@@ -14,12 +14,14 @@ import com.example.test.Database.ModelDB.Favorite;
 import com.example.test.event.EventBusManager;
 import com.example.test.event.MeasurementResultEvent;
 import com.example.test.model.Location;
+import com.example.test.model.LocationCoordinates;
 import com.example.test.model.Measurement;
 import com.example.test.service.MeasurementSearchService;
 import com.example.test.utils.Common;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Subscribe;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Modifier;
 
@@ -50,11 +52,17 @@ public class PlaceDetailActivity extends AppCompatActivity {
     @BindView(R.id.btn_favorite)
     ImageView btn_favorite;
 
+    @BindView(R.id.streetview)
+    ImageView streetview;
+
 
     //private MeasurementAdapter mMesureAdapter;
     private Gson gson ;
     String loc;
     Location ObjLoc;
+    LocationCoordinates coordinates;
+    double longitude;
+    double latitude;
 
 
    /* @BindView(R.id.activity_detail_place_street)
@@ -92,6 +100,13 @@ public class PlaceDetailActivity extends AppCompatActivity {
         place_adapter_city.setText(getIntent().getStringExtra("city"));
         place_adapter_location.setText(getIntent().getStringExtra("location"));
         ObjLoc = (Location)getIntent().getSerializableExtra("objetloc");
+        coordinates = ObjLoc.coordinates;
+        longitude=coordinates.longitude;
+        latitude=coordinates.latitude;
+        System.out.println("LONGGG"+longitude);
+        System.out.println("LATTT"+latitude);
+        System.out.println("LIENNN: "+"https://maps.googleapis.com/maps/api/streetview?size=400x400&location="+latitude+","+longitude+"&key=AIzaSyA6Bk_KhSlcPYXYRUUAb7KG8onlyJFmQsU");
+        Picasso.get().load("https://maps.googleapis.com/maps/api/streetview?size=400x400&location="+latitude+","+longitude+"&key=AIzaSyDWg17olhB-Wq9v5Cfg5a2YrmZSP7fhuvM").into(streetview);
 
 
 

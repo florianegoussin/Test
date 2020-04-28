@@ -5,20 +5,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/place_adapter_id"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/place_adapter_id"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
 
 
-    <ImageView
-        android:layout_margin="5dp"
-        android:id="@+id/place_adapter_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/home_icon">
-    </ImageView>
+        <ImageView
+            android:layout_margin="5dp"
+            android:id="@+id/place_adapter_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/home_icon">
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/streetview"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+        </ImageView>
 
 
     <LinearLayout
@@ -62,7 +71,6 @@
         android:layout_height="50dp"
         android:layout_gravity="end"
         android:layout_weight="1"
-
         android:src="@drawable/ic_favorite_border_white_24dp"></ImageView>
 
 
