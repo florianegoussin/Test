@@ -1,8 +1,5 @@
 package com.example.test;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,14 +8,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.test.event.EventBusManager;
 import com.example.test.event.LocationResultEvent;
-import com.example.test.event.ZoneResultEvent;
 import com.example.test.model.Location;
-import com.example.test.model.ZoneAddress;
 import com.example.test.service.LocationSearchService;
-import com.example.test.service.MeasurementSearchService;
-import com.example.test.service.ZoneSearchService;
 import com.example.test.ui.LocationAdapter;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -169,6 +164,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     seePlaceDetailIntent.putExtra("city", associatedPlace.city);
                     seePlaceDetailIntent.putExtra("country",associatedPlace.country);
                     seePlaceDetailIntent.putExtra("location",associatedPlace.location);
+                    seePlaceDetailIntent.putExtra("objetloc",associatedPlace);
                     //MeasurementSearchService.INSTANCE.searchMesures(getIntent().getStringExtra("location") );
                     startActivity(seePlaceDetailIntent);
                 }

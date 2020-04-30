@@ -2,6 +2,7 @@ package com.example.test;
 
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -55,6 +56,9 @@ public class PlaceDetailActivity extends AppCompatActivity {
     @BindView(R.id.streetview)
     ImageView streetview;
 
+    @BindView(R.id.temp)
+    WebView temp;
+
 
     //private MeasurementAdapter mMesureAdapter;
     private Gson gson ;
@@ -63,6 +67,10 @@ public class PlaceDetailActivity extends AppCompatActivity {
     LocationCoordinates coordinates;
     double longitude;
     double latitude;
+    String tempurl;
+    String quote;
+    String slash;
+    String annotation;
 
 
    /* @BindView(R.id.activity_detail_place_street)
@@ -100,15 +108,28 @@ public class PlaceDetailActivity extends AppCompatActivity {
         place_adapter_city.setText(getIntent().getStringExtra("city"));
         place_adapter_location.setText(getIntent().getStringExtra("location"));
         ObjLoc = (Location)getIntent().getSerializableExtra("objetloc");
+
         coordinates = ObjLoc.coordinates;
         longitude=coordinates.longitude;
         latitude=coordinates.latitude;
-        System.out.println("LONGGG"+longitude);
-        System.out.println("LATTT"+latitude);
-        System.out.println("LIENNN: "+"https://maps.googleapis.com/maps/api/streetview?size=400x400&location="+latitude+","+longitude+"&key=AIzaSyA6Bk_KhSlcPYXYRUUAb7KG8onlyJFmQsU");
+        System.out.println("LATT: "+ latitude);
+        System.out.println("LONG: "+ longitude);
+
+        //Affichage StreetView
         Picasso.get().load("https://maps.googleapis.com/maps/api/streetview?size=400x400&location="+latitude+","+longitude+"&key=AIzaSyDWg17olhB-Wq9v5Cfg5a2YrmZSP7fhuvM").into(streetview);
 
-
+        //Affichage température
+        quote="\"";
+        slash="\\";
+        annotation=slash+quote;
+        System.out.println("HEREE11: "+ quote);
+        System.out.println("HERE222: "+ slash);
+        System.out.println("HEREE33 : "+ annotation);
+        //tempurl="<iframe seamless width="+quote+"888"+quote+" height="+quote+"336"+quote+" frameborder="+quote+"0"+quote+" src="+annotation+"https://www.infoclimat.fr/public-api/mixed/iframeSLIDE?_ll="+latitude+","+longitude+"&_inc=WyJQYXJpcyIsIjQyIiwiMjk4ODUwNyIsIkZSIl0=&_auth=BR8DFAF%2FUHJfcgE2AHYGLwNrU2YBdwEmBnoKaQ5rVypSOVIzAGAHYQVrB3oDLFdhBCkCYQ02ADAKYQpyXy0EZQVvA28BalA3XzABZAAvBi0DLVMyASEBJgZkCmoOZVcqUjBSMwBjB3sFawdtAzBXfQQxAn0NLQA5CmwKZV86BGYFYwNnAWZQO183AXwALwY3A2VTYgE3AT0GZQo4DmJXN1JjUjQAYwc2BW4HewM0V2IENgJlDTYAOwpuCmxfLQR4BR8DFAF%2FUHJfcgE2AHYGLwNlU20Bag%3D%3D&_c=4c1aba888636a009d4b4d3187f0b4fd6"+annotation+"></iframe>"+quote;
+        //tempurl="<iframe seamless width=\"888\" height=\"336\" frameborder=\"0\" src=\"https://www.infoclimat.fr/public-api/mixed/iframeSLIDE?_ll="+latitude+","+longitude+"&_inc=WyJQYXJpcyIsIjQyIiwiMjk4ODUwNyIsIkZSIl0=&_auth=BR8DFAF%2FUHJfcgE2AHYGLwNrU2YBdwEmBnoKaQ5rVypSOVIzAGAHYQVrB3oDLFdhBCkCYQ02ADAKYQpyXy0EZQVvA28BalA3XzABZAAvBi0DLVMyASEBJgZkCmoOZVcqUjBSMwBjB3sFawdtAzBXfQQxAn0NLQA5CmwKZV86BGYFYwNnAWZQO183AXwALwY3A2VTYgE3AT0GZQo4DmJXN1JjUjQAYwc2BW4HewM0V2IENgJlDTYAOwpuCmxfLQR4BR8DFAF%2FUHJfcgE2AHYGLwNlU20Bag%3D%3D&_c=4c1aba888636a009d4b4d3187f0b4fd6\"></iframe>";
+        //temp.loadData(tempurl,"html","null");
+        tempurl="https://www.infoclimat.fr/public-api/mixed/iframeSLIDE?_ll="+latitude+","+longitude+"&_inc=WyJQYXJpcyIsIjQyIiwiMjk4ODUwNyIsIkZSIl0=&_auth=BR8DFAF%2FUHJfcgE2AHYGLwNrU2YBdwEmBnoKaQ5rVypSOVIzAGAHYQVrB3oDLFdhBCkCYQ02ADAKYQpyXy0EZQVvA28BalA3XzABZAAvBi0DLVMyASEBJgZkCmoOZVcqUjBSMwBjB3sFawdtAzBXfQQxAn0NLQA5CmwKZV86BGYFYwNnAWZQO183AXwALwY3A2VTYgE3AT0GZQo4DmJXN1JjUjQAYwc2BW4HewM0V2IENgJlDTYAOwpuCmxfLQR4BR8DFAF%2FUHJfcgE2AHYGLwNlU20Bag%3D%3D&_c=4c1aba888636a009d4b4d3187f0b4fd6";
+        temp.loadUrl(tempurl);
 
 
 
