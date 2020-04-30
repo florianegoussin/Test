@@ -6,9 +6,12 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.activeandroid.util.Log;
 import com.example.test.event.EventBusManager;
+import com.example.test.event.LocationResultEvent;
 import com.example.test.event.MeasurementResultEvent;
+import com.example.test.model.Location;
 import com.example.test.model.Measurement;
 import com.example.test.model.MeasurementResult;
+import com.example.test.model.ZoneAddress;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -139,6 +142,9 @@ public class MeasurementSearchService {
             EventBusManager.BUS.post(new MeasurementResultEvent(matchingMesureFromDB));
         }
 
+
+
+
         // Service describing the REST APIs
         public interface MeasurementSearchRESTService {
 
@@ -148,6 +154,15 @@ public class MeasurementSearchService {
         }
 
 
+   /* public void searchRechercheFromDB(String zoneCity, String locationCity) {
+        List<Measurement> matchingMeasurementFromDB = new Select()
+                .from(Measurement.class)
+                .where("city LIKE '%" + zoneCity +"%'" )
+                .where("location LIKE '%" + locationCity +"%'" )
+                .execute();
+
+        EventBusManager.BUS.post(new MeasurementResultEvent(matchingMeasurementFromDB));
+    }*/
 
 
 

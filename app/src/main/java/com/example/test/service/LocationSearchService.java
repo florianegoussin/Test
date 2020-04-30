@@ -6,9 +6,12 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.example.test.event.EventBusManager;
 import com.example.test.event.LocationResultEvent;
+import com.example.test.event.MeasurementResultEvent;
 import com.example.test.model.Location;
 import com.example.test.model.LocationCoordinates;
 import com.example.test.model.LocationSearchResult;
+import com.example.test.model.Measurement;
+import com.example.test.model.ZoneAddress;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -109,8 +112,8 @@ public class LocationSearchService {
                     public void onFailure(Call<LocationSearchResult> call, Throwable t) {
                         // Request has failed or is not at expected format
                         // We may want to display a warning to user (e.g. Toast)
-                        Log.e("[PlaceSearcher] [REST]", "Response error : " + t.getMessage());
-                        //searchLocationsFromDB(search);
+
+                        searchLocationsFromDB(search);
                     }
 
                 });
@@ -119,6 +122,9 @@ public class LocationSearchService {
         },REFRESH_DELAY, TimeUnit.MILLISECONDS);
     }
 
+
+
+
     public void searchLocationsFromDB (String search){
         List<Location> matchingLocationFromDB = new Select()
                 .from(Location.class)
@@ -126,7 +132,19 @@ public class LocationSearchService {
                 .on("Location.coordinates=LocationCoordinates.Id")
                 .where("city LIKE '%" + search + "%'").orderBy("city ").execute();
 
+
         EventBusManager.BUS.post(new LocationResultEvent(matchingLocationFromDB));
+    }
+
+
+    public void searchRechercheFromDB(String zoneCity, String locationCity) {
+        List<Measurement> matchingMeasurementFromDB = new Select()
+                .from(Measurement.class)
+                .where("city LIKE '%" + zoneCity +"%'" )
+                .where("location LIKE '%" + locationCity +"%'" )
+                .execute();
+
+        EventBusManager.BUS.post(new MeasurementResultEvent(matchingMeasurementFromDB));
     }
 
     // Service describing the REST APIs
