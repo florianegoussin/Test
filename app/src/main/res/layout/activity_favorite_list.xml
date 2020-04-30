@@ -5,24 +5,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/place_adapter_id"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:text="Favoris"
+        android:textSize="30sp"></TextView>
+
     <ImageView
         android:id="@+id/btn_favorite"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="50dp"
+        android:layout_width="314dp"
         android:layout_height="50dp"
-        android:layout_gravity="left"
+        android:layout_gravity="center_horizontal"
         android:layout_weight="1"
 
-        android:src="@drawable/ic_favorite_border_white_24dp">
-    </ImageView>
+        android:src="@drawable/ic_favorite_border_white_24dp"></ImageView>
 
-    <TextView
-        android:id="@+id/place_adapter_id"
-        android:layout_width="match_parent"
-        android:layout_height="43dp"
-        android:layout_weight="1"
-        android:text="Favoris">
-    </TextView>
+
 
     <View
         android:layout_width="match_parent"

@@ -36,7 +36,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
     @Override
     public LocationAdapter.LocationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.place_item, parent, false);
+        View view = inflater.inflate(R.layout.location_item, parent, false);
         LocationAdapter.LocationViewHolder holder = new LocationAdapter.LocationViewHolder(view);
         return holder;
     }
