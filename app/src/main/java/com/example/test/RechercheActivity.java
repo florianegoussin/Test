@@ -2,6 +2,7 @@ package com.example.test;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +31,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RechercheActivity extends AppCompatActivity {
+
+    @BindView(R.id.recyclerView)
+    RecyclerView mRecyclerView;
 
     @BindView(R.id.zone_search) EditText mZoneSearch;
     @BindView(R.id.location_search) EditText mLocationSearch;
@@ -68,6 +72,8 @@ public class RechercheActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mLocationAdapter = new LocationAdapter(this, new ArrayList<>());
+        mRecyclerView.setAdapter(mLocationAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
                 .serializeNulls()
@@ -91,8 +97,7 @@ public class RechercheActivity extends AppCompatActivity {
 
     @OnClick(R.id.valider)
     public  void onClickRecherche(){
-        Intent test = new Intent(RechercheActivity.this,ListeActivity.class);
-        startActivity(test);
+
 
         parametre = new HashMap<>();
 
@@ -138,6 +143,8 @@ public class RechercheActivity extends AppCompatActivity {
         //ZoneSearchService.INSTANCE.searchZoneFromDB(mZoneSearch.getText().toString());
         //LocationSearchService.INSTANCE.searchLocationsFromDB(mLocationSearch.getText().toString());
 
+        // Intent test = new Intent(RechercheActivity.this,ListeActivity.class);
+        // startActivity(test);
     }
 
 
@@ -185,4 +192,6 @@ public class RechercheActivity extends AppCompatActivity {
             mLocationAdapter.notifyDataSetChanged();
         });
     }
+
+
 }
