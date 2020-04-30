@@ -50,7 +50,9 @@
 
 
         <activity android:name=".MapActivity" />
-        <activity android:name=".PlaceDetailActivity" />
+        <activity android:name=".PlaceDetailActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation"/>
         <activity android:name=".MainActivity" />
         <activity android:name=".ListeActivity" />
     </application>
