@@ -1,5 +1,6 @@
 package com.example.test;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 
@@ -68,6 +69,7 @@ public class RechercheActivity extends AppCompatActivity {
 
     private LocationAdapter mLocationAdapter;
     private Gson gson ;
+    Intent test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,8 +163,8 @@ public class RechercheActivity extends AppCompatActivity {
         //ZoneSearchService.INSTANCE.searchZoneFromDB(mZoneSearch.getText().toString());
         //LocationSearchService.INSTANCE.searchLocationsFromDB(mLocationSearch.getText().toString());
 
-         //Intent test = new Intent(RechercheActivity.this,ListeActivity.class);
-         //startActivity(test);
+        //test = new Intent(RechercheActivity.this,ResultatRechActivity.class);
+        //startActivity(test);
 
 
     }
@@ -176,7 +178,7 @@ public class RechercheActivity extends AppCompatActivity {
             System.out.println("TOURR PARAM: " + i);
             System.out.println("I AM HEREEEE");
             System.out.println("LES MEsures: " + listMes);
-            for (Measurement m : listMes) {
+            Measurement m=listMes.get(i);
                 System.out.println("I AM HEREEEE222");
                 Measurement.Values[] valeur = gson.fromJson(m.mesure, Measurement.Values[].class);
                 for (Measurement.Values v : valeur) {
@@ -189,7 +191,7 @@ public class RechercheActivity extends AppCompatActivity {
                         }
                     }
                 }
-            }
+
 
 
         }
@@ -242,6 +244,9 @@ public class RechercheActivity extends AppCompatActivity {
              listLoc = event.getLocations();
             String nomLoc;
             String cityLoc;
+            String chaineLocLike="location LIKE '%";
+            String ReqnomLoc="";
+            String ReqcityLoc="";
             Float valParam;
             for (int i = 0; i < listLoc.size(); i++) {
                 System.out.println("TOURR Result: " + i);
@@ -249,7 +254,13 @@ public class RechercheActivity extends AppCompatActivity {
                 cityLoc = listLoc.get(i).city;
                 System.out.println("NOM Location"+nomLoc);
                 System.out.println("Ville Location: "+cityLoc);
-                MeasurementSearchService.INSTANCE.searchMesures(nomLoc, cityLoc);
+                if(i== listLoc.size()-1){
+                    ReqnomLoc = ReqnomLoc + chaineLocLike + nomLoc+ "%'";
+                } else {
+                    ReqnomLoc = ReqnomLoc + chaineLocLike + nomLoc + "%' OR " ;
+                }
+                System.out.println(ReqnomLoc);
+
                 //System.out.println("I AM HEREEEE");
                 //System.out.println("LES MEsures: " + listMes);
                 /*for (Measurement m : listMes) {
@@ -263,6 +274,7 @@ public class RechercheActivity extends AppCompatActivity {
                         }
                     }*/
             }
+            MeasurementSearchService.INSTANCE.searchRechMesures(ReqnomLoc,ReqcityLoc);
 
 
             /*
