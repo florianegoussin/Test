@@ -165,7 +165,7 @@ public class LocationSearchService {
                 .join(LocationCoordinates.class)
                 .on("Location.coordinates=LocationCoordinates.Id")
                 .where("city LIKE '" + zoneCity + "%'")
-                /*.where("location LIKE '%" + locationName + "%'")*/.execute();
+                .where("Location.location LIKE '%" + locationName + "%'").execute();
 
         EventBusManager.BUS.post(new LocationResultEvent(matchingRechFromDB));
     }
