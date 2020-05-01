@@ -101,7 +101,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
 
 
-        EventBusManager.BUS.register(this);
+        //EventBusManager.BUS.register(this);
         loc=getIntent().getStringExtra("location");
         place_adapter_icon.setImageResource(R.drawable.home_icon);
         place_adapter_country.setText(getIntent().getStringExtra("country"));
@@ -202,6 +202,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        EventBusManager.BUS.register(this);
     }
 
 
