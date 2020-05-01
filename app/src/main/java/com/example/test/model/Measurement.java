@@ -3,7 +3,6 @@ package com.example.test.model;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.example.test.model.Location;
 import com.google.gson.annotations.Expose;
 
 import java.util.List;
@@ -44,6 +43,15 @@ public class Measurement extends Model {
 
         @Expose
         public String unit;
+
+        private Float getParamValue(String param){
+            if(this.parameter == param){
+                return this.value;
+            }
+            else{
+                return null;
+            }
+        }
 
     }
 

@@ -28,6 +28,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
+import static com.example.test.model.Measurement.*;
+
 public class MeasurementSearchService {
 
     private static final long REFRESH_DELAY = 650;
@@ -93,8 +95,8 @@ public class MeasurementSearchService {
                             m.location=mesure.location;
                             m.city=mesure.city;
 
-                            List<Measurement.Values> value = new ArrayList<>();
-                            for(Measurement.Values mv :mesure.measurements){
+                            List<Values> value = new ArrayList<>();
+                            for(Values mv :mesure.measurements){
                                 System.out.println("aaaaaaaaaaaaa "+mv.parameter+"       "+mv.value+"    "+mv.unit);
 
                                 value.add(mv);
@@ -173,16 +175,6 @@ public class MeasurementSearchService {
 
         }
 
-
-   /* public void searchRechercheFromDB(String zoneCity, String locationCity) {
-        List<Measurement> matchingMeasurementFromDB = new Select()
-                .from(Measurement.class)
-                .where("city LIKE '%" + zoneCity +"%'" )
-                .where("location LIKE '%" + locationCity +"%'" )
-                .execute();
-
-        EventBusManager.BUS.post(new MeasurementResultEvent(matchingMeasurementFromDB));
-    }*/
 
 
 

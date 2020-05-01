@@ -33,90 +33,72 @@
             android:hint="Recherchez un lieu"
             android:inputType="text"/>
 
-        <!--TextView
-            android:id="@+id/bc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="bc" />
 
         <EditText
             android:id="@+id/editbc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:ems="10"
+            android:hint="Recherchez un bc"
             android:inputType="numberDecimal" />
 
-        <TextView
-            android:id="@+id/co"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="co" />
 
         <EditText
             android:id="@+id/editco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:ems="10"
+            android:hint="Recherchez un co"
             android:inputType="numberDecimal" />
 
-        <TextView
-            android:id="@+id/no2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="no2" />
 
         <EditText
             android:id="@+id/editno2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:ems="10"
+            android:hint="Recherchez un no2"
             android:inputType="numberDecimal" />
 
-        <TextView
-            android:id="@+id/o3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="o3" />
-        <EditText
-            android:id="@+id/edito3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal" />
-        <TextView
-            android:id="@+id/so2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="so2" />
         <EditText
             android:id="@+id/editso2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:ems="10"
+            android:hint="Recherchez un so2"
             android:inputType="numberDecimal" />
-        <TextView
-            android:id="@+id/pm10"
+
+
+        <EditText
+            android:id="@+id/edito3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="pm10" />
+            android:layout_margin="5dp"
+            android:ems="10"
+            android:hint="Recherchez un o3"
+            android:inputType="numberDecimal" />
+
         <EditText
             android:id="@+id/editpm10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:ems="10"
+            android:hint="Recherchez un pm10"
             android:inputType="numberDecimal" />
-        <TextView
-            android:id="@+id/pm25"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="pm25" />
+
         <EditText
             android:id="@+id/editpm25"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:ems="10"
-            android:inputType="numberDecimal" /-->
-
+            android:hint="Recherchez un pm25"
+            android:inputType="numberDecimal" />
 
 
     </LinearLayout>
