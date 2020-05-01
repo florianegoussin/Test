@@ -64,6 +64,8 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
             }
         });
 
+        System.out.println("ValLocationFav: "+location);
+        System.out.println("ValLocationDETAIL: "+location.location);
         //Favorite System
         if(Common.favoriteRepository.isFavorite(location.location) == 1)
             holder.btn_favorite.setImageResource(R.drawable.ic_favorite_white_24dp);
@@ -111,6 +113,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
 
 
     public void setLocations(List<Location> locations){
+        System.out.println("INSIDE SET LOCATION");
         this.mLocation = locations;
     }
 

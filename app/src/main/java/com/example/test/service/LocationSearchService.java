@@ -1,17 +1,12 @@
 package com.example.test.service;
 
-import android.util.Log;
-
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.example.test.event.EventBusManager;
 import com.example.test.event.LocationResultEvent;
-import com.example.test.event.MeasurementResultEvent;
 import com.example.test.model.Location;
 import com.example.test.model.LocationCoordinates;
 import com.example.test.model.LocationSearchResult;
-import com.example.test.model.Measurement;
-import com.example.test.model.ZoneAddress;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -136,16 +131,46 @@ public class LocationSearchService {
         EventBusManager.BUS.post(new LocationResultEvent(matchingLocationFromDB));
     }
 
+    public void searchRechercheFromDB(String zoneCity, String locationName) {
+        /*List<Location> matchingRechFromDB=null;
+        if(locationName == " " && zoneCity != " "){
+            System.out.println("MARK111");
+            matchingRechFromDB = new Select()
+                    .from(Location.class)
+                    .join(LocationCoordinates.class)
+                    .on("Location.coordinates=LocationCoordinates.Id")
+                    .where("city LIKE '%" + zoneCity + "%'").orderBy("city ").execute();
+        }
+        else if( locationName != " " && zoneCity == " "){
+            System.out.println("MARK222");
+            matchingRechFromDB = new Select()
+                    .from(Location.class)
+                    .join(LocationCoordinates.class)
+                    .on("Location.coordinates=LocationCoordinates.Id")
+                    .where("location LIKE '%" + locationName + "%'").execute();
+        }
+        else if(locationName != " " && zoneCity != " "){
+            System.out.println("MARK333");
+            matchingRechFromDB = new Select()
+                    .from(Location.class)
+                    .join(LocationCoordinates.class)
+                    .on("Location.coordinates=LocationCoordinates.Id")
+                    .where("city LIKE '%" + zoneCity + "%'")
+                    .where("location LIKE '%" + locationName + "%'").execute();
 
-    public void searchRechercheFromDB(String zoneCity, String locationCity) {
-        List<Measurement> matchingMeasurementFromDB = new Select()
-                .from(Measurement.class)
-                .where("city LIKE '%" + zoneCity +"%'" )
-                .where("location LIKE '%" + locationCity +"%'" )
-                .execute();
+        }*/
 
-        EventBusManager.BUS.post(new MeasurementResultEvent(matchingMeasurementFromDB));
+        List<Location> matchingRechFromDB = new Select()
+                .from(Location.class)
+                .join(LocationCoordinates.class)
+                .on("Location.coordinates=LocationCoordinates.Id")
+                .where("city LIKE '" + zoneCity + "%'")
+                /*.where("location LIKE '%" + locationName + "%'")*/.execute();
+
+        EventBusManager.BUS.post(new LocationResultEvent(matchingRechFromDB));
     }
+
+
 
     // Service describing the REST APIs
     public interface LocationSearchRESTService {

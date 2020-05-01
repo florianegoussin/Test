@@ -6,12 +6,9 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.activeandroid.util.Log;
 import com.example.test.event.EventBusManager;
-import com.example.test.event.LocationResultEvent;
 import com.example.test.event.MeasurementResultEvent;
-import com.example.test.model.Location;
 import com.example.test.model.Measurement;
 import com.example.test.model.MeasurementResult;
-import com.example.test.model.ZoneAddress;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -66,7 +63,7 @@ public class MeasurementSearchService {
                 .create();
     }
 
-        public  void searchMesures(final String location) {
+        public  void searchMesures(final String location, final String city) {
 
             if (mLastScheduleTask != null && !mLastScheduleTask.isDone()) {
                 mLastScheduleTask.cancel(true);
@@ -79,7 +76,7 @@ public class MeasurementSearchService {
 
             // Call to the REST service
             //Modification pour uniquement les locations en France
-            mMesureSearchRESTService.searchForMesures("FR", location).enqueue(new Callback<MeasurementResult>() {
+            mMesureSearchRESTService.searchForMesures("FR",city, location).enqueue(new Callback<MeasurementResult>() {
                 @Override
                 public void onResponse(Call<MeasurementResult> call, retrofit2.Response<MeasurementResult> response) {
 
@@ -142,6 +139,29 @@ public class MeasurementSearchService {
             EventBusManager.BUS.post(new MeasurementResultEvent(matchingMesureFromDB));
         }
 
+    /*public void searchRechercheFromDB(String zoneCity, String locationName) {
+        List<Measurement> matchingRechFromDB=null;
+        if(locationName == null && zoneCity != null){
+            matchingRechFromDB = new Select()
+                    .from(Measurement.class)
+                    .where("city LIKE '%" + zoneCity + "%'").orderBy("city ").execute();
+        }
+        else if( locationName != null && zoneCity == null){
+            matchingRechFromDB = new Select()
+                    .from(Measurement.class)
+                    .where("location LIKE '%" + locationName + "%'").execute();
+        }
+        else if(locationName != null && zoneCity != null){
+            matchingRechFromDB = new Select()
+                    .from(Measurement.class)
+                    .where("city LIKE '%" + zoneCity + "%'")
+                    .where("location LIKE '%" + locationName + "%'").execute();
+
+        }
+
+        EventBusManager.BUS.post(new MeasurementResultEvent(matchingRechFromDB));
+    }*/
+
 
 
 
@@ -149,7 +169,7 @@ public class MeasurementSearchService {
         public interface MeasurementSearchRESTService {
 
             @GET("latest")
-            Call<MeasurementResult> searchForMesures(@Query("country") String country, @Query("location") String location );
+            Call<MeasurementResult> searchForMesures(@Query("country") String country,@Query("city") String city, @Query("location") String location );
 
         }
 

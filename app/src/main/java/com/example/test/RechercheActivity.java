@@ -1,30 +1,26 @@
 package com.example.test;
 
+import android.os.Bundle;
+import android.widget.EditText;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-
+import com.example.test.Database.DataSource.FavoriteRepository;
+import com.example.test.Database.Local.EDMTRoomDatabase;
+import com.example.test.Database.Local.FavoriteDataSource;
 import com.example.test.event.EventBusManager;
-import com.example.test.event.MeasurementResultEvent;
-import com.example.test.model.Location;
-import com.example.test.model.Measurement;
+import com.example.test.event.LocationResultEvent;
 import com.example.test.service.LocationSearchService;
-import com.example.test.service.MeasurementSearchService;
-import com.example.test.service.ZoneSearchService;
 import com.example.test.ui.LocationAdapter;
+import com.example.test.utils.Common;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Subscribe;
 
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +34,7 @@ public class RechercheActivity extends AppCompatActivity {
     @BindView(R.id.zone_search) EditText mZoneSearch;
     @BindView(R.id.location_search) EditText mLocationSearch;
 
-    @BindView(R.id.editbc)
+   /* @BindView(R.id.editbc)
     EditText mEditBc;
 
     @BindView(R.id.editco)
@@ -59,7 +55,7 @@ public class RechercheActivity extends AppCompatActivity {
     @BindView(R.id.editpm25)
     EditText mEditPm25;
 
-    HashMap<String, Double> parametre;
+    HashMap<String, Double> parametre;*/
 
     private LocationAdapter mLocationAdapter;
     private Gson gson ;
@@ -78,6 +74,12 @@ public class RechercheActivity extends AppCompatActivity {
         gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
                 .serializeNulls()
                 .create();
+
+        //initDB
+        Common.edmtRoomDatabase = EDMTRoomDatabase.getInstance(this);
+        //Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.edmtRoomDatabase.CartDAO()));
+        Common.favoriteRepository = FavoriteRepository.getInstance(FavoriteDataSource.getInstance(Common.edmtRoomDatabase.favoriteDAO()));
+
     }
 
 
@@ -99,7 +101,7 @@ public class RechercheActivity extends AppCompatActivity {
     public  void onClickRecherche(){
 
 
-        parametre = new HashMap<>();
+       /* parametre = new HashMap<>();
 
 
         if(!mEditBc.getText().toString().equals("")) {
@@ -135,26 +137,35 @@ public class RechercheActivity extends AppCompatActivity {
         if(!mEditSo2.getText().toString().equals("")) {
             parametre.put("so2", Double.parseDouble(mEditSo2.getText().toString()));
         }
-        else parametre.put("so2", 0d);
+        else parametre.put("so2", 0d);*/
 
-
+        System.out.println("ZONEEE: "+mZoneSearch.getText().toString());
+        System.out.println("NAMEEE: "+mLocationSearch.getText().toString());
+        /*if(mLocationSearch.getText().toString().equals("")){
+            System.out.println("EMPTYYY");
+        }
+        else{
+            System.out.println("FAILLL");
+        }*/
+        //EventBusManager.BUS.register(this);
         LocationSearchService.INSTANCE.searchRechercheFromDB(mZoneSearch.getText().toString(),mLocationSearch.getText().toString());
+
         //MeasurementSearchService.INSTANCE.searchRechercheFromDB(mZoneSearch.getText().toString(),mLocationSearch.getText().toString());
         //ZoneSearchService.INSTANCE.searchZoneFromDB(mZoneSearch.getText().toString());
         //LocationSearchService.INSTANCE.searchLocationsFromDB(mLocationSearch.getText().toString());
 
-        // Intent test = new Intent(RechercheActivity.this,ListeActivity.class);
-        // startActivity(test);
+         //Intent test = new Intent(RechercheActivity.this,ListeActivity.class);
+         //startActivity(test);
     }
 
 
     @Subscribe
-    public void searchResult(final MeasurementResultEvent event) {
-
+    public void searchResult(final LocationResultEvent event) {
+        System.out.println("IN SEARCH RESULT ");
 
         // Here someone has posted a SearchResultEvent
-        HashMap<String, List<Measurement>> measurementHashmap = new HashMap<String, List<Measurement>>();
-        List<Measurement> mesureList = new ArrayList<>();
+        /*HashMap<String, List<Measurement>> measurementHashmap = new HashMap<String, List<Measurement>>();
+        List<Measurement> mesureList;
         List<Location> locationList = new ArrayList<>();
         for(Measurement mes : event.getmesures()) {
 
@@ -183,12 +194,10 @@ public class RechercheActivity extends AppCompatActivity {
                 }
             }
         }
-
+*/
         runOnUiThread (() -> {
-
-
-
-            mLocationAdapter.setLocations(locationList);
+            System.out.println("LOCATIONSSSS: "+event.getLocations());
+            mLocationAdapter.setLocations(event.getLocations());
             mLocationAdapter.notifyDataSetChanged();
         });
     }

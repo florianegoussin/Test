@@ -134,7 +134,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
 
    //     MeasurementSearchService.INSTANCE.searchMesures(getIntent().getStringExtra("city"), getIntent().getStringExtra("location"));
-        MeasurementSearchService.INSTANCE.searchMesures(getIntent().getStringExtra("location") );
+        MeasurementSearchService.INSTANCE.searchMesures(getIntent().getStringExtra("location"),getIntent().getStringExtra("city") );
 
         //initDB
         Common.edmtRoomDatabase = EDMTRoomDatabase.getInstance(this);
