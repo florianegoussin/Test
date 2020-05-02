@@ -84,14 +84,6 @@ public class RechercheActivityMesure extends AppCompatActivity {
         btnNext = (Button) findViewById(R.id.buttonNext);
         btnPrev = (Button) findViewById(R.id.buttonPrevious);
         simpleViewSwitcher = (ViewSwitcher) findViewById(R.id.simpleViewSwitcher); // get the reference of ViewSwitcher
-// Declare in and out animations and load them using AnimationUtils class
-
-      //  Animation in = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
-        //Animation out = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
-
-     //   simpleViewSwitcher.setInAnimation(in);
-       // simpleViewSwitcher.setOutAnimation(out);
-
 
 
         btnNext.setOnClickListener(new View.OnClickListener() {
@@ -163,6 +155,7 @@ public class RechercheActivityMesure extends AppCompatActivity {
         btnPrev.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
+                //locRetenu=null;
                 simpleViewSwitcher.showPrevious();
 
             }
