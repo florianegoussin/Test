@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
 
     private PlaceAdapter mPlaceAdapter;
-    //private LocationAdapter mPlaceAdapter;
 
     @BindView(R.id.activity_main_search_adress_edittext)
     EditText mSearchEditText;
@@ -79,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
 
                 // Launch a search through the PlaceSearchService
                 ZoneSearchService.INSTANCE.searchZone(editable.toString());
-                //LocationSearchService.INSTANCE.searchLocationsFromAddress(editable.toString());
             }
         });
 
@@ -91,9 +89,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         EventBusManager.BUS.register(this);
-
         ZoneSearchService.INSTANCE.searchZone(mSearchEditText.getText().toString());
-        //LocationSearchService.INSTANCE.searchLocationsFromAddress(mSearchEditText.getText().toString());
     }
     @Override
     protected void onPause() {
@@ -115,17 +111,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /*public void searchResult(final LocationResultEvent event) {
-        // Here someone has posted a SearchResultEvent
-        // Update adapter's model
-        runOnUiThread(() -> {
-            // Step 1: Update adapter's model
-            mPlaceAdapter.setLocations(event.getLocations());
-            mPlaceAdapter.notifyDataSetChanged();
-            // Step 2: hide loader
-            mProgressBar.setVisibility(View.GONE);
-        });
-    }*/
 
     @OnClick(R.id.activity_main_switch_button)
     public void clickedOnSwitchToMap(){
@@ -139,6 +124,12 @@ public class MainActivity extends AppCompatActivity {
         Intent switchToMapIntent = new Intent (this, ListeActivity.class);
         switchToMapIntent.putExtra("city", mSearchEditText.getText().toString());
         startActivity(switchToMapIntent);
+    }
+
+    @OnClick(R.id.menu_icon)
+    public void clickedOnSwitchToMenu(){
+        Intent switchToMenu = new Intent (this, MenuActivity.class);
+        startActivity(switchToMenu);
     }
 
 

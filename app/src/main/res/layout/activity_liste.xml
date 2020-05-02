@@ -12,22 +12,21 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/place_adapter_icon"
+            android:id="@+id/icon_menu"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="5dp"
-            android:src="@drawable/home_icon" />
+            android:src="@drawable/photo_menu" />
 
-        <View
-            android:layout_width="140dp"
-            android:layout_height="50dp"></View>
+
 
         <Button
             android:id="@+id/activity_main_switch_button"
             android:layout_width="150dp"
             android:layout_height="50dp"
-            android:layout_gravity="right"
-            android:text="Map" />
+            android:layout_weight="1"
+            android:text="Carte" />
+
     </LinearLayout>
 
 

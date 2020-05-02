@@ -20,12 +20,11 @@ import butterknife.ButterKnife;
 
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
 
-    //private LayoutInflater inflater;
     Context context;
     List<Favorite> favoriteList;
 
     public FavoriteAdapter(Context context, List<Favorite> favoriteList) {
-        //inflater = LayoutInflater.from(context);
+
         this.context = context;
         this.favoriteList = favoriteList;
     }
@@ -36,9 +35,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         View itemView = LayoutInflater.from(context).inflate(R.layout.fav_item_layout,parent,false);
         return new FavoriteViewHolder(itemView);
 
-        //View view = inflater.inflate(R.layout.fav_item_layout, parent, false);
-        //FavoriteViewHolder holder = new FavoriteViewHolder(view);
-        //return holder;
     }
 
     @Override
@@ -46,7 +42,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
        holder.place_adapter_icon.setImageResource(R.drawable.home_icon);
         holder.place_adapter_country.setText(favoriteList.get(position).country);
         holder.place_adapter_city.setText(favoriteList.get(position).city);
-        holder.place_adapter_id.setText(favoriteList.get(position).location);
+        holder.place_adapter_location.setText(favoriteList.get(position).location);
 
 
 
@@ -62,14 +58,14 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         @BindView(R.id.place_adapter_icon)
         ImageView place_adapter_icon;
 
-        @BindView(R.id.place_adapter_id)
-        TextView place_adapter_id;
-
         @BindView(R.id.place_adapter_country)
         TextView place_adapter_country;
 
         @BindView(R.id.place_adapter_city)
         TextView place_adapter_city;
+
+        @BindView(R.id.place_adapter_location)
+        TextView place_adapter_location;
 
 
         public FavoriteViewHolder(@NonNull View itemView) {

@@ -38,29 +38,26 @@ public class MenuActivity extends AppCompatActivity {
 
     @OnClick(R.id.liste)
     public void onClickListe(){
-        Intent test = new Intent(MenuActivity.this, MainActivity.class);
-        startActivity(test);
+        Intent liste = new Intent(this, MainActivity.class);
+        startActivity(liste);
     }
 
     @OnClick(R.id.carte)
     public void onClickCarte(){
-        Intent test = new Intent(MenuActivity.this, MapActivity.class);
-        startActivity(test);
+        Intent carte = new Intent(this, MapActivity.class);
+        startActivity(carte);
     }
 
     @OnClick(R.id.detail)
     public void onClickDetail(){
-        Intent test = new Intent(MenuActivity.this, ListeActivity.class);
-        startActivity(test);
+        Intent detail = new Intent(this, ListeActivity.class);
+        startActivity(detail);
     }
-
-
-
 
     @OnClick(R.id.recherche)
     public  void onClickRecherche(){
-        Intent test = new Intent(MenuActivity.this,RechercheActivity.class);
-        startActivity(test);
+        Intent recherche = new Intent(this,RechercheActivity.class);
+        startActivity(recherche);
     }
 
     @OnClick(R.id.rechercheMes)
@@ -72,8 +69,8 @@ public class MenuActivity extends AppCompatActivity {
 
     @OnClick(R.id.favoris)
     public  void onClickFav(){
-        Intent test = new Intent(MenuActivity.this,FavoriteListActivity.class);
-        startActivity(test);
+        Intent favoris = new Intent(this,FavoriteListActivity.class);
+        startActivity(favoris);
     }
 }
 

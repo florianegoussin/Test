@@ -1,5 +1,6 @@
 package com.example.test;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
@@ -28,15 +29,13 @@ import java.lang.reflect.Modifier;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class PlaceDetailActivity extends AppCompatActivity {
 
-    //@BindView(R.id.recyclerView_param)
-    //RecyclerView recyclerView_param;
-
-    @BindView(R.id.place_adapter_icon)
-    ImageView place_adapter_icon;
+    @BindView(R.id.menu_icon)
+    ImageView menu_icon;
 
     @BindView(R.id.place_adapter_location)
     TextView place_adapter_location;
@@ -59,8 +58,6 @@ public class PlaceDetailActivity extends AppCompatActivity {
     @BindView(R.id.temp)
     WebView temp;
 
-
-    //private MeasurementAdapter mMesureAdapter;
     private Gson gson ;
     String loc;
     Location ObjLoc;
@@ -73,17 +70,6 @@ public class PlaceDetailActivity extends AppCompatActivity {
     String annotation;
 
 
-   /* @BindView(R.id.activity_detail_place_street)
-    TextView mPlaceStreet;
-    private String mPlaceStreetValue;*/
-
-    //private String mparamname;
-
-    /*List<Measurement> listmesures;
-    public PlaceDetailActivity(List<Measurement> listmesures) {
-        this.listmesures = listmesures;
-    }*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,16 +80,11 @@ public class PlaceDetailActivity extends AppCompatActivity {
         this.gson = new GsonBuilder().excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
                 .serializeNulls()
                 .create();
-        //mMesureAdapter = new MeasurementAdapter(this, new ArrayList<>());
-        //recyclerView_param.setAdapter(mMesureAdapter);
-        //recyclerView_param.setLayoutManager(new LinearLayoutManager(this));
-
-
 
 
         //EventBusManager.BUS.register(this);
         loc=getIntent().getStringExtra("location");
-        place_adapter_icon.setImageResource(R.drawable.home_icon);
+        menu_icon.setImageResource(R.drawable.photo_menu);
         place_adapter_country.setText(getIntent().getStringExtra("country"));
         place_adapter_city.setText(getIntent().getStringExtra("city"));
         place_adapter_location.setText(getIntent().getStringExtra("location"));
@@ -116,39 +97,22 @@ public class PlaceDetailActivity extends AppCompatActivity {
         System.out.println("LONG: "+ longitude);
 
         //Affichage StreetView
-        Picasso.get().load("https://maps.googleapis.com/maps/api/streetview?size=400x400&location="+latitude+","+longitude+"&key=AIzaSyDWg17olhB-Wq9v5Cfg5a2YrmZSP7fhuvM").into(streetview);
+        Picasso.get().load("https://maps.googleapis.com/maps/api/streetview?size=600x400&location="+latitude+","+longitude+"&key=AIzaSyDWg17olhB-Wq9v5Cfg5a2YrmZSP7fhuvM").into(streetview);
 
         //Affichage température
-        quote="\"";
-        slash="\\";
-        annotation=slash+quote;
-        System.out.println("HEREE11: "+ quote);
-        System.out.println("HERE222: "+ slash);
-        System.out.println("HEREE33 : "+ annotation);
-        //tempurl="<iframe seamless width="+quote+"888"+quote+" height="+quote+"336"+quote+" frameborder="+quote+"0"+quote+" src="+annotation+"https://www.infoclimat.fr/public-api/mixed/iframeSLIDE?_ll="+latitude+","+longitude+"&_inc=WyJQYXJpcyIsIjQyIiwiMjk4ODUwNyIsIkZSIl0=&_auth=BR8DFAF%2FUHJfcgE2AHYGLwNrU2YBdwEmBnoKaQ5rVypSOVIzAGAHYQVrB3oDLFdhBCkCYQ02ADAKYQpyXy0EZQVvA28BalA3XzABZAAvBi0DLVMyASEBJgZkCmoOZVcqUjBSMwBjB3sFawdtAzBXfQQxAn0NLQA5CmwKZV86BGYFYwNnAWZQO183AXwALwY3A2VTYgE3AT0GZQo4DmJXN1JjUjQAYwc2BW4HewM0V2IENgJlDTYAOwpuCmxfLQR4BR8DFAF%2FUHJfcgE2AHYGLwNlU20Bag%3D%3D&_c=4c1aba888636a009d4b4d3187f0b4fd6"+annotation+"></iframe>"+quote;
-        //tempurl="<iframe seamless width=\"888\" height=\"336\" frameborder=\"0\" src=\"https://www.infoclimat.fr/public-api/mixed/iframeSLIDE?_ll="+latitude+","+longitude+"&_inc=WyJQYXJpcyIsIjQyIiwiMjk4ODUwNyIsIkZSIl0=&_auth=BR8DFAF%2FUHJfcgE2AHYGLwNrU2YBdwEmBnoKaQ5rVypSOVIzAGAHYQVrB3oDLFdhBCkCYQ02ADAKYQpyXy0EZQVvA28BalA3XzABZAAvBi0DLVMyASEBJgZkCmoOZVcqUjBSMwBjB3sFawdtAzBXfQQxAn0NLQA5CmwKZV86BGYFYwNnAWZQO183AXwALwY3A2VTYgE3AT0GZQo4DmJXN1JjUjQAYwc2BW4HewM0V2IENgJlDTYAOwpuCmxfLQR4BR8DFAF%2FUHJfcgE2AHYGLwNlU20Bag%3D%3D&_c=4c1aba888636a009d4b4d3187f0b4fd6\"></iframe>";
-        //temp.loadData(tempurl,"html","null");
+        quote = "\"";
+        slash = "\\";
+        annotation=slash + quote;
+
         tempurl="https://www.infoclimat.fr/public-api/mixed/iframeSLIDE?_ll="+latitude+","+longitude+"&_inc=WyJQYXJpcyIsIjQyIiwiMjk4ODUwNyIsIkZSIl0=&_auth=BR8DFAF%2FUHJfcgE2AHYGLwNrU2YBdwEmBnoKaQ5rVypSOVIzAGAHYQVrB3oDLFdhBCkCYQ02ADAKYQpyXy0EZQVvA28BalA3XzABZAAvBi0DLVMyASEBJgZkCmoOZVcqUjBSMwBjB3sFawdtAzBXfQQxAn0NLQA5CmwKZV86BGYFYwNnAWZQO183AXwALwY3A2VTYgE3AT0GZQo4DmJXN1JjUjQAYwc2BW4HewM0V2IENgJlDTYAOwpuCmxfLQR4BR8DFAF%2FUHJfcgE2AHYGLwNlU20Bag%3D%3D&_c=4c1aba888636a009d4b4d3187f0b4fd6";
         temp.loadUrl(tempurl);
 
-
-
-   //     MeasurementSearchService.INSTANCE.searchMesures(getIntent().getStringExtra("city"), getIntent().getStringExtra("location"));
         MeasurementSearchService.INSTANCE.searchMesures(getIntent().getStringExtra("location"),getIntent().getStringExtra("city") );
 
         //initDB
         Common.edmtRoomDatabase = EDMTRoomDatabase.getInstance(this);
-        //Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.edmtRoomDatabase.CartDAO()));
         Common.favoriteRepository = FavoriteRepository.getInstance(FavoriteDataSource.getInstance(Common.edmtRoomDatabase.favoriteDAO()));
 
-
-
-        //mPlaceStreetValue = getIntent().getStringExtra("placeStreet");
-        //mPlaceStreet.setText(mPlaceStreetValue);
-
-
-
-        //place_adapter_id.setText();
 
         //Favorite System
         if(Common.favoriteRepository.isFavorite(loc) == 1)
@@ -168,8 +132,6 @@ public class PlaceDetailActivity extends AppCompatActivity {
                     addOrRemoveFavorite(ObjLoc,false);
                     btn_favorite.setImageResource(R.drawable.ic_favorite_border_white_24dp);
                 }
-
-
             }
         });
     }
@@ -219,6 +181,13 @@ public class PlaceDetailActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    @OnClick(R.id.menu_icon)
+    public void clickedOnSwitchToMenu(){
+        Intent switchToMenu = new Intent (this, MenuActivity.class);
+        startActivity(switchToMenu);
     }
 
 }

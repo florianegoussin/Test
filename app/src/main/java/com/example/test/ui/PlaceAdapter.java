@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test.ListeActivity;
-import com.example.test.PlaceDetailActivity;
 import com.example.test.R;
 import com.example.test.model.ZoneAddress;
 
@@ -42,10 +41,8 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     public void onBindViewHolder(PlaceAdapter.PlaceViewHolder holder, int position) {
         // Adapt the ViewHolder state to the new element
         final ZoneAddress place = mPlaces.get(position);
-        holder.mPlaceIdTextView.setText(place.name);
-        //holder.mPlaceCountryTextView.setText(place.country);
-        holder.mPlaceCityTextView.setText(place.country);
-        holder.mPlaceLocationTextView.setText(place.city);
+        holder.mPlaceCountryTextView.setText(place.country);
+        holder.mPlaceCityTextView.setText(place.city);
 
 
         //Accès au détail de l'activité, doit renvoyer les mêmes infos qu'au clic sur l'infowindows
@@ -72,6 +69,10 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     // Pattern ViewHolder :
     class PlaceViewHolder extends RecyclerView.ViewHolder
     {
+
+        @BindView(R.id.place_adapter_icon)
+        ImageView mPlaceIcon;
+
         @BindView(R.id.place_adapter_id)
         TextView mPlaceIdTextView;
 
@@ -81,11 +82,6 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
         @BindView(R.id.place_adapter_city)
         TextView mPlaceCityTextView;
 
-        @BindView(R.id.place_adapter_icon)
-        ImageView mPlaceIcon;
-
-        @BindView(R.id.place_adapter_location)
-        TextView mPlaceLocationTextView;
 
         public PlaceViewHolder(View itemView) {
             super(itemView);
