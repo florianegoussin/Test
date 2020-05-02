@@ -54,6 +54,22 @@ public class ZoneAdapter extends RecyclerView.Adapter<ZoneAdapter.ZoneViewHolder
                 activity.startActivity(ListeActivity);
             }
         });
+        holder.mPlaceCountryTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ListeActivity = new Intent(activity, ListeActivity.class);
+                ListeActivity.putExtra("city", zone.city);
+                activity.startActivity(ListeActivity);
+            }
+        });
+        holder.mPlaceCityTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ListeActivity = new Intent(activity, ListeActivity.class);
+                ListeActivity.putExtra("city", zone.city);
+                activity.startActivity(ListeActivity);
+            }
+        });
 
     }
 

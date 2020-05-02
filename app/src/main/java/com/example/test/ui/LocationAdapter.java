@@ -61,6 +61,28 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
                 context.startActivity(seePlaceDetailIntent);
             }
         });
+        holder.mPlaceCityTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent seePlaceDetailIntent = new Intent(context, PlaceDetailActivity.class);
+                seePlaceDetailIntent.putExtra("city", location.city);
+                seePlaceDetailIntent.putExtra("country",location.country);
+                seePlaceDetailIntent.putExtra("location",location.location);
+                seePlaceDetailIntent.putExtra("objetloc",location);
+                context.startActivity(seePlaceDetailIntent);
+            }
+        });
+        holder.mPlaceLocationTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent seePlaceDetailIntent = new Intent(context, PlaceDetailActivity.class);
+                seePlaceDetailIntent.putExtra("city", location.city);
+                seePlaceDetailIntent.putExtra("country",location.country);
+                seePlaceDetailIntent.putExtra("location",location.location);
+                seePlaceDetailIntent.putExtra("objetloc",location);
+                context.startActivity(seePlaceDetailIntent);
+            }
+        });
 
         //Favorite System
         if(Common.favoriteRepository.isFavorite(location.location) == 1)
