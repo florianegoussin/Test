@@ -53,7 +53,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
             @Override
             public void onClick(View v) {
                 Intent ListeActivity = new Intent(activity, ListeActivity.class);
-                ListeActivity.putExtra("placeStreet", place.city);
+                ListeActivity.putExtra("city", place.city);
                 activity.startActivity(ListeActivity);
             }
         });

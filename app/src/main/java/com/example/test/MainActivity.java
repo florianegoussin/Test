@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mPlaceAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        if (getIntent().hasExtra("currentSearch")) {
-            mSearchEditText.setText(getIntent().getStringExtra("currentSearch"));
+        if (getIntent().hasExtra("city")) {
+            mSearchEditText.setText(getIntent().getStringExtra("city"));
         }
 
         mSearchEditText.addTextChangedListener(new TextWatcher() {
@@ -130,7 +130,14 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.activity_main_switch_button)
     public void clickedOnSwitchToMap(){
         Intent switchToMapIntent = new Intent (this, MapActivity.class);
-        switchToMapIntent.putExtra("currentSearch", mSearchEditText.getText().toString());
+        switchToMapIntent.putExtra("city", mSearchEditText.getText().toString());
+        startActivity(switchToMapIntent);
+    }
+
+    @OnClick(R.id.activity_main_switch_list)
+    public void clickedOnSwitchToList(){
+        Intent switchToMapIntent = new Intent (this, ListeActivity.class);
+        switchToMapIntent.putExtra("city", mSearchEditText.getText().toString());
         startActivity(switchToMapIntent);
     }
 

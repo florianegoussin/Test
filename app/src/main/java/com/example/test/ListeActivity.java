@@ -54,8 +54,8 @@ public class ListeActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mPlaceAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        if (getIntent().hasExtra("placeStreet")) {
-            mSearchEditText.setText(getIntent().getStringExtra("placeStreet"));
+        if (getIntent().hasExtra("city")) {
+            mSearchEditText.setText(getIntent().getStringExtra("city"));
         }
 
         mSearchEditText.addTextChangedListener(new TextWatcher() {
@@ -122,7 +122,7 @@ public class ListeActivity extends AppCompatActivity {
     @OnClick(R.id.activity_main_switch_button)
     public void clickedOnSwitchToMap(){
         Intent switchToMapIntent = new Intent (this, MapActivity.class);
-        switchToMapIntent.putExtra("placeStreet", mSearchEditText.getText().toString());
+        switchToMapIntent.putExtra("city", mSearchEditText.getText().toString());
         startActivity(switchToMapIntent);
     }
 

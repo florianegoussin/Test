@@ -150,7 +150,7 @@ public class MeasurementSearchService {
         mLastScheduleTask = mScheduler.schedule(new Runnable() {
 
             public void run(){
-
+                searchRechFromDB(location);
 
                 // Call to the REST service
                 //Modification pour uniquement les locations en France
@@ -185,7 +185,7 @@ public class MeasurementSearchService {
                             ActiveAndroid.endTransaction();
 
 
-                            searchRechFromDB(location);
+
 
                         } else {
                             // Null result

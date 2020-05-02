@@ -61,8 +61,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        if (getIntent().hasExtra("placeStreet")) {
-            mSearchEditText.setText(getIntent().getStringExtra("placeStreet"));
+        if (getIntent().hasExtra("city")) {
+            mSearchEditText.setText(getIntent().getStringExtra("city"));
         }
 
         mSearchEditText.addTextChangedListener(new TextWatcher() {
@@ -142,7 +142,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @OnClick(R.id.activity_map_switch_button)
     public void clickedOnSwitchToList(){
         Intent switchToListIntent = new Intent(this, MainActivity.class);
-        switchToListIntent.putExtra("placeStreet", mSearchEditText.getText().toString());
+        switchToListIntent.putExtra("city", mSearchEditText.getText().toString());
         startActivity(switchToListIntent);
     }
 
