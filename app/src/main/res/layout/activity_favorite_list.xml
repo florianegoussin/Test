@@ -14,16 +14,14 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_margin="5dp"
-        android:src="@drawable/photo_menu"
-        />
+        android:src="@drawable/photo_menu" />
 
         <ImageView
             android:id="@+id/btn_favorite"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_margin="5dp"
-            android:layout_weight="10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:src="@drawable/ic_favorite_border_white_24dp" />
 
     </LinearLayout>
