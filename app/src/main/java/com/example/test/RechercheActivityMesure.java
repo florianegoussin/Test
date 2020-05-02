@@ -192,6 +192,7 @@ public class RechercheActivityMesure extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         EventBusManager.BUS.register(this);
+        mLocationAdapter.notifyDataSetChanged();
 
     }
 
