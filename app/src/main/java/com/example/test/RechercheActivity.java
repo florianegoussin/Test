@@ -1,5 +1,6 @@
 package com.example.test;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class RechercheActivity extends AppCompatActivity {
 
@@ -116,6 +118,19 @@ public class RechercheActivity extends AppCompatActivity {
                 mLocationAdapter.notifyDataSetChanged();
             });
 
+    }
+
+
+    @OnClick(R.id.icon_menu)
+    public void clickedOnSwitchToMenu(){
+        Intent switchToMenu = new Intent (this, MenuActivity.class);
+        startActivity(switchToMenu);
+    }
+
+    @OnClick(R.id.icon_menu2)
+    public void clickedOnMenu(){
+        Intent switchToMenu = new Intent (this, MenuActivity.class);
+        startActivity(switchToMenu);
     }
 
 

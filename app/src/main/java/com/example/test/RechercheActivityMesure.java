@@ -34,6 +34,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class RechercheActivityMesure extends AppCompatActivity {
 
@@ -383,6 +384,16 @@ public class RechercheActivityMesure extends AppCompatActivity {
     }
 
 
+    @OnClick(R.id.icon_menu)
+    public void clickedOnSwitchToMenu(){
+        Intent switchToMenu = new Intent (this, MenuActivity.class);
+        startActivity(switchToMenu);
+    }
 
+    @OnClick(R.id.icon_menu2)
+    public void clickedOnMenu(){
+        Intent switchToMenu = new Intent (this, MenuActivity.class);
+        startActivity(switchToMenu);
+    }
 
 }
