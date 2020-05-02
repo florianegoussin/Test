@@ -5,113 +5,120 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-
-
-    <LinearLayout
-        android:orientation="vertical"
+    <ViewSwitcher
+        android:id="@+id/simpleViewSwitcher"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <EditText
-            android:id="@+id/zone_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ems="10"
-            android:hint="Recherchez une zone"
-            android:inputType="text"/>
-        <EditText
-            android:id="@+id/location_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ems="10"
-            android:hint="Recherchez un lieu"
-            android:inputType="text"/>
+        android:layout_height="wrap_content">
 
 
-        <EditText
-            android:id="@+id/editbc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ems="10"
-            android:hint="Recherchez un bc"
-            android:inputType="numberDecimal" />
 
 
-        <EditText
-            android:id="@+id/editco"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ems="10"
-            android:hint="Recherchez un co"
-            android:inputType="numberDecimal" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/zone_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="Recherchez une zone"
+                    android:inputType="text"/>
+                <EditText
+                    android:id="@+id/location_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="Recherchez un lieu"
+                    android:inputType="text"/>
 
 
-        <EditText
-            android:id="@+id/editno2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ems="10"
-            android:hint="Recherchez un no2"
-            android:inputType="numberDecimal" />
-
-        <EditText
-            android:id="@+id/editso2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ems="10"
-            android:hint="Recherchez un so2"
-            android:inputType="numberDecimal" />
+                <EditText
+                    android:id="@+id/editbc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="Recherchez un bc"
+                    android:inputType="numberDecimal" />
 
 
-        <EditText
-            android:id="@+id/edito3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ems="10"
-            android:hint="Recherchez un o3"
-            android:inputType="numberDecimal" />
-
-        <EditText
-            android:id="@+id/editpm10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ems="10"
-            android:hint="Recherchez un pm10"
-            android:inputType="numberDecimal" />
-
-        <EditText
-            android:id="@+id/editpm25"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:ems="10"
-            android:hint="Recherchez un pm25"
-            android:inputType="numberDecimal" />
+                <EditText
+                    android:id="@+id/editco"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="Recherchez un co"
+                    android:inputType="numberDecimal" />
 
 
-    </LinearLayout>
+                <EditText
+                    android:id="@+id/editno2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="Recherchez un no2"
+                    android:inputType="numberDecimal" />
 
-    <Button
-        android:id="@+id/valider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Valider" />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+                <EditText
+                    android:id="@+id/editso2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="Recherchez un so2"
+                    android:inputType="numberDecimal" />
 
 
-</LinearLayout>
+                <EditText
+                    android:id="@+id/edito3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="Recherchez un o3"
+                    android:inputType="numberDecimal" />
+
+                <EditText
+                    android:id="@+id/editpm10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="Recherchez un pm10"
+                    android:inputType="numberDecimal" />
+
+                <EditText
+                    android:id="@+id/editpm25"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="Recherchez un pm25"
+                    android:inputType="numberDecimal" />
+
+
+            </LinearLayout>
+    </ViewSwitcher>
+            <Button
+                android:id="@+id/buttonNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Valider" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+        </LinearLayout>

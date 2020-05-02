@@ -2,7 +2,12 @@ package com.example.test;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ViewSwitcher;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +39,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class RechercheActivity extends AppCompatActivity {
+
+    private ViewSwitcher simpleViewSwitcher;
+    Button btnNext;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -76,6 +84,83 @@ public class RechercheActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recherche);
 
+        btnNext = (Button) findViewById(R.id.buttonNext);
+        simpleViewSwitcher = (ViewSwitcher) findViewById(R.id.simpleViewSwitcher); // get the reference of ViewSwitcher
+// Declare in and out animations and load them using AnimationUtils class
+
+        Animation in = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
+        Animation out = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
+
+        simpleViewSwitcher.setInAnimation(in);
+        simpleViewSwitcher.setOutAnimation(out);
+
+
+
+        btnNext.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                // show the next view of ViewSwitcher
+                simpleViewSwitcher.showNext();
+
+                parametre = new HashMap<>();
+
+
+                if(!mEditBc.getText().toString().equals("")) {
+                    parametre.put("bc", Double.parseDouble(mEditBc.getText().toString()));
+                }
+
+                if(!mEditCo.getText().toString().equals("")) {
+                    parametre.put("co", Double.parseDouble(mEditCo.getText().toString()));
+                }
+
+                if(!mEditNo2.getText().toString().equals("")) {
+                    parametre.put("no2", Double.parseDouble(mEditNo2.getText().toString()));
+                }
+
+
+                if(!mEditO3.getText().toString().equals("")) {
+                    parametre.put("o3", Double.parseDouble(mEditO3.getText().toString()));
+                }
+
+
+                if(!mEditPm10.getText().toString().equals("")) {
+                    parametre.put("pm10", Double.parseDouble(mEditPm10.getText().toString()));
+                }
+
+
+                if(!mEditPm25.getText().toString().equals("")) {
+                    parametre.put("pm25", Double.parseDouble(mEditPm25.getText().toString()));
+                }
+
+
+                if(!mEditSo2.getText().toString().equals("")) {
+                    parametre.put("so2", Double.parseDouble(mEditSo2.getText().toString()));
+                }
+
+
+                System.out.println("ZONEEE: "+mZoneSearch.getText().toString());
+                System.out.println("NAMEEE: "+mLocationSearch.getText().toString());
+        /*if(mLocationSearch.getText().toString().equals("")){
+            System.out.println("EMPTYYY");
+        }
+        else{
+            System.out.println("FAILLL");
+        }*/
+        //EventBusManager.BUS.register(this);
+        LocationSearchService.INSTANCE.searchRechercheFromDB(mZoneSearch.getText().toString(),mLocationSearch.getText().toString());
+
+        //MeasurementSearchService.INSTANCE.searchRechercheFromDB(mZoneSearch.getText().toString(),mLocationSearch.getText().toString());
+        //ZoneSearchService.INSTANCE.searchZoneFromDB(mZoneSearch.getText().toString());
+        //LocationSearchService.INSTANCE.searchLocationsFromDB(mLocationSearch.getText().toString());
+
+
+
+                test = new Intent(RechercheActivity.this,ResultatRechActivity.class);
+                startActivity(test);
+            }
+        });
+
         ButterKnife.bind(this);
 
         mLocationAdapter = new LocationAdapter(this, new ArrayList<>());
@@ -108,7 +193,8 @@ public class RechercheActivity extends AppCompatActivity {
         EventBusManager.BUS.unregister(this);
     }
 
-    @OnClick(R.id.valider)
+
+   /* @OnClick(R.id.valider)
     public  void onClickRecherche(){
 
 
@@ -157,7 +243,7 @@ public class RechercheActivity extends AppCompatActivity {
             System.out.println("FAILLL");
         }*/
         //EventBusManager.BUS.register(this);
-        LocationSearchService.INSTANCE.searchRechercheFromDB(mZoneSearch.getText().toString(),mLocationSearch.getText().toString());
+     /*   LocationSearchService.INSTANCE.searchRechercheFromDB(mZoneSearch.getText().toString(),mLocationSearch.getText().toString());
 
         //MeasurementSearchService.INSTANCE.searchRechercheFromDB(mZoneSearch.getText().toString(),mLocationSearch.getText().toString());
         //ZoneSearchService.INSTANCE.searchZoneFromDB(mZoneSearch.getText().toString());
@@ -167,7 +253,7 @@ public class RechercheActivity extends AppCompatActivity {
         //startActivity(test);
 
 
-    }
+    }*/
 
     @Subscribe
     public void paramSearch(final MeasurementResultEvent mes){
