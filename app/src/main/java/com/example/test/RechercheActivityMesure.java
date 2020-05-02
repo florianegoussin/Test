@@ -155,7 +155,7 @@ public class RechercheActivityMesure extends AppCompatActivity {
         btnPrev.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                //locRetenu=null;
+                locRetenu.clear();
                 simpleViewSwitcher.showPrevious();
 
             }
