@@ -116,9 +116,6 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         @BindView(R.id.place_adapter_icon)
         ImageView mPlaceIcon;
 
-        @BindView(R.id.place_adapter_id)
-        TextView mPlaceIdTextView;
-
         @BindView(R.id.place_adapter_city)
         TextView mPlaceCityTextView;
 

@@ -73,9 +73,6 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
         @BindView(R.id.place_adapter_icon)
         ImageView mPlaceIcon;
 
-        @BindView(R.id.place_adapter_id)
-        TextView mPlaceIdTextView;
-
         @BindView(R.id.place_adapter_country)
         TextView mPlaceCountryTextView;
 
