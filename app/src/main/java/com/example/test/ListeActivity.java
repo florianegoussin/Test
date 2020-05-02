@@ -33,13 +33,13 @@ public class ListeActivity extends AppCompatActivity {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
-    private LocationAdapter mLocationAdapter;
-
     @BindView(R.id.activity_main_search_adress_edittext)
     EditText mSearchEditText;
 
     @BindView(R.id.activity_main_loader)
     ProgressBar mProgressBar;
+
+    private LocationAdapter mLocationAdapter;
 
 
     @Override
@@ -52,6 +52,7 @@ public class ListeActivity extends AppCompatActivity {
         mLocationAdapter = new LocationAdapter(this, new ArrayList<>());
         mRecyclerView.setAdapter(mLocationAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
         if (getIntent().hasExtra("city")) {
             mSearchEditText.setText(getIntent().getStringExtra("city"));
@@ -73,12 +74,11 @@ public class ListeActivity extends AppCompatActivity {
                 // Once text has changed
                 // Show a loader
                 mProgressBar.setVisibility(View.VISIBLE);
-
                 LocationSearchService.INSTANCE.searchLocationsFromAddress(editable.toString());
             }
         });
 
-        //initDB
+            //initDB
             Common.edmtRoomDatabase = EDMTRoomDatabase.getInstance(this);
             Common.favoriteRepository = FavoriteRepository.getInstance(FavoriteDataSource.getInstance(Common.edmtRoomDatabase.favoriteDAO()));
 
@@ -93,6 +93,7 @@ public class ListeActivity extends AppCompatActivity {
         EventBusManager.BUS.register(this);
         LocationSearchService.INSTANCE.searchLocationsFromAddress(mSearchEditText.getText().toString());
     }
+
     @Override
     protected void onPause() {
         // Unregister from Event bus : if event are posted now, the activity will not receive it

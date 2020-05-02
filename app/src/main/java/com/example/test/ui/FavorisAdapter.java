@@ -21,12 +21,11 @@ import butterknife.ButterKnife;
 public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavoriteViewHolder> {
 
     Context context;
-    List<Favorite> favoriteList;
+    List<Favorite> favorisList;
 
-    public FavorisAdapter(Context context, List<Favorite> favoriteList) {
-
+    public FavorisAdapter(Context context, List<Favorite> favorisList) {
         this.context = context;
-        this.favoriteList = favoriteList;
+        this.favorisList = favorisList;
     }
 
     @NonNull
@@ -39,10 +38,10 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.Favorite
 
     @Override
     public void onBindViewHolder(@NonNull FavoriteViewHolder holder, int position) {
-       holder.place_adapter_icon.setImageResource(R.drawable.home_icon);
-        holder.place_adapter_country.setText(favoriteList.get(position).country);
-        holder.place_adapter_city.setText(favoriteList.get(position).city);
-        holder.place_adapter_location.setText(favoriteList.get(position).location);
+        holder.place_adapter_icon.setImageResource(R.drawable.home_icon);
+        holder.place_adapter_country.setText(favorisList.get(position).country);
+        holder.place_adapter_city.setText(favorisList.get(position).city);
+        holder.place_adapter_location.setText(favorisList.get(position).location);
 
 
 
@@ -50,7 +49,7 @@ public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.Favorite
 
     @Override
     public int getItemCount() {
-        return favoriteList.size();
+        return favorisList.size();
     }
 
     public class FavoriteViewHolder extends RecyclerView.ViewHolder {

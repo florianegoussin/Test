@@ -19,30 +19,30 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ZoneAdapter extends RecyclerView.Adapter<ZoneAdapter.PlaceViewHolder>{
+public class ZoneAdapter extends RecyclerView.Adapter<ZoneAdapter.ZoneViewHolder>{
     private LayoutInflater inflater;
     private Activity activity;
-    private List<ZoneAddress> mPlaces;
+    private List<ZoneAddress> mZones;
 
-    public ZoneAdapter(Activity activity, List<ZoneAddress> places) {
+    public ZoneAdapter(Activity activity, List<ZoneAddress> zones) {
         inflater = LayoutInflater.from(activity);
         this.activity = activity;
-        this.mPlaces = places;
+        this.mZones = zones;
     }
 
     @Override
-    public ZoneAdapter.PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ZoneAdapter.ZoneViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.zone_item, parent, false);
-        ZoneAdapter.PlaceViewHolder holder = new ZoneAdapter.PlaceViewHolder(view);
+        ZoneAdapter.ZoneViewHolder holder = new ZoneAdapter.ZoneViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(ZoneAdapter.PlaceViewHolder holder, int position) {
+    public void onBindViewHolder(ZoneAdapter.ZoneViewHolder holder, int position) {
         // Adapt the ViewHolder state to the new element
-        final ZoneAddress place = mPlaces.get(position);
-        holder.mPlaceCountryTextView.setText(place.country);
-        holder.mPlaceCityTextView.setText(place.city);
+        final ZoneAddress zone = mZones.get(position);
+        holder.mPlaceCountryTextView.setText(zone.country);
+        holder.mPlaceCityTextView.setText(zone.city);
 
 
         //Accès au détail de l'activité, doit renvoyer les mêmes infos qu'au clic sur l'infowindows
@@ -50,7 +50,7 @@ public class ZoneAdapter extends RecyclerView.Adapter<ZoneAdapter.PlaceViewHolde
             @Override
             public void onClick(View v) {
                 Intent ListeActivity = new Intent(activity, ListeActivity.class);
-                ListeActivity.putExtra("city", place.city);
+                ListeActivity.putExtra("city", zone.city);
                 activity.startActivity(ListeActivity);
             }
         });
@@ -59,15 +59,15 @@ public class ZoneAdapter extends RecyclerView.Adapter<ZoneAdapter.PlaceViewHolde
 
     @Override
     public int getItemCount() {
-        return mPlaces.size();
+        return mZones.size();
     }
 
     public void setPlaces(List<ZoneAddress> places){
-        this.mPlaces = places;
+        this.mZones = places;
     }
 
     // Pattern ViewHolder :
-    class PlaceViewHolder extends RecyclerView.ViewHolder
+    class ZoneViewHolder extends RecyclerView.ViewHolder
     {
 
         @BindView(R.id.place_adapter_icon)
@@ -80,7 +80,7 @@ public class ZoneAdapter extends RecyclerView.Adapter<ZoneAdapter.PlaceViewHolde
         TextView mPlaceCityTextView;
 
 
-        public PlaceViewHolder(View itemView) {
+        public ZoneViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

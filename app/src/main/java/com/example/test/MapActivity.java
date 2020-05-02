@@ -81,7 +81,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 // Show a loader
                 mProgressBar.setVisibility(View.VISIBLE);
 
-                // Launch a search through the PlaceSearchService
                 LocationSearchService.INSTANCE.searchLocationsFromAddress(editable.toString());
             }
         });
@@ -92,16 +91,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onResume();
 
         EventBusManager.BUS.register(this);
-
         LocationSearchService.INSTANCE.searchLocationsFromAddress(mSearchEditText.getText().toString());
 
     }
 
     @Override
     protected void onPause(){
+        super.onPause();
         EventBusManager.BUS.unregister(this);
 
-        super.onPause();
     }
 
     @Subscribe
@@ -110,7 +108,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 // Here someone has posted a SearchResultEvent
                 // Check that map is ready
                 if (mActiveGoogleMap != null) {
@@ -119,13 +116,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     mMarkersToPlaces.clear();
 
                     for (Location location : event.getLocations()) {
-
                         MarkerOptions markerOptions = new MarkerOptions()
                                 .position(new LatLng(location.getCoordinates().latitude, location.getCoordinates().longitude))
                                 .title(location.city)
                                 .snippet("Location : " + location.location + " Mesure : " + location.count);
 
-                        // Step 3: add marker
                        // mActiveGoogleMap.addMarker(markerOptions);
                         Marker marker = mActiveGoogleMap.addMarker(markerOptions);
                         mMarkersToPlaces.put(marker.getId(), location);
@@ -135,12 +130,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         });
     }
 
-    @OnClick(R.id.activity_map_switch_button)
-    public void clickedOnSwitchToList(){
-        Intent switchToListIntent = new Intent(this, ZoneActivity.class);
-        switchToListIntent.putExtra("city", mSearchEditText.getText().toString());
-        startActivity(switchToListIntent);
-    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -164,5 +153,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
             }
         });
+    }
+
+    @OnClick(R.id.activity_map_switch_button)
+    public void clickedOnSwitchToList(){
+        Intent switchToListIntent = new Intent(this, ZoneActivity.class);
+        switchToListIntent.putExtra("city", mSearchEditText.getText().toString());
+        startActivity(switchToListIntent);
     }
 }

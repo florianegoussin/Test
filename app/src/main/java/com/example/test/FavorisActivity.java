@@ -25,10 +25,9 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class FavorisActivity extends AppCompatActivity {
+
     @BindView(R.id.recyclerView_fav)
     RecyclerView recyclerView_fav;
-
-    // private FavoriteAdapter mFavAdpt;
 
     CompositeDisposable compositeDisposable;
 
@@ -41,21 +40,16 @@ public class FavorisActivity extends AppCompatActivity {
 
         compositeDisposable = new CompositeDisposable();
 
-        //recyclerView_fav = (RecyclerView)findViewById(R.id.recyclerView_fav);
-        //mFavAdpt = new FavoriteAdapter(this, new ArrayList<>());
-        //recyclerView_fav.setAdapter(mFavAdpt);
         recyclerView_fav.setLayoutManager(new LinearLayoutManager(this));
         recyclerView_fav.setHasFixedSize(true);
 
         //initDB
         Common.edmtRoomDatabase = EDMTRoomDatabase.getInstance(this);
-        //Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.edmtRoomDatabase.CartDAO()));
         Common.favoriteRepository = FavoriteRepository.getInstance(FavoriteDataSource.getInstance(Common.edmtRoomDatabase.favoriteDAO()));
-
-
 
         loadFavoritesItem();
     }
+
 
     private void loadFavoritesItem() {
         compositeDisposable.add(Common.favoriteRepository.getFavItems()
@@ -68,6 +62,7 @@ public class FavorisActivity extends AppCompatActivity {
                     }
                 }));
     }
+
 
     private void displayFavoriteItem(List<Favorite> favorites) {
         FavorisAdapter favoriteAdapter = new FavorisAdapter(this,favorites);

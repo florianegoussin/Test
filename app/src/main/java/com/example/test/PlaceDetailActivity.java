@@ -102,9 +102,9 @@ public class PlaceDetailActivity extends AppCompatActivity {
         //Affichage température
         quote = "\"";
         slash = "\\";
-        annotation=slash + quote;
+        annotation = slash + quote;
 
-        tempurl="https://www.infoclimat.fr/public-api/mixed/iframeSLIDE?_ll="+latitude+","+longitude+"&_inc=WyJQYXJpcyIsIjQyIiwiMjk4ODUwNyIsIkZSIl0=&_auth=BR8DFAF%2FUHJfcgE2AHYGLwNrU2YBdwEmBnoKaQ5rVypSOVIzAGAHYQVrB3oDLFdhBCkCYQ02ADAKYQpyXy0EZQVvA28BalA3XzABZAAvBi0DLVMyASEBJgZkCmoOZVcqUjBSMwBjB3sFawdtAzBXfQQxAn0NLQA5CmwKZV86BGYFYwNnAWZQO183AXwALwY3A2VTYgE3AT0GZQo4DmJXN1JjUjQAYwc2BW4HewM0V2IENgJlDTYAOwpuCmxfLQR4BR8DFAF%2FUHJfcgE2AHYGLwNlU20Bag%3D%3D&_c=4c1aba888636a009d4b4d3187f0b4fd6";
+        tempurl = "https://www.infoclimat.fr/public-api/mixed/iframeSLIDE?_ll="+latitude+","+longitude+"&_inc=WyJQYXJpcyIsIjQyIiwiMjk4ODUwNyIsIkZSIl0=&_auth=BR8DFAF%2FUHJfcgE2AHYGLwNrU2YBdwEmBnoKaQ5rVypSOVIzAGAHYQVrB3oDLFdhBCkCYQ02ADAKYQpyXy0EZQVvA28BalA3XzABZAAvBi0DLVMyASEBJgZkCmoOZVcqUjBSMwBjB3sFawdtAzBXfQQxAn0NLQA5CmwKZV86BGYFYwNnAWZQO183AXwALwY3A2VTYgE3AT0GZQo4DmJXN1JjUjQAYwc2BW4HewM0V2IENgJlDTYAOwpuCmxfLQR4BR8DFAF%2FUHJfcgE2AHYGLwNlU20Bag%3D%3D&_c=4c1aba888636a009d4b4d3187f0b4fd6";
         temp.loadUrl(tempurl);
 
         MeasurementSearchService.INSTANCE.searchMesures(getIntent().getStringExtra("location"),getIntent().getStringExtra("city") );
@@ -148,9 +148,6 @@ public class PlaceDetailActivity extends AppCompatActivity {
             Common.favoriteRepository.delete(favorite);
 
     }
-
-
-
 
 
 
