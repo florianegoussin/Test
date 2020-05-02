@@ -42,12 +42,10 @@
             android:value="com.example.test.model.ZoneAddress,                            com.example.test.model.LocationCoordinates,                            com.example.test.model.Measurement,                            com.example.test.model.MeasurementValue,                            com.example.test.model.Location" />
 
         <activity android:name=".MapActivity" />
-        <activity android:name=".PlaceDetailActivity"
-            android:screenOrientation="landscape"
-            android:configChanges="orientation"/>
+        <activity android:name=".PlaceDetailActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".ListeActivity" />
-        <activity android:name=".ResultatRechActivity"/>
+        <activity android:name=".RechercheActivityMesure"/>
     </application>
 
 </manifest>

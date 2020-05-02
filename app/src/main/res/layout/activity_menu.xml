@@ -47,6 +47,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Recherche" />
+        <Button
+            android:id="@+id/rechercheMes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RechercheMesure" />
 
 
         <Button

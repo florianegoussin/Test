@@ -63,6 +63,12 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(test);
     }
 
+    @OnClick(R.id.rechercheMes)
+    public  void onClickRechercheMes(){
+        Intent test = new Intent(MenuActivity.this,RechercheActivityMesure.class);
+        startActivity(test);
+    }
+
 
     @OnClick(R.id.favoris)
     public  void onClickFav(){
