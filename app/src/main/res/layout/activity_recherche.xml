@@ -5,6 +5,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+    <Button
+        android:id="@+id/buttonNext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Effectuer la recherche" />
+
+    <Button
+        android:id="@+id/buttonPrevious"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Revenir à la recherche"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
     <ViewSwitcher
         android:id="@+id/simpleViewSwitcher"
         android:layout_width="match_parent"
@@ -118,25 +137,7 @@
 
     </ViewSwitcher>
 
-    <Button
-        android:id="@+id/buttonNext"
-        android:layout_width="match_parent"
-        android:layout_height="37dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="Valider" />
 
-    <Button
-        android:id="@+id/buttonPrevious"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Retour"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
 
 
 </LinearLayout>
