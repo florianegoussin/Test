@@ -46,7 +46,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         // Adapt the ViewHolder state to the new element
         final Location location = mLocation.get(position);
        // holder.mPlaceIdTextView.setText(location.country);
-       // holder.mPlaceCountryTextView.setText(location.country);
+
         holder.mPlaceCityTextView.setText(location.city);
         holder.mPlaceLocationTextView.setText(location.location);
 
@@ -122,9 +122,6 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     {
         @BindView(R.id.place_adapter_id)
         TextView mPlaceIdTextView;
-
-        @BindView(R.id.place_adapter_country)
-        TextView mPlaceCountryTextView;
 
         @BindView(R.id.place_adapter_city)
         TextView mPlaceCityTextView;

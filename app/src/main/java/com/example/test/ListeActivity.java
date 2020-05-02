@@ -126,4 +126,11 @@ public class ListeActivity extends AppCompatActivity {
         startActivity(switchToMapIntent);
     }
 
+
+    @OnClick(R.id.icon_menu)
+    public void clickedOnSwitchToMenu(){
+        Intent switchToMenu = new Intent (this, MenuActivity.class);
+        startActivity(switchToMenu);
+    }
+
 }

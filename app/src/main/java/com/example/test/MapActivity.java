@@ -126,7 +126,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         MarkerOptions markerOptions = new MarkerOptions()
                                 .position(new LatLng(location.getCoordinates().latitude, location.getCoordinates().longitude))
                                 .title(location.city)
-                                .snippet(location.country + " " + location.count);
+                                .snippet("Location : " + location.location + " Mesure : " + location.count);
                                 //.icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap));
 
                         // Step 3: add marker

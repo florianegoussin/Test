@@ -1,5 +1,6 @@
 package com.example.test;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
@@ -28,6 +29,7 @@ import java.lang.reflect.Modifier;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class PlaceDetailActivity extends AppCompatActivity {
@@ -35,8 +37,8 @@ public class PlaceDetailActivity extends AppCompatActivity {
     //@BindView(R.id.recyclerView_param)
     //RecyclerView recyclerView_param;
 
-    @BindView(R.id.place_adapter_icon)
-    ImageView place_adapter_icon;
+    @BindView(R.id.menu_icon)
+    ImageView menu_icon;
 
     @BindView(R.id.place_adapter_location)
     TextView place_adapter_location;
@@ -103,7 +105,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
         //EventBusManager.BUS.register(this);
         loc=getIntent().getStringExtra("location");
-        place_adapter_icon.setImageResource(R.drawable.home_icon);
+        menu_icon.setImageResource(R.drawable.photo_menu);
         place_adapter_country.setText(getIntent().getStringExtra("country"));
         place_adapter_city.setText(getIntent().getStringExtra("city"));
         place_adapter_location.setText(getIntent().getStringExtra("location"));
@@ -116,7 +118,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
         System.out.println("LONG: "+ longitude);
 
         //Affichage StreetView
-        Picasso.get().load("https://maps.googleapis.com/maps/api/streetview?size=400x400&location="+latitude+","+longitude+"&key=AIzaSyDWg17olhB-Wq9v5Cfg5a2YrmZSP7fhuvM").into(streetview);
+        Picasso.get().load("https://maps.googleapis.com/maps/api/streetview?size=600x400&location="+latitude+","+longitude+"&key=AIzaSyDWg17olhB-Wq9v5Cfg5a2YrmZSP7fhuvM").into(streetview);
 
         //Affichage température
         quote="\"";
@@ -221,4 +223,11 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
     }
 
+
+
+    @OnClick(R.id.menu_icon)
+    public void clickedOnSwitchToMenu(){
+        Intent switchToMenu = new Intent (this, MenuActivity.class);
+        startActivity(switchToMenu);
+    }
 }

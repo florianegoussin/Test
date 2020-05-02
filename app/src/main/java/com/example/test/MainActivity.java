@@ -141,6 +141,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(switchToMapIntent);
     }
 
+    @OnClick(R.id.menu_icon)
+    public void clickedOnSwitchToMenu(){
+        Intent switchToMenu = new Intent (this, MenuActivity.class);
+        startActivity(switchToMenu);
+    }
+
 
 
 }
