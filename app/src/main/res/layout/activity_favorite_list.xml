@@ -34,7 +34,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
         android:text="Favoris"
-        android:textSize="30sp"></TextView>
+        android:textSize="30sp"/>
 
 
     <View
@@ -47,6 +47,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
