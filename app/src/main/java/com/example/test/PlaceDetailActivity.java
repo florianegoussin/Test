@@ -134,7 +134,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
 
 
    //     MeasurementSearchService.INSTANCE.searchMesures(getIntent().getStringExtra("city"), getIntent().getStringExtra("location"));
-        MeasurementSearchService.INSTANCE.searchMesures(getIntent().getStringExtra("location") );
+        MeasurementSearchService.INSTANCE.searchMesures(getIntent().getStringExtra("location"),getIntent().getStringExtra("city") );
 
         //initDB
         Common.edmtRoomDatabase = EDMTRoomDatabase.getInstance(this);
@@ -218,24 +218,7 @@ public class PlaceDetailActivity extends AppCompatActivity {
                 }
             }
         });
-       /*runOnUiThread(()-> {
-           //System.out.println("eventttttttttttttttttttt "+event.results);
-           List<Measurement> mesures= event.getmesures();
-           mMesureAdapter.setMesures(event.getmesures());
-           mMesureAdapter.notifyDataSetChanged();
-           System.out.println(event.getmesures());*/
 
-
-
-           /*for(int i=0;i<=event.getmesures().size();i++){
-               param.setText(mesures.get(i));
-           }
-
-        });*/
     }
 
-    /*@OnClick(R.id.activity_detail_place_street)
-    public void clickedOnPlaceStreet(){
-        finish();
-    }*/
 }

@@ -28,6 +28,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
+import static com.example.test.model.Measurement.*;
+
 public class MeasurementSearchService {
 
     private static final long REFRESH_DELAY = 650;
@@ -63,7 +65,7 @@ public class MeasurementSearchService {
                 .create();
     }
 
-        public  void searchMesures(final String location) {
+        public  void searchMesures(final String location, final String city) {
 
             if (mLastScheduleTask != null && !mLastScheduleTask.isDone()) {
                 mLastScheduleTask.cancel(true);
@@ -76,7 +78,7 @@ public class MeasurementSearchService {
 
             // Call to the REST service
             //Modification pour uniquement les locations en France
-            mMesureSearchRESTService.searchForMesures("FR", location).enqueue(new Callback<MeasurementResult>() {
+            mMesureSearchRESTService.searchForMesures("FR",city, location).enqueue(new Callback<MeasurementResult>() {
                 @Override
                 public void onResponse(Call<MeasurementResult> call, retrofit2.Response<MeasurementResult> response) {
 
@@ -93,8 +95,8 @@ public class MeasurementSearchService {
                             m.location=mesure.location;
                             m.city=mesure.city;
 
-                            List<Measurement.Values> value = new ArrayList<>();
-                            for(Measurement.Values mv :mesure.measurements){
+                            List<Values> value = new ArrayList<>();
+                            for(Values mv :mesure.measurements){
                                 System.out.println("aaaaaaaaaaaaa "+mv.parameter+"       "+mv.value+"    "+mv.unit);
 
                                 value.add(mv);
@@ -139,14 +141,116 @@ public class MeasurementSearchService {
             EventBusManager.BUS.post(new MeasurementResultEvent(matchingMesureFromDB));
         }
 
+    public  void searchRechMesures(final String location, final String city) {
+
+        if (mLastScheduleTask != null && !mLastScheduleTask.isDone()) {
+            mLastScheduleTask.cancel(true);
+        }
+
+        mLastScheduleTask = mScheduler.schedule(new Runnable() {
+
+            public void run(){
+                searchRechFromDB(location);
+
+                // Call to the REST service
+                //Modification pour uniquement les locations en France
+                mMesureSearchRESTService.searchForMesures("FR",city, location).enqueue(new Callback<MeasurementResult>() {
+                    @Override
+                    public void onResponse(Call<MeasurementResult> call, retrofit2.Response<MeasurementResult> response) {
+
+                        System.out.println("aaaaaaaaaaaaa "+response.body().results);
+                        // Post an event so that listening activities can update their UI
+                        if (response.body() != null && response.body().results != null) {
+
+                            ActiveAndroid.beginTransaction();
+                            for (Measurement mesure : response.body().results) {
+
+                                System.out.println("aaaaaaaaaaaaa "+mesure.location+"         "+mesure.city);
+
+                                Measurement m = new Measurement();
+                                m.location=mesure.location;
+                                m.city=mesure.city;
+
+                                List<Values> value = new ArrayList<>();
+                                for(Values mv :mesure.measurements){
+                                    System.out.println("aaaaaaaaaaaaa "+mv.parameter+"       "+mv.value+"    "+mv.unit);
+
+                                    value.add(mv);
+                                }
+                                m.mesure= gson.toJson(value);
+                                System.out.println("testValue: "+m.mesure);
+                                m.save();
+                            }
+                            ActiveAndroid.setTransactionSuccessful();
+                            ActiveAndroid.endTransaction();
+
+
+
+
+                        } else {
+                            // Null result
+                            // We may want to display a warning to user (e.g. Toast)
+                        }
+                    }
+
+
+                    @Override
+                    public void onFailure(Call<MeasurementResult> call, Throwable t) {
+                        // Request has failed or is not at expected format
+                        // We may want to display a warning to user (e.g. Toast)
+                        System.out.println("trooooooooooooooooooop triste pas de reponse");
+                        Log.e("[PlaceSearcher] [REST]", "Response error : " + t.getMessage());
+                        searchRechFromDB(location);
+                    }
+
+
+                });
+            }
+        },REFRESH_DELAY, TimeUnit.MILLISECONDS);
+    }
+
+
+    public void searchRechFromDB (String search){
+        List<Measurement> matchingMesureFromDB = new Select()
+                .from(Measurement.class)
+                .where(search).orderBy("location ").execute();
+
+        EventBusManager.BUS.post(new MeasurementResultEvent(matchingMesureFromDB));
+    }
+
+    /*public void searchRechercheFromDB(String zoneCity, String locationName) {
+        List<Measurement> matchingRechFromDB=null;
+        if(locationName == null && zoneCity != null){
+            matchingRechFromDB = new Select()
+                    .from(Measurement.class)
+                    .where("city LIKE '%" + zoneCity + "%'").orderBy("city ").execute();
+        }
+        else if( locationName != null && zoneCity == null){
+            matchingRechFromDB = new Select()
+                    .from(Measurement.class)
+                    .where("location LIKE '%" + locationName + "%'").execute();
+        }
+        else if(locationName != null && zoneCity != null){
+            matchingRechFromDB = new Select()
+                    .from(Measurement.class)
+                    .where("city LIKE '%" + zoneCity + "%'")
+                    .where("location LIKE '%" + locationName + "%'").execute();
+
+        }
+
+        EventBusManager.BUS.post(new MeasurementResultEvent(matchingRechFromDB));
+    }*/
+
+
+
+
         // Service describing the REST APIs
         public interface MeasurementSearchRESTService {
 
             @GET("latest")
-            Call<MeasurementResult> searchForMesures(@Query("country") String country, @Query("location") String location );
+            Call<MeasurementResult> searchForMesures(@Query("country") String country,@Query("city") String city, @Query("location") String location );
 
         }
-
 
 
 

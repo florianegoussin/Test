@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/buttonNext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Effectuer la recherche" />
+
+    <Button
+        android:id="@+id/buttonPrevious"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Revenir à la recherche"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <ViewSwitcher
+        android:id="@+id/simpleViewSwitcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+               >
+
+                <EditText
+                    android:id="@+id/zone_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="Recherchez une zone"
+                    android:inputType="text"/>
+                <EditText
+                    android:id="@+id/location_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="Recherchez un lieu"
+                    android:inputType="text"/>
+
+
+                <EditText
+                    android:id="@+id/editbc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="Recherchez un bc"
+                    android:inputType="numberDecimal" />
+
+
+                <EditText
+                    android:id="@+id/editco"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="Recherchez un co"
+                    android:inputType="numberDecimal" />
+
+
+                <EditText
+                    android:id="@+id/editno2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="Recherchez un no2"
+                    android:inputType="numberDecimal" />
+
+                <EditText
+                    android:id="@+id/editso2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="Recherchez un so2"
+                    android:inputType="numberDecimal" />
+
+
+                <EditText
+                    android:id="@+id/edito3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="Recherchez un o3"
+                    android:inputType="numberDecimal" />
+
+                <EditText
+                    android:id="@+id/editpm10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="Recherchez un pm10"
+                    android:inputType="numberDecimal" />
+
+                <EditText
+                    android:id="@+id/editpm25"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="10"
+                    android:hint="Recherchez un pm25"
+                    android:inputType="numberDecimal" />
+
+
+            </LinearLayout>
+
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+
+    </ViewSwitcher>
+
+
+
+
+</LinearLayout>

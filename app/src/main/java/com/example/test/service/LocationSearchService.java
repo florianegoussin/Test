@@ -1,7 +1,5 @@
 package com.example.test.service;
 
-import android.util.Log;
-
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.example.test.event.EventBusManager;
@@ -109,8 +107,8 @@ public class LocationSearchService {
                     public void onFailure(Call<LocationSearchResult> call, Throwable t) {
                         // Request has failed or is not at expected format
                         // We may want to display a warning to user (e.g. Toast)
-                        Log.e("[PlaceSearcher] [REST]", "Response error : " + t.getMessage());
-                        //searchLocationsFromDB(search);
+
+                        searchLocationsFromDB(search);
                     }
 
                 });
@@ -119,6 +117,9 @@ public class LocationSearchService {
         },REFRESH_DELAY, TimeUnit.MILLISECONDS);
     }
 
+
+
+
     public void searchLocationsFromDB (String search){
         List<Location> matchingLocationFromDB = new Select()
                 .from(Location.class)
@@ -126,8 +127,50 @@ public class LocationSearchService {
                 .on("Location.coordinates=LocationCoordinates.Id")
                 .where("city LIKE '%" + search + "%'").orderBy("city ").execute();
 
+
         EventBusManager.BUS.post(new LocationResultEvent(matchingLocationFromDB));
     }
+
+    public void searchRechercheFromDB(String zoneCity, String locationName) {
+        /*List<Location> matchingRechFromDB=null;
+        if(locationName == " " && zoneCity != " "){
+            System.out.println("MARK111");
+            matchingRechFromDB = new Select()
+                    .from(Location.class)
+                    .join(LocationCoordinates.class)
+                    .on("Location.coordinates=LocationCoordinates.Id")
+                    .where("city LIKE '%" + zoneCity + "%'").orderBy("city ").execute();
+        }
+        else if( locationName != " " && zoneCity == " "){
+            System.out.println("MARK222");
+            matchingRechFromDB = new Select()
+                    .from(Location.class)
+                    .join(LocationCoordinates.class)
+                    .on("Location.coordinates=LocationCoordinates.Id")
+                    .where("location LIKE '%" + locationName + "%'").execute();
+        }
+        else if(locationName != " " && zoneCity != " "){
+            System.out.println("MARK333");
+            matchingRechFromDB = new Select()
+                    .from(Location.class)
+                    .join(LocationCoordinates.class)
+                    .on("Location.coordinates=LocationCoordinates.Id")
+                    .where("city LIKE '%" + zoneCity + "%'")
+                    .where("location LIKE '%" + locationName + "%'").execute();
+
+        }*/
+
+        List<Location> matchingRechFromDB = new Select()
+                .from(Location.class)
+                .join(LocationCoordinates.class)
+                .on("Location.coordinates=LocationCoordinates.Id")
+                .where("city LIKE '" + zoneCity + "%'")
+                .where("Location.location LIKE '%" + locationName + "%'").execute();
+
+        EventBusManager.BUS.post(new LocationResultEvent(matchingRechFromDB));
+    }
+
+
 
     // Service describing the REST APIs
     public interface LocationSearchRESTService {
