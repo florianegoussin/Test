@@ -41,7 +41,7 @@ import butterknife.OnClick;
 public class RechercheActivity extends AppCompatActivity {
 
     private ViewSwitcher simpleViewSwitcher;
-    Button btnNext;
+    Button btnNext, btnPrev;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -85,14 +85,15 @@ public class RechercheActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recherche);
 
         btnNext = (Button) findViewById(R.id.buttonNext);
+        btnPrev = (Button) findViewById(R.id.buttonPrevious);
         simpleViewSwitcher = (ViewSwitcher) findViewById(R.id.simpleViewSwitcher); // get the reference of ViewSwitcher
 // Declare in and out animations and load them using AnimationUtils class
 
-        Animation in = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
-        Animation out = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
+      //  Animation in = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left);
+        //Animation out = AnimationUtils.loadAnimation(this, android.R.anim.slide_out_right);
 
-        simpleViewSwitcher.setInAnimation(in);
-        simpleViewSwitcher.setOutAnimation(out);
+     //   simpleViewSwitcher.setInAnimation(in);
+       // simpleViewSwitcher.setOutAnimation(out);
 
 
 
@@ -156,8 +157,17 @@ public class RechercheActivity extends AppCompatActivity {
 
 
 
-                test = new Intent(RechercheActivity.this,ResultatRechActivity.class);
-                startActivity(test);
+                //test = new Intent(RechercheActivity.this,ResultatRechActivity.class);
+            //    startActivity(test);
+            }
+        });
+
+
+        btnPrev.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                simpleViewSwitcher.showPrevious();
+
             }
         });
 
@@ -177,6 +187,7 @@ public class RechercheActivity extends AppCompatActivity {
         Common.favoriteRepository = FavoriteRepository.getInstance(FavoriteDataSource.getInstance(Common.edmtRoomDatabase.favoriteDAO()));
 
     }
+
 
 
 
