@@ -137,7 +137,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @OnClick(R.id.activity_map_switch_button)
     public void clickedOnSwitchToList(){
-        Intent switchToListIntent = new Intent(this, MainActivity.class);
+        Intent switchToListIntent = new Intent(this, ZoneActivity.class);
         switchToListIntent.putExtra("city", mSearchEditText.getText().toString());
         startActivity(switchToListIntent);
     }

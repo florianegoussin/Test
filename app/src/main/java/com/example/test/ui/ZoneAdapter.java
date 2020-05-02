@@ -19,26 +19,26 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHolder>{
+public class ZoneAdapter extends RecyclerView.Adapter<ZoneAdapter.PlaceViewHolder>{
     private LayoutInflater inflater;
     private Activity activity;
     private List<ZoneAddress> mPlaces;
 
-    public PlaceAdapter(Activity activity, List<ZoneAddress> places) {
+    public ZoneAdapter(Activity activity, List<ZoneAddress> places) {
         inflater = LayoutInflater.from(activity);
         this.activity = activity;
         this.mPlaces = places;
     }
 
     @Override
-    public PlaceAdapter.PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.place_item, parent, false);
-        PlaceAdapter.PlaceViewHolder holder = new PlaceAdapter.PlaceViewHolder(view);
+    public ZoneAdapter.PlaceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.zone_item, parent, false);
+        ZoneAdapter.PlaceViewHolder holder = new ZoneAdapter.PlaceViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(PlaceAdapter.PlaceViewHolder holder, int position) {
+    public void onBindViewHolder(ZoneAdapter.PlaceViewHolder holder, int position) {
         // Adapt the ViewHolder state to the new element
         final ZoneAddress place = mPlaces.get(position);
         holder.mPlaceCountryTextView.setText(place.country);

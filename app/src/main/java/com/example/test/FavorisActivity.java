@@ -11,7 +11,7 @@ import com.example.test.Database.DataSource.FavoriteRepository;
 import com.example.test.Database.Local.EDMTRoomDatabase;
 import com.example.test.Database.Local.FavoriteDataSource;
 import com.example.test.Database.ModelDB.Favorite;
-import com.example.test.ui.FavoriteAdapter;
+import com.example.test.ui.FavorisAdapter;
 import com.example.test.utils.Common;
 
 import java.util.List;
@@ -24,7 +24,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class FavoriteListActivity extends AppCompatActivity {
+public class FavorisActivity extends AppCompatActivity {
     @BindView(R.id.recyclerView_fav)
     RecyclerView recyclerView_fav;
 
@@ -35,7 +35,7 @@ public class FavoriteListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favorite_list);
+        setContentView(R.layout.activity_favoris);
 
         ButterKnife.bind(this);
 
@@ -70,7 +70,7 @@ public class FavoriteListActivity extends AppCompatActivity {
     }
 
     private void displayFavoriteItem(List<Favorite> favorites) {
-        FavoriteAdapter favoriteAdapter = new FavoriteAdapter(this,favorites);
+        FavorisAdapter favoriteAdapter = new FavorisAdapter(this,favorites);
         recyclerView_fav.setAdapter(favoriteAdapter);
     }
 

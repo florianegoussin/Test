@@ -18,12 +18,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
+public class FavorisAdapter extends RecyclerView.Adapter<FavorisAdapter.FavoriteViewHolder> {
 
     Context context;
     List<Favorite> favoriteList;
 
-    public FavoriteAdapter(Context context, List<Favorite> favoriteList) {
+    public FavorisAdapter(Context context, List<Favorite> favoriteList) {
 
         this.context = context;
         this.favoriteList = favoriteList;
@@ -32,7 +32,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     @NonNull
     @Override
     public FavoriteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.fav_item_layout,parent,false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.favoris_item,parent,false);
         return new FavoriteViewHolder(itemView);
 
     }

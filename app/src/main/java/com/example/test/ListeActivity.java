@@ -33,7 +33,7 @@ public class ListeActivity extends AppCompatActivity {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
-    private LocationAdapter mPlaceAdapter;
+    private LocationAdapter mLocationAdapter;
 
     @BindView(R.id.activity_main_search_adress_edittext)
     EditText mSearchEditText;
@@ -49,8 +49,8 @@ public class ListeActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        mPlaceAdapter = new LocationAdapter(this, new ArrayList<>());
-        mRecyclerView.setAdapter(mPlaceAdapter);
+        mLocationAdapter = new LocationAdapter(this, new ArrayList<>());
+        mRecyclerView.setAdapter(mLocationAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if (getIntent().hasExtra("city")) {
@@ -106,8 +106,8 @@ public class ListeActivity extends AppCompatActivity {
         // Update adapter's model
         runOnUiThread (() -> {
             // Step 1: Update adapter's model
-            mPlaceAdapter.setLocations(event.getLocations());
-            mPlaceAdapter.notifyDataSetChanged();
+            mLocationAdapter.setLocations(event.getLocations());
+            mLocationAdapter.notifyDataSetChanged();
             // Step 2: hide loader
             mProgressBar.setVisibility(View.GONE);
         });

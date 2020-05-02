@@ -366,12 +366,6 @@ public class RechercheActivityMesure extends AppCompatActivity {
             MeasurementSearchService.INSTANCE.searchRechMesures(ReqnomLoc,ReqcityLoc);
 
 
-            /*
-            runOnUiThread(() -> {
-                System.out.println("LOCATIONSSSS: " + locRetenu);
-                mLocationAdapter.setLocations(locRetenu);
-                mLocationAdapter.notifyDataSetChanged();
-            });*/
 
         }
         else{

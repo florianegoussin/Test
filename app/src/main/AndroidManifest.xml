@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".RechercheActivity" />
-        <activity android:name=".FavoriteListActivity" />
+        <activity android:name=".FavorisActivity" />
         <activity android:name=".MenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,7 +42,7 @@
 
         <activity android:name=".MapActivity" />
         <activity android:name=".PlaceDetailActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".ZoneActivity" />
         <activity android:name=".ListeActivity" />
         <activity android:name=".RechercheActivityMesure"/>
     </application>

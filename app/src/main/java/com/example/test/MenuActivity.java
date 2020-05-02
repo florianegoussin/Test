@@ -38,7 +38,7 @@ public class MenuActivity extends AppCompatActivity {
 
     @OnClick(R.id.liste)
     public void onClickListe(){
-        Intent liste = new Intent(this, MainActivity.class);
+        Intent liste = new Intent(this, ZoneActivity.class);
         startActivity(liste);
     }
 
@@ -69,7 +69,7 @@ public class MenuActivity extends AppCompatActivity {
 
     @OnClick(R.id.favoris)
     public  void onClickFav(){
-        Intent favoris = new Intent(this,FavoriteListActivity.class);
+        Intent favoris = new Intent(this, FavorisActivity.class);
         startActivity(favoris);
     }
 }

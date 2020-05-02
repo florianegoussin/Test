@@ -13,13 +13,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.test.event.EventBusManager;
-import com.example.test.event.LocationResultEvent;
 import com.example.test.event.ZoneResultEvent;
-import com.example.test.model.Location;
-import com.example.test.service.LocationSearchService;
 import com.example.test.service.ZoneSearchService;
-import com.example.test.ui.LocationAdapter;
-import com.example.test.ui.PlaceAdapter;
+import com.example.test.ui.ZoneAdapter;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
@@ -28,12 +24,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class ZoneActivity extends AppCompatActivity {
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
-    private PlaceAdapter mPlaceAdapter;
+    private ZoneAdapter mZoneAdapter;
 
     @BindView(R.id.activity_main_search_adress_edittext)
     EditText mSearchEditText;
@@ -46,13 +42,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_zone);
 
         ButterKnife.bind(this);
 
-        mPlaceAdapter = new PlaceAdapter(this, new ArrayList<>());
-        //mPlaceAdapter = new LocationAdapter(this, new ArrayList<>());
-        mRecyclerView.setAdapter(mPlaceAdapter);
+        mZoneAdapter = new ZoneAdapter(this, new ArrayList<>());
+        //mZoneAdapter = new LocationAdapter(this, new ArrayList<>());
+        mRecyclerView.setAdapter(mZoneAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if (getIntent().hasExtra("city")) {
@@ -104,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
         // Update adapter's model
         runOnUiThread (() -> {
             // Step 1: Update adapter's model
-            mPlaceAdapter.setPlaces(event.getZones());
-            mPlaceAdapter.notifyDataSetChanged();
+            mZoneAdapter.setPlaces(event.getZones());
+            mZoneAdapter.notifyDataSetChanged();
             // Step 2: hide loader
             mProgressBar.setVisibility(View.GONE);
         });
