@@ -42,7 +42,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private GoogleMap mActiveGoogleMap;
     private Map<String, Location> mMarkersToPlaces = new LinkedHashMap<>();
 
-    private LocationAdapter mPlaceAdapter;
+    private LocationAdapter mLocationAdapter;
 
 
     @Override
@@ -52,9 +52,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         ButterKnife.bind(this);
 
-        mPlaceAdapter = new LocationAdapter(this, new ArrayList<>());
-        //mRecyclerView.setAdapter(mPlaceAdapter);
-        //mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mLocationAdapter = new LocationAdapter(this, new ArrayList<>());
+
 
         // Get map fragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -83,7 +82,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 mProgressBar.setVisibility(View.VISIBLE);
 
                 // Launch a search through the PlaceSearchService
-                //ZoneSearchService.INSTANCE.searchZone(editable.toString());
                 LocationSearchService.INSTANCE.searchLocationsFromAddress(editable.toString());
             }
         });
@@ -96,7 +94,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         EventBusManager.BUS.register(this);
 
         LocationSearchService.INSTANCE.searchLocationsFromAddress(mSearchEditText.getText().toString());
-       // ZoneSearchService.INSTANCE.searchZone(mSearchEditText.getText().toString());
 
     }
 
@@ -127,10 +124,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 .position(new LatLng(location.getCoordinates().latitude, location.getCoordinates().longitude))
                                 .title(location.city)
                                 .snippet("Location : " + location.location + " Mesure : " + location.count);
-                                //.icon(BitmapDescriptorFactory.fromBitmap(resizedBitmap));
 
                         // Step 3: add marker
-                        //mActiveGoogleMap.addMarker(markerOptions);
+                       // mActiveGoogleMap.addMarker(markerOptions);
                         Marker marker = mActiveGoogleMap.addMarker(markerOptions);
                         mMarkersToPlaces.put(marker.getId(), location);
                     }
@@ -160,12 +156,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 Location associatedPlace = mMarkersToPlaces.get(marker.getId());
                 if (associatedPlace != null) {
                     Intent seePlaceDetailIntent = new Intent(MapActivity.this, PlaceDetailActivity.class);
-                    //seePlaceDetailIntent.putExtra("placeStreet", associatedPlace.location);
                     seePlaceDetailIntent.putExtra("city", associatedPlace.city);
                     seePlaceDetailIntent.putExtra("country",associatedPlace.country);
                     seePlaceDetailIntent.putExtra("location",associatedPlace.location);
                     seePlaceDetailIntent.putExtra("objetloc",associatedPlace);
-                    //MeasurementSearchService.INSTANCE.searchMesures(getIntent().getStringExtra("location") );
                     startActivity(seePlaceDetailIntent);
                 }
             }

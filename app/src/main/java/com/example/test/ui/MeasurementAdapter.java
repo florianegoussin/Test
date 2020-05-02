@@ -22,15 +22,12 @@ import butterknife.ButterKnife;
 
 public class MeasurementAdapter extends RecyclerView.Adapter<MeasurementAdapter.MeasurementViewHolder> {
 
-    //private LayoutInflater inflater;
     Context context;
     List<Measurement> mesureList;
-    //private List<Location> mLocation;
 
-    public MeasurementAdapter(Context context, List<Measurement> mesureList/*,List<Location> location*/) {
+    public MeasurementAdapter(Context context, List<Measurement> mesureList) {
         this.context = context;
         this.mesureList = mesureList;
-        //this.mLocation = location;
     }
 
 
@@ -55,8 +52,6 @@ public class MeasurementAdapter extends RecyclerView.Adapter<MeasurementAdapter.
             }
 
         }
-        //holder.param.setText(mesureList.get(position).mesure);
-        //holder.mesure_value.setText(Double.toString(mesureList.get(position).measurements.get(position).value));
 
     }
 

@@ -80,7 +80,7 @@ public class ZoneSearchService {
                             ActiveAndroid.setTransactionSuccessful();
                             ActiveAndroid.endTransaction();
 
-                            //searchZoneFromDB(search);
+                            searchZoneFromDB(search);
 
                         } else {
                             // Null result
@@ -93,7 +93,6 @@ public class ZoneSearchService {
                     public void onFailure(Call<ZoneSearchResult> call, Throwable t) {
                         // Request has failed or is not at expected format
                         // We may want to display a warning to user (e.g. Toast)
-                       // Log.e("[PlaceSearcher] [REST]", "Response error : " + t.getMessage());
                         searchZoneFromDB(search);
                     }
                 });
@@ -108,6 +107,7 @@ public class ZoneSearchService {
 
         EventBusManager.BUS.post((new ZoneResultEvent(matchingZoneFromDB)));
     }
+
         // Service describing the REST APIs
         public interface PlaceSearchRESTService {
             @GET("cities/")

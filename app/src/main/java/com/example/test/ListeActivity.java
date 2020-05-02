@@ -41,7 +41,6 @@ public class ListeActivity extends AppCompatActivity {
     @BindView(R.id.activity_main_loader)
     ProgressBar mProgressBar;
 
-    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,15 +74,12 @@ public class ListeActivity extends AppCompatActivity {
                 // Show a loader
                 mProgressBar.setVisibility(View.VISIBLE);
 
-                // Launch a search through the PlaceSearchService
-                //ZoneSearchService.INSTANCE.searchPlacesFromAddress(editable.toString());
                 LocationSearchService.INSTANCE.searchLocationsFromAddress(editable.toString());
             }
         });
 
         //initDB
             Common.edmtRoomDatabase = EDMTRoomDatabase.getInstance(this);
-            //Common.cartRepository = CartRepository.getInstance(CartDataSource.getInstance(Common.edmtRoomDatabase.CartDAO()));
             Common.favoriteRepository = FavoriteRepository.getInstance(FavoriteDataSource.getInstance(Common.edmtRoomDatabase.favoriteDAO()));
 
 
@@ -95,8 +91,6 @@ public class ListeActivity extends AppCompatActivity {
         super.onResume();
 
         EventBusManager.BUS.register(this);
-
-        //ZoneSearchService.INSTANCE.searchPlacesFromAddress(mSearchEditText.getText().toString());
         LocationSearchService.INSTANCE.searchLocationsFromAddress(mSearchEditText.getText().toString());
     }
     @Override

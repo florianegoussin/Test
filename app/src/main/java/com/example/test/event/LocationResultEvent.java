@@ -10,10 +10,8 @@ public class LocationResultEvent {
 
     public LocationResultEvent(List<Location> locations){
         this.locations = locations;
-
     }
 
     public List<Location> getLocations(){return locations;}
-
 
 }

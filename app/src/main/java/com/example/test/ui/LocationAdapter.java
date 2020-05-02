@@ -45,8 +45,6 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     public void onBindViewHolder(LocationAdapter.LocationViewHolder holder, int position) {
         // Adapt the ViewHolder state to the new element
         final Location location = mLocation.get(position);
-       // holder.mPlaceIdTextView.setText(location.country);
-
         holder.mPlaceCityTextView.setText(location.city);
         holder.mPlaceLocationTextView.setText(location.location);
 
@@ -64,8 +62,6 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
             }
         });
 
-        System.out.println("ValLocationFav: "+location);
-        System.out.println("ValLocationDETAIL: "+location.location);
         //Favorite System
         if(Common.favoriteRepository.isFavorite(location.location) == 1)
             holder.btn_favorite.setImageResource(R.drawable.ic_favorite_white_24dp);
@@ -84,8 +80,6 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
                     addOrRemoveFavorite(location,false);
                     holder.btn_favorite.setImageResource(R.drawable.ic_favorite_border_white_24dp);
                 }
-
-
             }
         });
     }
@@ -104,7 +98,6 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     }
 
 
-
     @Override
     public int getItemCount() {
         return mLocation.size();
@@ -120,14 +113,14 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     // Pattern ViewHolder :
     class LocationViewHolder extends RecyclerView.ViewHolder
     {
+        @BindView(R.id.place_adapter_icon)
+        ImageView mPlaceIcon;
+
         @BindView(R.id.place_adapter_id)
         TextView mPlaceIdTextView;
 
         @BindView(R.id.place_adapter_city)
         TextView mPlaceCityTextView;
-
-        @BindView(R.id.place_adapter_icon)
-        ImageView mPlaceIcon;
 
         @BindView(R.id.place_adapter_location)
         TextView mPlaceLocationTextView;

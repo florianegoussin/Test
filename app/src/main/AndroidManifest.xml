@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".RechercheActivity" />
-        <activity android:name=".MeasurementActivity" />
         <activity android:name=".FavoriteListActivity" />
         <activity android:name=".MenuActivity">
             <intent-filter>

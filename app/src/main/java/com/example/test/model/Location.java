@@ -41,10 +41,6 @@ public class Location extends Model implements Serializable {
         return coordinates;
     }
 
-   /* @Expose
-    @Column(name = "measurements")
-    public MesureSearchResult measurements;*/
-
     public Location(){
         super();
     }
