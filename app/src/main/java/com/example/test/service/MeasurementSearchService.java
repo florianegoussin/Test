@@ -1,6 +1,5 @@
 package com.example.test.service;
 
-//import com.example.test.model.LocationCoordinates;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
@@ -82,27 +81,23 @@ public class MeasurementSearchService {
                 @Override
                 public void onResponse(Call<MeasurementResult> call, retrofit2.Response<MeasurementResult> response) {
 
-                    System.out.println("aaaaaaaaaaaaa "+response.body().results);
+
                     // Post an event so that listening activities can update their UI
                     if (response.body() != null && response.body().results != null) {
 
                         ActiveAndroid.beginTransaction();
                         for (Measurement mesure : response.body().results) {
 
-                            System.out.println("aaaaaaaaaaaaa "+mesure.location+"         "+mesure.city);
-
                             Measurement m = new Measurement();
                             m.location=mesure.location;
                             m.city=mesure.city;
-
                             List<Values> value = new ArrayList<>();
-                            for(Values mv :mesure.measurements){
-                                System.out.println("aaaaaaaaaaaaa "+mv.parameter+"       "+mv.value+"    "+mv.unit);
 
+                            for(Values mv :mesure.measurements){
                                 value.add(mv);
                             }
+
                             m.mesure= gson.toJson(value);
-                            System.out.println("testValue: "+m.mesure);
                             m.save();
                         }
                         ActiveAndroid.setTransactionSuccessful();
@@ -122,7 +117,6 @@ public class MeasurementSearchService {
                 public void onFailure(Call<MeasurementResult> call, Throwable t) {
                     // Request has failed or is not at expected format
                     // We may want to display a warning to user (e.g. Toast)
-                    System.out.println("trooooooooooooooooooop triste pas de reponse");
                     Log.e("[PlaceSearcher] [REST]", "Response error : " + t.getMessage());
                     searchMesuresFromDB(location);
                 }
@@ -137,7 +131,7 @@ public class MeasurementSearchService {
         List<Measurement> res= new Select()
                 .from(Measurement.class)
                 .execute();
-        System.out.println("AFFICH4: "+res);
+
         EventBusManager.BUS.post(new MeasurementResultEvent(res));
     }
 
@@ -166,27 +160,23 @@ public class MeasurementSearchService {
                     @Override
                     public void onResponse(Call<MeasurementResult> call, retrofit2.Response<MeasurementResult> response) {
 
-                        System.out.println("aaaaaaaaaaaaa "+response.body().results);
+
                         // Post an event so that listening activities can update their UI
                         if (response.body() != null && response.body().results != null) {
 
                             ActiveAndroid.beginTransaction();
                             for (Measurement mesure : response.body().results) {
 
-                                System.out.println("aaaaaaaaaaaaa "+mesure.location+"         "+mesure.city);
-
                                 Measurement m = new Measurement();
                                 m.location=mesure.location;
                                 m.city=mesure.city;
-
                                 List<Values> value = new ArrayList<>();
-                                for(Values mv :mesure.measurements){
-                                    System.out.println("aaaaaaaaaaaaa "+mv.parameter+"       "+mv.value+"    "+mv.unit);
 
+                                for(Values mv :mesure.measurements){
                                     value.add(mv);
                                 }
+
                                 m.mesure= gson.toJson(value);
-                                System.out.println("testValue: "+m.mesure);
                                 m.save();
                             }
                             ActiveAndroid.setTransactionSuccessful();
@@ -206,7 +196,6 @@ public class MeasurementSearchService {
                     public void onFailure(Call<MeasurementResult> call, Throwable t) {
                         // Request has failed or is not at expected format
                         // We may want to display a warning to user (e.g. Toast)
-                        System.out.println("trooooooooooooooooooop triste pas de reponse");
                         Log.e("[PlaceSearcher] [REST]", "Response error : " + t.getMessage());
                         searchRechFromDB(location);
                     }
@@ -226,42 +215,11 @@ public class MeasurementSearchService {
         EventBusManager.BUS.post(new MeasurementResultEvent(matchingMesureFromDB));
     }
 
-    /*public void searchRechercheFromDB(String zoneCity, String locationName) {
-        List<Measurement> matchingRechFromDB=null;
-        if(locationName == null && zoneCity != null){
-            matchingRechFromDB = new Select()
-                    .from(Measurement.class)
-                    .where("city LIKE '%" + zoneCity + "%'").orderBy("city ").execute();
-        }
-        else if( locationName != null && zoneCity == null){
-            matchingRechFromDB = new Select()
-                    .from(Measurement.class)
-                    .where("location LIKE '%" + locationName + "%'").execute();
-        }
-        else if(locationName != null && zoneCity != null){
-            matchingRechFromDB = new Select()
-                    .from(Measurement.class)
-                    .where("city LIKE '%" + zoneCity + "%'")
-                    .where("location LIKE '%" + locationName + "%'").execute();
-
-        }
-
-        EventBusManager.BUS.post(new MeasurementResultEvent(matchingRechFromDB));
-    }*/
-
-
-
-
         // Service describing the REST APIs
         public interface MeasurementSearchRESTService {
-
             @GET("latest")
             Call<MeasurementResult> searchForMesures(@Query("country") String country,@Query("city") String city, @Query("location") String location );
-
         }
-
-
-
 
 }
 
