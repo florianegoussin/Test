@@ -18,7 +18,7 @@ public class MenuActivity extends AppCompatActivity {
     @BindView(R.id.liste) TextView liste;
     @BindView(R.id.carte) TextView carte;
     @BindView(R.id.detail) TextView detail;
-    @BindView(R.id.recherche) TextView recherche;
+    @BindView(R.id.rechercheMes) TextView rechercheMes;
     @BindView(R.id.favoris) TextView favoris;
 
     @Override
@@ -54,16 +54,16 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(detail);
     }
 
-    @OnClick(R.id.recherche)
+    /*@OnClick(R.id.recherche)
     public  void onClickRecherche(){
         Intent recherche = new Intent(this,RechercheActivity.class);
         startActivity(recherche);
-    }
+    }*/
 
     @OnClick(R.id.rechercheMes)
     public  void onClickRechercheMes(){
-        Intent test = new Intent(MenuActivity.this,RechercheActivityMesure.class);
-        startActivity(test);
+        Intent rechercheMes = new Intent(this,RechercheActivityMesure.class);
+        startActivity(rechercheMes);
     }
 
 
