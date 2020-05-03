@@ -166,6 +166,8 @@ public class RechercheActivityMesure extends AppCompatActivity {
                 locRetenu.clear();
                 simpleViewSwitcher.showPrevious();
                 MesRetenu.clear();
+                listMes.clear();
+                listLoc.clear();
 
             }
         });
