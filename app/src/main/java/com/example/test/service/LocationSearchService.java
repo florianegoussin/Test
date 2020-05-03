@@ -131,12 +131,23 @@ public class LocationSearchService {
     }
 
     public void searchRechercheFromDB(String zoneCity, String locationName) {
-       List<Location> matchingRechFromDB = new Select()
-                .from(Location.class)
-                .join(LocationCoordinates.class)
-                .on("Location.coordinates=LocationCoordinates.Id")
-                .where("city LIKE '" + zoneCity + "%'")
-                .where("Location.location LIKE '%" + locationName + "%'").execute();
+        List<Location> matchingRechFromDB;
+        if(zoneCity.indexOf("LIKE") == -1) {
+
+             matchingRechFromDB = new Select()
+                    .from(Location.class)
+                    .join(LocationCoordinates.class)
+                    .on("Location.coordinates=LocationCoordinates.Id")
+                    .where("city LIKE '" + zoneCity + "%'")
+                    .where("Location.location LIKE '%" + locationName + "%'").execute();
+        }
+        else{
+            matchingRechFromDB = new Select()
+                    .from(Location.class)
+                    .join(LocationCoordinates.class)
+                    .on("Location.coordinates=LocationCoordinates.Id")
+                    .where(zoneCity).execute();
+        }
 
         EventBusManager.BUS.post(new LocationResultEvent(matchingRechFromDB));
     }

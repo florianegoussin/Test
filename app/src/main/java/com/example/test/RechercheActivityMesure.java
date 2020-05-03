@@ -72,6 +72,7 @@ public class RechercheActivityMesure extends AppCompatActivity {
     List<Measurement> listMes = new ArrayList<>();
     List<Location> listLoc =new ArrayList<>();
     List<Location> locRetenu = new ArrayList<>();
+    List<Measurement> MesRetenu = new ArrayList<>();
     String zone;
     String name;
 
@@ -265,20 +266,22 @@ public class RechercheActivityMesure extends AppCompatActivity {
 
     @Subscribe
     public void paramSearch(final MeasurementResultEvent mes){
-        System.out.println("Les Mesure GET: "+mes.getmesures());
-        listMes=mes.getmesures();
-        System.out.println("Les Mesures autes: "+listMes);
-        for (int i = 0; i < listLoc.size(); i++) {
-            System.out.println("TOURR PARAM: " + i);
-            System.out.println("I AM HEREEEE");
-            System.out.println("LES MEsures: " + listMes);
-            Measurement m=listMes.get(i);
+        if(!(parametre.isEmpty()) && ( (!zone.isEmpty() || !name.isEmpty()) || (!zone.isEmpty() && !name.isEmpty()))) {
+
+            System.out.println("Les Mesure GET: " + mes.getmesures());
+            listMes = mes.getmesures();
+            System.out.println("Les Mesures autes: " + listMes);
+            for (int i = 0; i < listLoc.size(); i++) {
+                System.out.println("TOURR PARAM: " + i);
+                System.out.println("I AM HEREEEE");
+                System.out.println("LES MEsures: " + listMes);
+                Measurement m = listMes.get(i);
                 System.out.println("I AM HEREEEE222");
                 Measurement.Values[] valeur = gson.fromJson(m.mesure, Measurement.Values[].class);
                 for (Measurement.Values v : valeur) {
                     System.out.println("ValueObj: " + v.value);
                     System.out.println("ValeurSaisi: " + parametre.get(v.parameter));
-                    if(parametre.get(v.parameter) != null){
+                    if (parametre.get(v.parameter) != null) {
                         if (v.value > parametre.get(v.parameter)) {
                             locRetenu.add(listLoc.get(i));
                             System.out.println("AJOUTTTT");
@@ -287,13 +290,63 @@ public class RechercheActivityMesure extends AppCompatActivity {
                 }
 
 
-
+            }
+            runOnUiThread(() -> {
+                System.out.println("LOCATIONSSSS: " + locRetenu);
+                mLocationAdapter.setLocations(locRetenu);
+                mLocationAdapter.notifyDataSetChanged();
+            });
         }
-        runOnUiThread(() -> {
-            System.out.println("LOCATIONSSSS: " + locRetenu);
-            mLocationAdapter.setLocations(locRetenu);
-            mLocationAdapter.notifyDataSetChanged();
-        });
+        else {
+            String nomLocMes;
+            String cityLocMes;
+            String ReqnomLocMes = "";
+            String ReqcityMes = "";
+            String chaineLocLike = "Location.location LIKE '%";
+            String chaineCityLike = "(city LIKE '%";
+            String Req="";
+
+            System.out.println("Les Mesure GET 22: " + mes.getmesures());
+            listMes = mes.getmesures();
+            System.out.println("Les Mesures autes 22: " + listMes);
+            //PArcourir list mesures et faire la comparaison de valeur
+            for (int i = 0; i < listMes.size(); i++) {
+                Measurement m = listMes.get(i);
+                Measurement.Values[] valeur = gson.fromJson(m.mesure, Measurement.Values[].class);
+                for (Measurement.Values v : valeur) {
+
+                    if (parametre.get(v.parameter) != null) {
+                        System.out.println("ValueObj222: " + v.value);
+                        System.out.println("ValeurSaisi222: " + parametre.get(v.parameter));
+                        if (v.value > parametre.get(v.parameter)) {
+                            MesRetenu.add(listMes.get(i));
+                            System.out.println("AJOUTTTT 222");
+                        }
+                    }
+                }
+
+            }
+
+            System.out.println("MESURE RETENU: "+ MesRetenu);
+
+            for (int j = 0; j < MesRetenu.size(); j++) {
+                nomLocMes = MesRetenu.get(j).location;
+                cityLocMes = MesRetenu.get(j).city;
+                System.out.println("NOM Location Mes" + nomLocMes);
+                System.out.println("Ville Location Mes: " + cityLocMes);
+                if (j == MesRetenu.size() - 1) {
+                    //ReqnomLocMes = ReqnomLocMes + chaineLocLike + nomLocMes + "%'";
+                    //ReqcityMes = ReqcityMes + chaineCityLike + cityLocMes + "%'";
+                    Req= Req + chaineCityLike + cityLocMes + "%' AND " + chaineLocLike + nomLocMes + "%')";
+                } else {
+                    //ReqnomLocMes = ReqnomLocMes + chaineLocLike + nomLocMes + "%' OR ";
+                    //ReqcityMes = ReqcityMes + chaineCityLike + cityLocMes + "%' OR ";
+                    Req = Req + chaineCityLike + cityLocMes + "%' AND " + chaineLocLike + nomLocMes + "%') OR ";
+                }
+                System.out.println(ReqnomLocMes);
+            }
+            LocationSearchService.INSTANCE.searchRechercheFromDB(Req, Req);
+        }
 
     }
 
@@ -334,29 +387,30 @@ public class RechercheActivityMesure extends AppCompatActivity {
         }
 */
         //System.out.println("HASHMAPContenu: "+ parametre.get(1));
-        if(!(parametre.isEmpty()) && ( (!zone.isEmpty() || !name.isEmpty()) || (!zone.isEmpty() && !name.isEmpty()))) {
-             listLoc = event.getLocations();
-            String nomLoc;
-            String cityLoc;
-            String chaineLocLike="location LIKE '%";
-            String ReqnomLoc="";
-            String ReqcityLoc="";
-            Float valParam;
-            for (int i = 0; i < listLoc.size(); i++) {
-                System.out.println("TOURR Result: " + i);
-                nomLoc = listLoc.get(i).location;
-                cityLoc = listLoc.get(i).city;
-                System.out.println("NOM Location"+nomLoc);
-                System.out.println("Ville Location: "+cityLoc);
-                if(i== listLoc.size()-1){
-                    ReqnomLoc = ReqnomLoc + chaineLocLike + nomLoc+ "%'";
-                } else {
-                    ReqnomLoc = ReqnomLoc + chaineLocLike + nomLoc + "%' OR " ;
-                }
-                System.out.println(ReqnomLoc);
+        if(MesRetenu.isEmpty()) {
+            if (!(parametre.isEmpty()) && ((!zone.isEmpty() || !name.isEmpty()) || (!zone.isEmpty() && !name.isEmpty()))) {
+                listLoc = event.getLocations();
+                String nomLoc;
+                String cityLoc;
+                String chaineLocLike = "location LIKE '%";
+                String ReqnomLoc = "";
+                String ReqcityLoc = "";
+                Float valParam;
+                for (int i = 0; i < listLoc.size(); i++) {
+                    System.out.println("TOURR Result: " + i);
+                    nomLoc = listLoc.get(i).location;
+                    cityLoc = listLoc.get(i).city;
+                    System.out.println("NOM Location" + nomLoc);
+                    System.out.println("Ville Location: " + cityLoc);
+                    if (i == listLoc.size() - 1) {
+                        ReqnomLoc = ReqnomLoc + chaineLocLike + nomLoc + "%'";
+                    } else {
+                        ReqnomLoc = ReqnomLoc + chaineLocLike + nomLoc + "%' OR ";
+                    }
+                    System.out.println(ReqnomLoc);
 
-                //System.out.println("I AM HEREEEE");
-                //System.out.println("LES MEsures: " + listMes);
+                    //System.out.println("I AM HEREEEE");
+                    //System.out.println("LES MEsures: " + listMes);
                 /*for (Measurement m : listMes) {
                     System.out.println("I AM HEREEEE222");
                     Measurement.Values[] valeur = gson.fromJson(m.mesure, Measurement.Values[].class);
@@ -367,22 +421,31 @@ public class RechercheActivityMesure extends AppCompatActivity {
                             locRetenu.add(listLoc.get(i));
                         }
                     }*/
+                }
+                MeasurementSearchService.INSTANCE.searchRechMesures(ReqnomLoc, ReqcityLoc);
+
+
+            } else if (!(parametre.isEmpty()) && (zone.isEmpty() && name.isEmpty())) {
+                MeasurementSearchService.INSTANCE.recherche();
+
+            } else {
+                runOnUiThread(() -> {
+                    System.out.println("LOCATIONSSSS22: " + event.getLocations());
+                    mLocationAdapter.setLocations(event.getLocations());
+                    mLocationAdapter.notifyDataSetChanged();
+                });
             }
-            MeasurementSearchService.INSTANCE.searchRechMesures(ReqnomLoc,ReqcityLoc);
-
-
-
-        }
-        else if(!(parametre.isEmpty()) && (zone.isEmpty() && name.isEmpty())){
-
-
         }
         else{
+            System.out.println(listLoc);
+            listLoc = event.getLocations();
+            System.out.println("ON RECUP: "+ listLoc);
             runOnUiThread(() -> {
-                System.out.println("LOCATIONSSSS22: " + event.getLocations());
                 mLocationAdapter.setLocations(event.getLocations());
                 mLocationAdapter.notifyDataSetChanged();
             });
+
+
         }
     }
 
