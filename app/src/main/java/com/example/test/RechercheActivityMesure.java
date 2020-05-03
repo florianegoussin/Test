@@ -323,7 +323,7 @@ public class RechercheActivityMesure extends AppCompatActivity {
                 System.out.println("BOUCLEE: "+i);
                 System.out.println("MES NAME: "+ listMes.get(i).location);
                 System.out.println("MES CITY: "+ listMes.get(i).city);
-                //test=false;
+                test=false;
                 //valTest.set(i,false);
                 Measurement m = listMes.get(i);
                 Measurement.Values[] valeur = gson.fromJson(m.mesure, Measurement.Values[].class);
