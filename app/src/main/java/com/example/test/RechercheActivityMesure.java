@@ -72,6 +72,8 @@ public class RechercheActivityMesure extends AppCompatActivity {
     List<Measurement> listMes = new ArrayList<>();
     List<Location> listLoc =new ArrayList<>();
     List<Location> locRetenu = new ArrayList<>();
+    String zone;
+    String name;
 
     private LocationAdapter mLocationAdapter;
     private Gson gson ;
@@ -128,6 +130,9 @@ public class RechercheActivityMesure extends AppCompatActivity {
                 if(!mEditSo2.getText().toString().equals("")) {
                     parametre.put("so2", Double.parseDouble(mEditSo2.getText().toString()));
                 }
+
+                zone =mZoneSearch.getText().toString();
+                name=mLocationSearch.getText().toString();
 
 
                 System.out.println("ZONEEE: "+mZoneSearch.getText().toString());
@@ -329,7 +334,7 @@ public class RechercheActivityMesure extends AppCompatActivity {
         }
 */
         //System.out.println("HASHMAPContenu: "+ parametre.get(1));
-        if(!(parametre.isEmpty())) {
+        if(!(parametre.isEmpty()) && ( (!zone.isEmpty() || !name.isEmpty()) || (!zone.isEmpty() && !name.isEmpty()))) {
              listLoc = event.getLocations();
             String nomLoc;
             String cityLoc;
@@ -365,6 +370,10 @@ public class RechercheActivityMesure extends AppCompatActivity {
             }
             MeasurementSearchService.INSTANCE.searchRechMesures(ReqnomLoc,ReqcityLoc);
 
+
+
+        }
+        else if(!(parametre.isEmpty()) && (zone.isEmpty() && name.isEmpty())){
 
 
         }
