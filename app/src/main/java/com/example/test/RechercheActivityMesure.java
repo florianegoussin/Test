@@ -271,7 +271,12 @@ public class RechercheActivityMesure extends AppCompatActivity {
     @Subscribe
     public void paramSearch(final MeasurementResultEvent mes){
         if(!(parametre.isEmpty()) && ( (!zone.isEmpty() || !name.isEmpty()) || (!zone.isEmpty() && !name.isEmpty()))) {
-
+            Boolean test=false;
+            Boolean res;
+            ArrayList<Boolean> valTest= new ArrayList<Boolean>();
+            ArrayList<Boolean> resultat= new ArrayList<Boolean>();
+            //Collections.fill(valTest, Boolean.FALSE);
+            int cpt=-1;
             System.out.println("Les Mesure GET: " + mes.getmesures());
             listMes = mes.getmesures();
             System.out.println("Les Mesures autes: " + listMes);
@@ -282,7 +287,78 @@ public class RechercheActivityMesure extends AppCompatActivity {
                 Measurement m = listMes.get(i);
                 System.out.println("I AM HEREEEE222");
                 Measurement.Values[] valeur = gson.fromJson(m.mesure, Measurement.Values[].class);
-                for (Measurement.Values v : valeur) {
+                for (Map.Entry mapentry : parametre.entrySet()) {
+                    test=false;
+                    System.out.println("INSIDE HAsh MAP boucle");
+                    cpt++;
+                    System.out.println("COmpteur: "+cpt);
+                    //valTest.set(cpt,false);
+                    //System.out.println("VAL tab bool: "+valTest.get(cpt));
+                    if(mapentry.getKey() != null) {
+                        System.out.println("Dans le if hash map");
+                        for (int j = 0; j < valeur.length; j++) {
+                            System.out.println("LAPP: "+j);
+                            System.out.println("INSIDE Boucle VAleur");
+                            System.out.println("VALEUR TEST: "+test);
+                            if (!test) {
+                                System.out.println("nom param hm: "+mapentry.getKey());
+                                System.out.println("nom param obj: "+valeur[j].parameter);
+                                if (mapentry.getKey().equals(valeur[j].parameter)) {
+                                    System.out.println("INSIDE IF COMP NOM PARAM");
+                                    if (valeur[j].value > parametre.get(valeur[j].parameter)) {
+                                        test=true;
+                                        //MesRetenu.add(listMes.get(i));
+                                        System.out.println("COMPARAISON VALLLL");
+                                    } else {
+                                        test = false;
+                                    }
+                                }
+                                else{
+                                    System.out.println("INSIDE ELSE COMP NOM PARAM");
+                                    test=false;
+                                }
+                                valTest.add(test);
+
+                            }
+                            else{
+                                break;
+                            }
+
+                        }
+
+
+                        for(int k=0;k<valTest.size();k++) {
+                            if(valTest.get(k)){
+                                resultat.add(valTest.get(k));
+                                valTest.clear();
+                                break;
+                            }
+                            else{
+                                if(k == valTest.size()-1){
+                                    resultat.add(false);
+                                    valTest.clear();
+                                }
+                            }
+
+
+                        }
+
+                    }
+                    else{
+                        System.out.println("Dans le else hash map");
+                    }
+                }
+                res=resultat.get(0);
+                for(int l=1;l<resultat.size();l++){
+                    System.out.println("VALEUR TAB BOOL TEST: "+resultat.get(l-1));
+                    res = res && resultat.get(l);
+
+                }
+                resultat.clear();
+                if(res){
+                    locRetenu.add(listLoc.get(i));
+                }
+                /*for (Measurement.Values v : valeur) {
                     System.out.println("ValueObj: " + v.value);
                     System.out.println("ValeurSaisi: " + parametre.get(v.parameter));
                     if (parametre.get(v.parameter) != null) {
@@ -291,7 +367,7 @@ public class RechercheActivityMesure extends AppCompatActivity {
                             System.out.println("AJOUTTTT");
                         }
                     }
-                }
+                }*/
 
 
             }
