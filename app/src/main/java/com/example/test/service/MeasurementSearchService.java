@@ -133,6 +133,14 @@ public class MeasurementSearchService {
             },REFRESH_DELAY, TimeUnit.MILLISECONDS);
         }
 
+    public void recherche(){
+        List<Measurement> res= new Select()
+                .from(Measurement.class)
+                .execute();
+        System.out.println("AFFICH4: "+res);
+        EventBusManager.BUS.post(new MeasurementResultEvent(res));
+    }
+
         public void searchMesuresFromDB (String search){
             List<Measurement> matchingMesureFromDB = new Select()
                     .from(Measurement.class)

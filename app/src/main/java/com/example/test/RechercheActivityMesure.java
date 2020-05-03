@@ -31,6 +31,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,6 +73,7 @@ public class RechercheActivityMesure extends AppCompatActivity {
     List<Measurement> listMes = new ArrayList<>();
     List<Location> listLoc =new ArrayList<>();
     List<Location> locRetenu = new ArrayList<>();
+    List<Measurement> MesRetenu = new ArrayList<>();
     String zone;
     String name;
 
@@ -163,6 +165,9 @@ public class RechercheActivityMesure extends AppCompatActivity {
             public void onClick(View v) {
                 locRetenu.clear();
                 simpleViewSwitcher.showPrevious();
+                MesRetenu.clear();
+                listMes.clear();
+                listLoc.clear();
 
             }
         });
@@ -265,35 +270,267 @@ public class RechercheActivityMesure extends AppCompatActivity {
 
     @Subscribe
     public void paramSearch(final MeasurementResultEvent mes){
-        System.out.println("Les Mesure GET: "+mes.getmesures());
-        listMes=mes.getmesures();
-        System.out.println("Les Mesures autes: "+listMes);
-        for (int i = 0; i < listLoc.size(); i++) {
-            System.out.println("TOURR PARAM: " + i);
-            System.out.println("I AM HEREEEE");
-            System.out.println("LES MEsures: " + listMes);
-            Measurement m=listMes.get(i);
+        if(!(parametre.isEmpty()) && ( (!zone.isEmpty() || !name.isEmpty()) || (!zone.isEmpty() && !name.isEmpty()))) {
+            Boolean test=false;
+            Boolean res;
+            ArrayList<Boolean> valTest= new ArrayList<Boolean>();
+            ArrayList<Boolean> resultat= new ArrayList<Boolean>();
+            //Collections.fill(valTest, Boolean.FALSE);
+            int cpt=-1;
+            System.out.println("Les Mesure GET: " + mes.getmesures());
+            listMes = mes.getmesures();
+            System.out.println("Les Mesures autes: " + listMes);
+            for (int i = 0; i < listLoc.size(); i++) {
+                System.out.println("TOURR PARAM: " + i);
+                System.out.println("I AM HEREEEE");
+                System.out.println("LES MEsures: " + listMes);
+                Measurement m = listMes.get(i);
                 System.out.println("I AM HEREEEE222");
                 Measurement.Values[] valeur = gson.fromJson(m.mesure, Measurement.Values[].class);
-                for (Measurement.Values v : valeur) {
+                for (Map.Entry mapentry : parametre.entrySet()) {
+                    test=false;
+                    System.out.println("INSIDE HAsh MAP boucle");
+                    cpt++;
+                    System.out.println("COmpteur: "+cpt);
+                    //valTest.set(cpt,false);
+                    //System.out.println("VAL tab bool: "+valTest.get(cpt));
+                    if(mapentry.getKey() != null) {
+                        System.out.println("Dans le if hash map");
+                        for (int j = 0; j < valeur.length; j++) {
+                            System.out.println("LAPP: "+j);
+                            System.out.println("INSIDE Boucle VAleur");
+                            System.out.println("VALEUR TEST: "+test);
+                            if (!test) {
+                                System.out.println("nom param hm: "+mapentry.getKey());
+                                System.out.println("nom param obj: "+valeur[j].parameter);
+                                if (mapentry.getKey().equals(valeur[j].parameter)) {
+                                    System.out.println("INSIDE IF COMP NOM PARAM");
+                                    if (valeur[j].value > parametre.get(valeur[j].parameter)) {
+                                        test=true;
+                                        //MesRetenu.add(listMes.get(i));
+                                        System.out.println("COMPARAISON VALLLL");
+                                    } else {
+                                        test = false;
+                                    }
+                                }
+                                else{
+                                    System.out.println("INSIDE ELSE COMP NOM PARAM");
+                                    test=false;
+                                }
+                                valTest.add(test);
+
+                            }
+                            else{
+                                break;
+                            }
+
+                        }
+
+
+                        for(int k=0;k<valTest.size();k++) {
+                            if(valTest.get(k)){
+                                resultat.add(valTest.get(k));
+                                valTest.clear();
+                                break;
+                            }
+                            else{
+                                if(k == valTest.size()-1){
+                                    resultat.add(false);
+                                    valTest.clear();
+                                }
+                            }
+
+
+                        }
+
+                    }
+                    else{
+                        System.out.println("Dans le else hash map");
+                    }
+                }
+                res=resultat.get(0);
+                for(int l=1;l<resultat.size();l++){
+                    System.out.println("VALEUR TAB BOOL TEST: "+resultat.get(l-1));
+                    res = res && resultat.get(l);
+
+                }
+                resultat.clear();
+                if(res){
+                    locRetenu.add(listLoc.get(i));
+                }
+                /*for (Measurement.Values v : valeur) {
                     System.out.println("ValueObj: " + v.value);
                     System.out.println("ValeurSaisi: " + parametre.get(v.parameter));
-                    if(parametre.get(v.parameter) != null){
+                    if (parametre.get(v.parameter) != null) {
                         if (v.value > parametre.get(v.parameter)) {
                             locRetenu.add(listLoc.get(i));
                             System.out.println("AJOUTTTT");
                         }
                     }
+                }*/
+
+
+            }
+            runOnUiThread(() -> {
+                System.out.println("LOCATIONSSSS: " + locRetenu);
+                mLocationAdapter.setLocations(locRetenu);
+                mLocationAdapter.notifyDataSetChanged();
+            });
+        }
+        else {
+            String nomLocMes;
+            String cityLocMes;
+            String ReqnomLocMes = "";
+            String ReqcityMes = "";
+            String chaineLocLike = "Location.location LIKE '%";
+            String chaineCityLike = "(city LIKE '%";
+            String Req="";
+            Boolean test=false;
+            Boolean res;
+            ArrayList<Boolean> valTest= new ArrayList<Boolean>();
+            ArrayList<Boolean> resultat= new ArrayList<Boolean>();
+            //Collections.fill(valTest, Boolean.FALSE);
+            int cpt=-1;
+
+            System.out.println("Les Mesure GET 22: " + mes.getmesures());
+            listMes = mes.getmesures();
+            System.out.println("Les Mesures autes 22: " + listMes);
+            //PArcourir list mesures et faire la comparaison de valeur
+            for (int i = 0; i < listMes.size(); i++) {
+                cpt=-1;
+                System.out.println("BOUCLEE: "+i);
+                System.out.println("MES NAME: "+ listMes.get(i).location);
+                System.out.println("MES CITY: "+ listMes.get(i).city);
+                test=false;
+                //valTest.set(i,false);
+                Measurement m = listMes.get(i);
+                Measurement.Values[] valeur = gson.fromJson(m.mesure, Measurement.Values[].class);
+                for (Map.Entry mapentry : parametre.entrySet()) {
+                    test=false;
+                    System.out.println("INSIDE HAsh MAP boucle");
+                    cpt++;
+                    System.out.println("COmpteur: "+cpt);
+                    //valTest.set(cpt,false);
+                    //System.out.println("VAL tab bool: "+valTest.get(cpt));
+                    if(mapentry.getKey() != null) {
+                        System.out.println("Dans le if hash map");
+                        for (int j = 0; j < valeur.length; j++) {
+                            System.out.println("LAPP: "+j);
+                            System.out.println("INSIDE Boucle VAleur");
+                            System.out.println("VALEUR TEST: "+test);
+                            if (!test) {
+                                System.out.println("nom param hm: "+mapentry.getKey());
+                                System.out.println("nom param obj: "+valeur[j].parameter);
+                                if (mapentry.getKey().equals(valeur[j].parameter)) {
+                                    System.out.println("INSIDE IF COMP NOM PARAM");
+                                    if (valeur[j].value > parametre.get(valeur[j].parameter)) {
+                                        test=true;
+                                        //MesRetenu.add(listMes.get(i));
+                                        System.out.println("COMPARAISON VALLLL");
+                                    } else {
+                                        test = false;
+                                    }
+                                }
+                                else{
+                                    System.out.println("INSIDE ELSE COMP NOM PARAM");
+                                    test=false;
+                                }
+                                valTest.add(test);
+
+                            }
+                            else{
+                                break;
+                            }
+
+                        }
+
+
+                        for(int k=0;k<valTest.size();k++) {
+                            if(valTest.get(k)){
+                                resultat.add(valTest.get(k));
+                                valTest.clear();
+                                break;
+                            }
+                            else{
+                                if(k == valTest.size()-1){
+                                    resultat.add(false);
+                                    valTest.clear();
+                                }
+                            }
+
+
+                        }
+
+                    }
+                    else{
+                        System.out.println("Dans le else hash map");
+                    }
+                }
+                res=resultat.get(0);
+                for(int l=1;l<resultat.size();l++){
+                    System.out.println("VALEUR TAB BOOL TEST: "+resultat.get(l-1));
+                    res = res && resultat.get(l);
+
+                }
+                resultat.clear();
+                if(res){
+                    MesRetenu.add(listMes.get(i));
                 }
 
+                      /*for(int j=0; j< valeur.length;j++){
+                        //System.out.println("CONTENU TAB VALEUR: "+valeur[j]);
+                        if(test) {
+                            if (parametre.get(valeur[j].parameter) != null) {
+                                System.out.println("NOM PARAM: "+valeur[j].parameter );
+                                System.out.println("VAL PARAM: "+parametre.get(valeur[j].parameter));
+                                System.out.println("-------------------------");
+                                System.out.println("ValueObj222: " + valeur[j].value);
+                                System.out.println("ValeurSaisi222: " + parametre.get(valeur[j].parameter));
+                                test=false;
+                                if (valeur[j].value > parametre.get(valeur[j].parameter)) {
+                                    test = true;
+                                    //MesRetenu.add(listMes.get(i));
+                                    System.out.println("COMPARAISON VALLLL");
+                                } else {
+                                    test = false;
+                                }
+                                System.out.println("VAL BOOL: " + test);
+                            }
+                        }
+                        else{
+                            break;
+                        }
 
+                    }*/
+
+
+
+
+            }
+
+            System.out.println("MESURE RETENU: "+ MesRetenu);
+
+            for (int j = 0; j < MesRetenu.size(); j++) {
+                nomLocMes = MesRetenu.get(j).location;
+                cityLocMes = MesRetenu.get(j).city;
+                System.out.println("NOM Location Mes" + nomLocMes);
+                System.out.println("Ville Location Mes: " + cityLocMes);
+                if (j == MesRetenu.size() - 1) {
+                    //ReqnomLocMes = ReqnomLocMes + chaineLocLike + nomLocMes + "%'";
+                    //ReqcityMes = ReqcityMes + chaineCityLike + cityLocMes + "%'";
+                    Req= Req + chaineCityLike + cityLocMes + "%' AND " + chaineLocLike + nomLocMes + "%')";
+                } else {
+                    //ReqnomLocMes = ReqnomLocMes + chaineLocLike + nomLocMes + "%' OR ";
+                    //ReqcityMes = ReqcityMes + chaineCityLike + cityLocMes + "%' OR ";
+                    Req = Req + chaineCityLike + cityLocMes + "%' AND " + chaineLocLike + nomLocMes + "%') OR ";
+                }
+                System.out.println(ReqnomLocMes);
+            }
+            if(!MesRetenu.isEmpty()){
+                LocationSearchService.INSTANCE.searchRechercheFromDB(Req, Req);
+            }
 
         }
-        runOnUiThread(() -> {
-            System.out.println("LOCATIONSSSS: " + locRetenu);
-            mLocationAdapter.setLocations(locRetenu);
-            mLocationAdapter.notifyDataSetChanged();
-        });
 
     }
 
@@ -334,29 +571,30 @@ public class RechercheActivityMesure extends AppCompatActivity {
         }
 */
         //System.out.println("HASHMAPContenu: "+ parametre.get(1));
-        if(!(parametre.isEmpty()) && ( (!zone.isEmpty() || !name.isEmpty()) || (!zone.isEmpty() && !name.isEmpty()))) {
-             listLoc = event.getLocations();
-            String nomLoc;
-            String cityLoc;
-            String chaineLocLike="location LIKE '%";
-            String ReqnomLoc="";
-            String ReqcityLoc="";
-            Float valParam;
-            for (int i = 0; i < listLoc.size(); i++) {
-                System.out.println("TOURR Result: " + i);
-                nomLoc = listLoc.get(i).location;
-                cityLoc = listLoc.get(i).city;
-                System.out.println("NOM Location"+nomLoc);
-                System.out.println("Ville Location: "+cityLoc);
-                if(i== listLoc.size()-1){
-                    ReqnomLoc = ReqnomLoc + chaineLocLike + nomLoc+ "%'";
-                } else {
-                    ReqnomLoc = ReqnomLoc + chaineLocLike + nomLoc + "%' OR " ;
-                }
-                System.out.println(ReqnomLoc);
+        if(MesRetenu.isEmpty()) {
+            if (!(parametre.isEmpty()) && ((!zone.isEmpty() || !name.isEmpty()) || (!zone.isEmpty() && !name.isEmpty()))) {
+                listLoc = event.getLocations();
+                String nomLoc;
+                String cityLoc;
+                String chaineLocLike = "location LIKE '%";
+                String ReqnomLoc = "";
+                String ReqcityLoc = "";
+                Float valParam;
+                for (int i = 0; i < listLoc.size(); i++) {
+                    System.out.println("TOURR Result: " + i);
+                    nomLoc = listLoc.get(i).location;
+                    cityLoc = listLoc.get(i).city;
+                    System.out.println("NOM Location" + nomLoc);
+                    System.out.println("Ville Location: " + cityLoc);
+                    if (i == listLoc.size() - 1) {
+                        ReqnomLoc = ReqnomLoc + chaineLocLike + nomLoc + "%'";
+                    } else {
+                        ReqnomLoc = ReqnomLoc + chaineLocLike + nomLoc + "%' OR ";
+                    }
+                    System.out.println(ReqnomLoc);
 
-                //System.out.println("I AM HEREEEE");
-                //System.out.println("LES MEsures: " + listMes);
+                    //System.out.println("I AM HEREEEE");
+                    //System.out.println("LES MEsures: " + listMes);
                 /*for (Measurement m : listMes) {
                     System.out.println("I AM HEREEEE222");
                     Measurement.Values[] valeur = gson.fromJson(m.mesure, Measurement.Values[].class);
@@ -367,22 +605,31 @@ public class RechercheActivityMesure extends AppCompatActivity {
                             locRetenu.add(listLoc.get(i));
                         }
                     }*/
+                }
+                MeasurementSearchService.INSTANCE.searchRechMesures(ReqnomLoc, ReqcityLoc);
+
+
+            } else if (!(parametre.isEmpty()) && (zone.isEmpty() && name.isEmpty())) {
+                MeasurementSearchService.INSTANCE.recherche();
+
+            } else {
+                runOnUiThread(() -> {
+                    System.out.println("LOCATIONSSSS22: " + event.getLocations());
+                    mLocationAdapter.setLocations(event.getLocations());
+                    mLocationAdapter.notifyDataSetChanged();
+                });
             }
-            MeasurementSearchService.INSTANCE.searchRechMesures(ReqnomLoc,ReqcityLoc);
-
-
-
-        }
-        else if(!(parametre.isEmpty()) && (zone.isEmpty() && name.isEmpty())){
-
-
         }
         else{
+            System.out.println(listLoc);
+            listLoc = event.getLocations();
+            System.out.println("ON RECUP: "+ listLoc);
             runOnUiThread(() -> {
-                System.out.println("LOCATIONSSSS22: " + event.getLocations());
                 mLocationAdapter.setLocations(event.getLocations());
                 mLocationAdapter.notifyDataSetChanged();
             });
+
+
         }
     }
 
