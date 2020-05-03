@@ -103,7 +103,7 @@ public class ZoneSearchService {
 
     public void searchZoneFromDB(String search){
         List<ZoneAddress> matchingZoneFromDB = new Select().from(ZoneAddress.class)
-                .where("city LIKE '%" + search + "%'").orderBy("country").execute();
+                .where("city LIKE '%" + search + "%'").orderBy("city").execute();
 
         EventBusManager.BUS.post((new ZoneResultEvent(matchingZoneFromDB)));
     }
