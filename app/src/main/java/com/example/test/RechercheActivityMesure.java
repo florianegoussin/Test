@@ -164,6 +164,7 @@ public class RechercheActivityMesure extends AppCompatActivity {
             public void onClick(View v) {
                 locRetenu.clear();
                 simpleViewSwitcher.showPrevious();
+                MesRetenu.clear();
 
             }
         });
@@ -345,7 +346,10 @@ public class RechercheActivityMesure extends AppCompatActivity {
                 }
                 System.out.println(ReqnomLocMes);
             }
-            LocationSearchService.INSTANCE.searchRechercheFromDB(Req, Req);
+            if(!MesRetenu.isEmpty()){
+                LocationSearchService.INSTANCE.searchRechercheFromDB(Req, Req);
+            }
+
         }
 
     }
